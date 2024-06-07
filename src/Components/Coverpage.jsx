@@ -4,8 +4,15 @@ import instagramlogo from './img/instagram.png'
 import lightmoodlogo from './img/sun.png'
 // import darkmoodlogo from './img/moon.png'
 import line from './img/line.png'
+import { useNavigate } from "react-router-dom";
+
 
 function Coverpage() {
+    const navigate = useNavigate()
+
+    const gotToNewPage=()=>{
+      navigate("/homepage");
+    }
   return (
     <div >
         <div className='flex justify-between pl-6 shadow pb-2'>
@@ -26,7 +33,10 @@ function Coverpage() {
             Rawssa with others and get what you need.</h1>
         <p className='text-lg text-slate-400 mt-5 m-80 mb-0'>
             The first Web App  in iraq to changing your old stuff that you don't need anymore with what you need it, faster than you think and without any cost </p>
-            <button className='bg-sky-500 hover:bg-sky-700 text-white pl-6 pr-6 p-2   rounded-md mt-5'> Get started </button>        
+        <button onClick={() => gotToNewPage()} 
+            className='bg-sky-500 hover:bg-sky-700 text-white pl-6 pr-6 p-2 rounded-md mt-5'> 
+            Get started 
+        </button>
     </div>
     </div>
   )

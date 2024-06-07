@@ -8,7 +8,7 @@ function Navbar() {
                  src={logo} alt='logo'/>
            <h1 className='pt-5 font-bold text-lg mr-80 '>awssa</h1>
         </div>
-        <input className=' w-3/4 seacrch border-2 pl-10 p-1 mr-80 mt-5 mb-2 rounded-lg '
+        <input className=' w-3/4 seacrch border-2 pl-10 p-1 mr-80 mt-5 mb-2 rounded-lg hover:bg-gray-50'
         type='text' placeholder='search...'/>
     </div>
   )

@@ -25,6 +25,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { useNavigate } from "react-router-dom";
+import Homepage from './Homepage';
 
 const drawerWidth = 240;
 
@@ -47,6 +49,17 @@ function ResponsiveDrawer(props) {
       setMobileOpen(!mobileOpen);
     }
   };
+  const Savepage = useNavigate()
+
+  const goToSavePage=()=>{
+    Savepage("/savepage");
+  }
+  
+  const HomePage = useNavigate()
+
+  const goToHomePage=()=>{
+    HomePage("/homepage")
+  }
 
   const drawer = (
     <div>
@@ -58,8 +71,8 @@ function ResponsiveDrawer(props) {
       <List>
         {['Home','Saved' ,'Language'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
+            <ListItemButton onClick={text === 'Home' ? goToHomePage : (text === 'Saved' ? goToSavePage : undefined)}>
+            <ListItemIcon>
               {index % 3 === 0 ? <HomeIcon /> : (index % 3 === 1 ? < BookmarkAddedIcon/> : <LanguageIcon />)}
               </ListItemIcon>
               <ListItemText primary={text} />
@@ -121,6 +134,7 @@ function ResponsiveDrawer(props) {
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
+          
         >
           {drawer}
         </Drawer>

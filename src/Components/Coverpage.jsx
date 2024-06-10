@@ -14,7 +14,7 @@ function Coverpage() {
       navigate("/homepage");
     }
   return (
-    <div >
+    <div className=' Coverpage'>
         <div className='flex justify-between pl-6 shadow pb-2'>
            <div className='flex '>
             <img className='w-6 h-6 mt-3'
@@ -23,9 +23,9 @@ function Coverpage() {
            </div>
            <div className='flex '>
                <button className='pt-1 font-bold text-m mr-2' > Sign up </button>
-               <img className='w-6 h-6 mt-3 mr-2' src={line}/>
-               <img className='w-6 h-6 mt-3 mr-6' src={lightmoodlogo}/>
-               <img  className='w-6 h-6 mt-3 mr-6' src={instagramlogo}/>
+               <img className='w-6 h-6 mt-3 mr-2' src={line} alt='line'/>
+               <img className='w-6 h-6 mt-3 mr-6' src={lightmoodlogo} alt='light mood icon'/>
+               <img  className='w-6 h-6 mt-3 mr-6' src={instagramlogo} alt='dark mood icon'/>
            </div>
         </div>
     <div className='text-center'>

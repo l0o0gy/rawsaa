@@ -27,6 +27,8 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useNavigate } from "react-router-dom";
 import Homepage from './Homepage';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const drawerWidth = 240;
 
@@ -34,6 +36,7 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -60,6 +63,20 @@ function ResponsiveDrawer(props) {
   const goToHomePage=()=>{
     HomePage("/homepage")
   }
+
+  const LoginPage = useNavigate()
+
+  const goToLoginPage=()=>{
+    LoginPage("/loginpage")
+  }
+
+  const signupPage = useNavigate()
+
+  const goToSignUpPage=()=>{
+    signupPage("/signuppage")
+  }
+
+
 
   const drawer = (
     <div>
@@ -91,21 +108,33 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {['Account', 'Log Out', 'Delete account'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-              {index % 3 === 0 ? <AccountCircleIcon /> : (index % 3 === 1 ? <LogoutIcon />  : <PersonRemoveIcon />)}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      {isAuthenticated ? (
+          ['Account', 'Log Out', 'Delete account'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 3 === 0 ? <AccountCircleIcon /> : (index % 3 === 1 ? <LogoutIcon /> : <PersonRemoveIcon />)}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))
+        ) : (
+          ['Login', 'Sign Up'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton onClick={text === 'Login' ? goToLoginPage : goToSignUpPage}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <LoginIcon/> : <PersonAddIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))
+        )}
       </List>
     </div>
   );
 
-  // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (

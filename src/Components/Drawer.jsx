@@ -63,10 +63,6 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <div>
-        <img src='' alt/>
-
-      </div>
       <Divider />
       <List>
         {['Home','Saved' ,'Language'].map((text, index) => (
@@ -142,20 +138,20 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop:6.5 , width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop:6.5 , width: drawerWidth, },
           }}
           open
         >
           {drawer}
         </Drawer>
       </Box>
-      <Box
+      {/* <Box
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
 
-      </Box>
+      </Box> */}
     </Box>
   );
 }

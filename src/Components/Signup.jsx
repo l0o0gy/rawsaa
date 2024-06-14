@@ -27,14 +27,7 @@ function Signup(props) {
     LoginPage("/loginpage")
   }
 
-  // const handleSubmitClick = (e) => {
-  //   e.preventDefault();
-  //   if(signupdata.password === signupdata.confirmPassword) {
-  //     sendDetailsToServer()    
-  //   } else {
-  //     props.showError('Passwords do not match');
-  //   }
-  // }
+
 
   return (
     <div className="flex justify-center">
@@ -93,7 +86,6 @@ function Signup(props) {
                 <button
                     type="submit" 
                     className="bg-orange-500 w-80 p-2 rounded-md mt-5"
-                    // onClick={handleSubmitClick}
                 >
                     Sign up 
                 </button>

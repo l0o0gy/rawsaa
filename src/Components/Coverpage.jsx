@@ -2,7 +2,6 @@ import React from 'react'
 import logo from './img/logo.png'
 import instagramlogo from './img/instagram.png'
 import lightmoodlogo from './img/sun.png'
-// import darkmoodlogo from './img/moon.png'
 import line from './img/line.png'
 import { useNavigate } from "react-router-dom";
 

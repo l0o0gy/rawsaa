@@ -14,9 +14,9 @@ function Navbar() {
         <input className=' w-96 seacrch border-2 border-slate-400 pl-10 p-1 ml-222 mt-2 mb-2  rounded-lg hover:bg-gray-50'
         type='text' placeholder='search...'/>
         <div className='flex '>
-          <img className='w-6 h-6 mt-3 mr-2' src={line}/>
-          <img className='w-6 h-6 mt-3 mr-6' src={lightmoodlogo}/>
-          <img  className='w-6 h-6 mt-3 mr-6' src={instagramlogo}/>
+          <img className='w-6 h-6 mt-3 mr-2' src={line} alt=''/>
+          <img className='w-6 h-6 mt-3 mr-6' src={lightmoodlogo} alt='' />
+          <img  className='w-6 h-6 mt-3 mr-6' src={instagramlogo} alt=''/>
         </div>
     </div>
 

@@ -5,20 +5,18 @@ import lightmoodlogo from './img/sun.png'
 import line from './img/line.png'
 function Navbar() {
   return (
-    <div className='flex justify-between pl-6 shadow-lg sticky top-0 '>
-        <div className='flex '>
-            <img className='w-8 h-9 mt-3'
-                 src={logo} alt='logo'/>
-           <h1 className='pt-5 font-bold text-lg mr-80 '>awssa</h1>
-        </div>
-        <input className=' w-96 seacrch border-2 border-slate-400 pl-10 p-1 ml-222 mt-2 mb-2  rounded-lg hover:bg-gray-50'
-        type='text' placeholder='search...'/>
-        <div className='flex '>
-          <img className='w-6 h-6 mt-3 mr-2' src={line} alt=''/>
-          <img className='w-6 h-6 mt-3 mr-6' src={lightmoodlogo} alt='' />
-          <img  className='w-6 h-6 mt-3 mr-6' src={instagramlogo} alt=''/>
-        </div>
+    <div className='pl-2 flex justify-between  sm:pl-6 shadow pb-2'>
+    <div className=' flex '>
+     <img className='ml-10 sm:w-6 h-6 mt-3 sm:ml-0'
+          src={logo} alt='logo'/>
+    <h1 className='pt-3 font-bold text-lg  sm:mr-80 '>awssa</h1>
     </div>
+    <div className='flex '>
+        <img className=' mt-3 w-6 h-6 sm:mr-2' src={line} alt='line'/>
+        <img className='mt-3 mr-3 w-6 h-6  sm:mr-6' src={lightmoodlogo} alt='light mood icon'/>
+        <img  className='mt-3 mr-3 w-6 h-6 sm:mr-6' src={instagramlogo} alt='dark mood icon'/>
+    </div>
+ </div>
 
   )
 }

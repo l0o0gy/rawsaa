@@ -10,7 +10,7 @@ function Homepage() {
     <div className='bg-white text-center h-screen'>
       <Navbar/>
       <Drawer/>
-      <div className="  grid grid-cols-4 ml-64 mt-10 ">
+      <div className="  mr-2 grid  grid-cols-2 sm:grid-cols-4 sm:ml-64 sm:mt-10 ">
       {items.map(item => (
         <Card key={item.id} item={item} />
       ))}

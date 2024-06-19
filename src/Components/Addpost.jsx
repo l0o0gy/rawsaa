@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import React, { useState, useContext } from 'react';
+import { PostContext } from '../Components/contacts/store';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -20,6 +21,7 @@ const data = [
 ];
 
 function Addpost() {
+  const { posts, setPosts } = useContext(PostContext);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
@@ -30,15 +32,23 @@ function Addpost() {
     setSelectedPhoto(e.target.files[0]);
   };
 
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newPost = {
+      photo: selectedPhoto,
+      itemName,
+      description,
+      location,
+      categories,
+    };
+    setPosts([...posts, newPost]);
+  };
 
   return (
     <div>
-      <div className="flex justify-center ">
+      <div className="flex justify-center">
         <div className='text-center p-10 border-2 bg-white mt-10'>
-          <form 
-          // onSubmit={handleSubmit}
-          >
+          <form onSubmit={handleSubmit}>
             <input type="file" accept="image/*" onChange={handlePhotoChange} /> <br />
             {selectedPhoto && <img src={URL.createObjectURL(selectedPhoto)} alt={itemName} className='w-60' />}
             <TextField

@@ -5,23 +5,28 @@ import { useNavigate } from "react-router-dom";
 import Navbar from './Navbar'
 
 
-function logIn(props) {
-  const [signupdata , setSignupdata] = useState({
-    userName: "",
-    phoneNumber:"",
+function LoginForm(props) {
+  const [state , setState] = useState({
     email : "",
     password : "",
-    confirmPassword: "",
     successMessage: null
-})
-
+  })
   const handleChange = (e) => {
     const {id , value} = e.target   
-      setSignupdata(prevState => ({
+    setState(prevState => ({
         ...prevState,
         [id] : value
     }))
+}
+
+const handleSubmitClick = (e) => {
+    e.preventDefault();
+    const payload={
+        "email":state.email,
+        "password":state.password,
+    }
   }
+
 
   const signupPage = useNavigate()
 
@@ -44,7 +49,7 @@ function logIn(props) {
                         className="form-control w-80 p-2 rounded-md border-2 border-slate-400" 
                         id="userName" 
                         placeholder="Add User Name"
-                        value={signupdata.userName}
+                        value={state .userName}
                         onChange={handleChange} 
                     /> <br/>
                     
@@ -54,7 +59,7 @@ function logIn(props) {
                         className="form-control w-80 p-2 rounded-md border-2 border-slate-400 " 
                         id="password" 
                         placeholder="Password"
-                        value={signupdata.password}
+                        value={state .password}
                         onChange={handleChange} 
                     />
                 </div> <br/>
@@ -67,8 +72,8 @@ function logIn(props) {
                 </div>
                 </div>
             </form>
-            <div className="alert alert-success mt-2" style={{display: signupdata.successMessage ? 'block' : 'none' }} role="alert">
-                {signupdata.successMessage}
+            <div className="alert alert-success mt-2" style={{display:state .successMessage ? 'block' : 'none' }} role="alert">
+                {state .successMessage}
             </div>
             <div className="mt-2 text-center">
                 <span>Don't have an account? </span>
@@ -81,5 +86,5 @@ function logIn(props) {
   )
 }
 
-export default logIn
+export default LoginForm
 

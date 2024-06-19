@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from './img/logo.png'
-import instagramlogo from './img/instagram.png'
-import lightmoodlogo from './img/sun.png'
-import line from './img/line.png'
+import logo from '../assets/img//logo.png'
+import instagramlogo from '../assets/img//instagram.png'
+import lightmoodlogo from '../assets/img//sun.png'
+import line from '../assets/img/line.png'
 function Navbar() {
   return (
     <div className='pl-2 flex justify-between  sm:pl-6 shadow pb-2'>

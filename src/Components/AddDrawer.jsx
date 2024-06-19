@@ -25,6 +25,8 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Avatar from '@mui/material/CssBaseline';
+import Typography from '@mui/material/CssBaseline';
 
 const drawerWidth = 240;
 
@@ -34,6 +36,11 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const user = {
+    name: 'Welcome there',
+    photo:"https://i.pinimg.com/originals/9c/83/88/9c838839fcf2197a8d8007b27ba713a3.gif "
+  };
+
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -88,7 +95,14 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Divider />
+        {/* {isAuthenticated && ( */}
+        <Box sx={{ display: 'flex', alignItems: 'center', padding: 2 }}>
+          <Avatar src={user.photo} alt={user.name} />
+          <Typography variant="h6" sx={{ marginLeft: 2 }}>
+            {user.name}
+          </Typography>
+        </Box>
+      {/* )} */}
       <List>
         {['Home','Saved' ,'Language'].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -116,8 +130,7 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-      {isAuthenticated ? (
-          ['Account', 'Log Out', 'Delete account'].map((text, index) => (
+          {['Account', 'Log Out', 'Delete account'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -126,19 +139,7 @@ function ResponsiveDrawer(props) {
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
-          ))
-        ) : (
-          ['Login', 'Sign Up'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton onClick={text === 'Login' ? goToLoginPage : goToSignUpPage}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <LoginIcon/> : <PersonAddIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))
-        )}
+          ))}
       </List>
     </div>
   );

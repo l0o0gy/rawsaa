@@ -3,6 +3,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+/* Card {
+  background-color: #F2F1F1;
+} */
 @media screen and (max-width:800px) {
   body{
     background-size: 300%;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 
 function Signup(props) {
@@ -21,12 +21,27 @@ function Signup(props) {
     }))
   }
 
-  const LoginPage = useNavigate()
+  const redirectToHome = () => {
+    props.updateTitle('Home')
+    props.history.push('/homepage');
+}
+  // const LoginPage = useNavigate()
 
+  // const goToLoginPage=()=>{
+  //   LoginPage("/loginpage")
+  // }
   const goToLoginPage=()=>{
-    LoginPage("/loginpage")
+    props.updateTitle('loginpage')
+    props.history.push('/loginpage')
   }
-
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+    if(signupdata.password === signupdata.confirmPassword) {
+        // sendDetailsToServer()    
+    } else {
+        props.showError('Passwords do not match');
+    }
+}
 
 
   return (
@@ -86,6 +101,7 @@ function Signup(props) {
                 <button
                     type="submit" 
                     className="bg-orange-500 w-80 p-2 rounded-md mt-5"
+                    onClick={handleSubmitClick}
                 >
                     Sign up 
                 </button>

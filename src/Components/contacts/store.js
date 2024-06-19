@@ -1,5 +1,5 @@
 import React from "react";
-import img from '../img/img.jpg'
+import img from '../../assets/img/img.jpg'
 import { createContext, useContext, useState} from 'react';
 
 const DataContext = createContext();

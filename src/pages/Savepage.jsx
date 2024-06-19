@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from './Navbar'
-import Drawer from './Drawer'
+import Navbar from '../Components/Navbar'
+import Drawer from '../Components/Drawer'
 
 function Savepage() {
   return (

@@ -1,20 +1,11 @@
-// import React from 'react'
 
-// function Login() {
-//   return (
-//     <div>
-//       <h1>login</h1>
-//     </div>
-//   )
-// }
-
-// export default Login
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import Navbar from './Navbar'
 
 
-function Signup(props) {
+function logIn(props) {
   const [signupdata , setSignupdata] = useState({
     userName: "",
     phoneNumber:"",
@@ -41,6 +32,8 @@ function Signup(props) {
 
 
   return (
+    <div >
+      <Navbar/>
     <div className="flex justify-center">
       <div className=' bg-zinc-300 mt-10 p-10 rounded-md shadow-lg shadow-black-500/90 '>
             <form>
@@ -84,8 +77,9 @@ function Signup(props) {
             
         </div>
         </div>
+        </div>
   )
 }
 
-export default Signup
+export default logIn
 

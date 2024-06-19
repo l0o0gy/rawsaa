@@ -1,26 +1,16 @@
-// import React from 'react'
-// import Navbar from './Navbar'
-// import Drawer from './Drawer'
+import React from 'react'
+import Navbar from './Navbar'
+import Drawer from './Drawer'
 
-// function Savepage() {
-//   return (
-//     <div className=' bg-red-200 text-center h-screen'>
-//     <Navbar/>
-//     <Drawer/>
-//       Savepage
-//     </div>
-//   )
-// }
-
-// export default Savepage
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import App from './App';
-// import { CategoryProvider } from './CategoryContext';
-
-// ReactDOM.render(
-//   <CategoryProvider>
-//     <App />
-//   </CategoryProvider>,
-//   document.getElementById('root')
-// );
+function Savepage() {
+  return (
+    <div className=' text-center h-screen'>
+    <Navbar/>
+    <Drawer/>
+    <div className=" text-center bg-red-500 sm:ml-64 sm:mt-10 ">
+        <h1>savepage</h1>
+    </div>
+    </div>
+  )
+}
+export default Savepage;

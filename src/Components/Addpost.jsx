@@ -101,7 +101,7 @@ function Addpost() {
                 <TextField {...params} label="Checkboxes" placeholder="Favorites" />
               )}
             />
-            <button type="submit" className="bg-orange-500 p-2 rounded-md mt-2 text-white drop-shadow-md w-full" onClick={handelAlart}> Add </button>
+            <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md w-full" onClick={handelAlart}> Add </button>
           </form>
         </div>
       </div>

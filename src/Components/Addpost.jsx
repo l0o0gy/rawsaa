@@ -30,16 +30,7 @@ function Addpost() {
     setSelectedPhoto(e.target.files[0]);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const formData = {
-  //     itemName,
-  //     description,
-  //     location,
-  //     selectedPhoto,
-  //   };
-    
-  // };
+
 
   return (
     <div>

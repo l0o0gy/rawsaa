@@ -25,7 +25,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-
+import img from '../assets/img/rawssa.jpg'
 const drawerWidth = 240;
 
 
@@ -58,7 +58,7 @@ function ResponsiveDrawer(props) {
   const HomePage = useNavigate()
 
   const goToHomePage=()=>{
-    HomePage("/homepage")
+    HomePage("/")
   }
 
   const LoginPage = useNavigate()
@@ -88,7 +88,7 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Divider />
+      <img src={img} alt="logo" className='w-1/2 pl-3'/>
       <List>
         {['Home','Saved' ,'Language'].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -188,7 +188,7 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop:6.5 , width: drawerWidth, },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop:0 , width: drawerWidth, },
           }}
           open
         >

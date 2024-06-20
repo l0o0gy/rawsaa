@@ -23,13 +23,15 @@ import ElectricalDevices from './pages/ElectricalDevices.jsx'
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
+  
   return (
     <div className="App"> 
+    
     <BrowserRouter>
       <DataProvider>
         <Routes>
-          <Route path='/' element={<Coverpage/>}/>
-          <Route path='/homepage' element={<Homepage/>}/>
+          {/* <Route path='/' element={<Coverpage/>}/> */}
+          <Route path='/' element={<Homepage/>}/>
           <Route path='/savepage' element={<Savepage/>}/>
           <Route path='/add' element={<Addpost/>}/>
           <Route path='/houseware' element= {<Houseware/>}/>

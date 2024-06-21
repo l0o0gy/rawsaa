@@ -148,7 +148,7 @@ function ResponsiveDrawer(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ display: { sm: 'none' } , backgroundColor: 'transparent', boxShadow: 'none' }}>
+      <AppBar position="fixed" sx={{ display: { sm: 'none' } , backgroundColor: 'white', boxShadow: 'none' }}>
         <Toolbar>
           <IconButton
             color="black"

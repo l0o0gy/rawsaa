@@ -16,7 +16,7 @@ function Coversection() {
           <button type='submit' className='mt-2 bg-orange-500 hover:bg-orange-600 p-2 rounded-md text-white drop-shadow-md ml-1 sm:w-10'><SearchIcon/></button>
         </div>
         <div>
-          <img src={img} alt=" coverimg" className=' mt-20 mr-0 ml-0 sm:w-3/4 sm:mt-0 sm:ml-20 '/>
+          <img src={img} alt=" coverimg" className=' mt-20 mr-0 ml-0 sm:w-3/4 sm:mt-0 sm:ml-20 sm:pl-20 sm:pt-10'/>
         </div>
       </div>
     </div>

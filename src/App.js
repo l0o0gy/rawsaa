@@ -19,6 +19,7 @@ import CarAccessories from './pages/CarAccessories.jsx'
 import Books from './pages/Books.jsx'
 import Antiques from './pages/Antiques.jsx'
 import ElectricalDevices from './pages/ElectricalDevices.jsx'
+import AddYours from './pages/AddYours.jsx';
 
 function App() {
   const [title, updateTitle] = useState(null);
@@ -33,7 +34,7 @@ function App() {
           {/* <Route path='/' element={<Coverpage/>}/> */}
           <Route path='/' element={<Homepage/>}/>
           <Route path='/savepage' element={<Savepage/>}/>
-          <Route path='/add' element={<Addpost/>}/>
+          <Route path='/add' element={<AddYours/>}/>
           <Route path='/houseware' element= {<Houseware/>}/>
           <Route path='/officeware' element= {<Officeware/>}/>
           <Route path='/electronics' element= {<Electronics/>}/>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Components/Navbar'
 import Drawer from '../Components/Drawer'
 import PostCard from '../Components/PostCard';
@@ -8,7 +8,7 @@ import { PostContext } from '../Components/contacts/store';
 function Books() {
   const { posts } = useContext(PostContext);
 
-  const housewarePosts = posts.filter(post => 
+  const sectionPosts = posts.filter(post => 
     post.categories.some(category => category.title === "Books")
   );
 
@@ -18,11 +18,12 @@ function Books() {
       <Drawer/>
       <div className=" text-center bg-pink-300 sm:ml-64 sm:mt-10 ">
         <h1>Books</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
-          {housewarePosts.map((post, index) => (
-            <PostCard key={index} post={post} />
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+          {sectionPosts.map((post, index) => (
+            <PostCard key={index} post={post}  />
           ))}
         </div>
+
     </div>
     </div>
   )

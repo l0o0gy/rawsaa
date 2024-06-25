@@ -10,11 +10,8 @@ hero{
 @media screen and (max-width:800px) {
   body{
     background-size: 300%;
+    /* background-color: rgb(219, 110, 31); */
   }
 
 }
-/* .img{
-  width:500px;
-  margin-left: 150px;
-  margin-top: -40px;
-} */
+

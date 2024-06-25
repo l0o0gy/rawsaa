@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext ,useEffect} from 'react';
 import { PostContext } from '../Components/contacts/store';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -37,8 +37,13 @@ function Addpost() {
   const [location, setLocation] = useState('');
   const [categories, setCategories] = useState([]);
   const [showBox, setShowBox] = useState(false);
-  const [showSnackbar, setShowSnackbar] = useState(false);
+  // const [showSnackbar, setShowSnackbar] = useState(false);
 
+  // const [showpost,setShowPost] = useState(true)
+  
+  // useEffect(()=>{
+  //   window.localStorage.setItem("MY_POST",JSON.stringify(showBox))
+  // },[posts])
 
 
   const handlePhotoChange = (e) => {
@@ -70,11 +75,10 @@ function Addpost() {
         <AddIcon />
       </Fab>
     </Box>
-    
     {showBox && (
-    <Box className="flex justify-center fixed sm:ml-96">
-        <div className='text-center p-6 border-2  bg-white mt-10'>
-          <form onSubmit={handleSubmit}>
+    <Box className="flex justify-center fixed sm:ml-96 z-10">
+        <div className='text-center p-6 border-2  bg-white mt-10  '>
+          <form onSubmit={handleSubmit} >
             <input type="file" accept="image/*" onChange={handlePhotoChange} /> <br />
             {selectedPhoto && <img src={URL.createObjectURL(selectedPhoto)} alt={itemName} className='w-60' />}
             <TextField
@@ -125,10 +129,10 @@ function Addpost() {
               )}
               sx={{ width: { xs: 300, md: 500 }, marginTop: "10px" }}
               renderInput={(params) => (
-                <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+                <TextField {...params} label="Checkboxes" placeholder="Categorie" />
               )}
             />
-            <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md w-full"> Add </button>
+            <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md w-full" > Add </button>
           </form>
         </div>
       </Box>

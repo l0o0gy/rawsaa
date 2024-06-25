@@ -25,7 +25,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import img from '../assets/img/rawssa.jpg'
+import img from '../assets/img/rawsshaa.png'
 const drawerWidth = 240;
 
 
@@ -88,7 +88,7 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <img src={img} alt="logo" className='w-1/2 pl-3'/>
+      <img src={img} alt="logo" className='w-40 pl-3 pt-3'/>
       <List>
         {['Home','Saved' ,'Language'].map((text, index) => (
           <ListItem key={text} disablePadding>

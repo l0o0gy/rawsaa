@@ -4,7 +4,7 @@ import Coverpage from './pages/Coverpage.jsx';
 import Homepage from './pages/Homepage.jsx';
 import Savepage from './pages/Savepage.jsx';
 import { DataProvider } from './Components/contacts/store';
-import Login from './Components/Login';
+import Login from './Components/Login.jsx';
 import Singup from './Components/Signup';
 // import Header from './Components/Header';
 import AlertComponent from './Components/AlertComponent.jsx';

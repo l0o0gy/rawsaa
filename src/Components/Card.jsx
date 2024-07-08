@@ -10,11 +10,11 @@ import CardActionArea from '@mui/material/CardActionArea';
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
   marginBottom: theme.spacing(4),
-  marginLeft: theme.spacing(2),
+  marginLeft: theme.spacing(1),
 }));
 
 const StyledCardMedia = styled(CardMedia)({
-  height: 200, // Adjust the height as needed
+  height: 200,
 });
 
 function PostCard({ item }) {

@@ -1,127 +1,169 @@
-import React from 'react'
-import { useState } from 'react'
-// import { useNavigate } from "react-router-dom";
-import Navbar from './Navbar'
+import * as React from 'react';
+import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
+import Sheet from '@mui/joy/Sheet';
+import CssBaseline from '@mui/joy/CssBaseline';
+import Typography from '@mui/joy/Typography';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Button from '@mui/joy/Button';
+import Link from '@mui/joy/Link';
+import img from '../assets/img/orang.jpg';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 
-function Signup(props) {
-  const [signupdata , setSignupdata] = useState({
-    userName: "",
-    phoneNumber:"",
-    email : "",
-    password : "",
-    confirmPassword: "",
-    successMessage: null
-})
+function ModeToggle() {
+  const { mode, setMode } = useColorScheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    return <Button variant="soft">Change mode</Button>;
+  }
+
+  return (
+    <Button
+      variant="soft"
+      onClick={() => {
+        setMode(mode === 'light' ? 'dark' : 'light');
+      }}
+    >
+      {mode === 'light' ? 'Turn dark' : 'Turn light'}
+    </Button>
+  );
+}
+
+export default function SignUpFinal() {
+  const [data, setData] = useState({ name: '', email: '', password: '', phone_number: '' });
 
   const handleChange = (e) => {
-    const {id , value} = e.target   
-      setSignupdata(prevState => ({
-        ...prevState,
-        [id] : value
-    }))
-  }
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-  const redirectToHome = () => {
-    props.updateTitle('Home')
-    props.history.push('/homepage');
-}
-  // const LoginPage = useNavigate()
-
-  // const goToLoginPage=()=>{
-  //   LoginPage("/loginpage")
-  // }
-  const goToLoginPage=()=>{
-    props.updateTitle('loginpage')
-    props.history.push('/loginpage')
-  }
-  const handleSubmitClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(signupdata.password === signupdata.confirmPassword) {
-        // sendDetailsToServer()    
-    } else {
-        props.showError('Passwords do not match');
-    }
-}
+    console.log("Submitting data:", data);
+  
+    fetch('https://x8ki-letl-twmt.n7.xano.io/api:B8mXd58e/auth/signup_1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((err) => { throw new Error(err.message) });
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log("Response data:", resData);
+        // Handle successful sign-up (e.g., redirect, show message, etc.)
+      })
+      .catch((err) => {
+        console.error("Error:", err.message);
+        // Handle errors
+      });
+  };
+  const LoginPage = useNavigate()
+
+  const goToLoginPage=()=>{
+    LoginPage("/loginpage")
+  }
 
 
   return (
     <div>
-          <Navbar/>
-
-    <div className="flex justify-center">
-      <div className=' bg-zinc-300 mt-10 p-10 rounded-md shadow-lg shadow-black-500/90 '>
-            <form>
-                <div className="">
-                <div className=" ">
-                  <label For="userName">User Name</label> <br/>
-                    <input type="text" 
-                        className="form-control w-80 p-2 rounded-md border-2 border-slate-400" 
-                        id="userName" 
-                        placeholder="Add User Name"
-                        value={signupdata.userName}
-                        onChange={handleChange} 
-                    /> <br/>
-                    <label For="phoneNumber">Phone Number</label> <br/>
-                    <input type="number"
-                        className="form-control w-80 p-2 rounded-md border-2 border-slate-400" 
-                        id="phoneNumber" 
-                        placeholder="Add Phone Number"
-                        value={signupdata.phoneNumber}
-                        onChange={handleChange} 
-                    /> <br/>
-                </div>
-                <label For="email">Email address</label> <br/>
-                <input type="email" 
-                       className="form-control w-80 p-2 rounded-md border-2 border-slate-400" 
-                       id="email" 
-                       aria-describedby="emailHelp" 
-                       placeholder="Enter email" 
-                       value={signupdata.email}
-                       onChange={handleChange}
-                /> <br/>
-                <small id="emailHelp" className=" text-muted">We'll never share your email with anyone else.</small> <br/>
-                </div>
-                <div className=" ">
-                    <label For="Password">Password</label> <br/>
-                    <input type="password" 
-                        className="form-control w-80 p-2 rounded-md border-2 border-slate-400 " 
-                        id="password" 
-                        placeholder="Password"
-                        value={signupdata.password}
-                        onChange={handleChange} 
-                    />
-                </div> <br/>
-                <div className=" ">
-                    <label For="Password">Confirm Password</label> <br/>
-                    <input type="password" 
-                        className="form-control w-80 p-2 rounded-md border-2 border-slate-400" 
-                        id="confirmPassword" 
-                        placeholder="Confirm Password"
-                        value={signupdata.confirmPassword}
-                        onChange={handleChange} 
-                    /> <br/>
-                </div>
-                <button
-                    type="submit" 
-                    className="bg-orange-500 w-80 p-2 rounded-md mt-5"
-                    onClick={handleSubmitClick}
-                >
-                    Sign up 
-                </button>
+      <CssVarsProvider>
+        <img src={img} style={{ position: "fixed" }} />
+        <main>
+          <ModeToggle />
+          <CssBaseline />
+          <Sheet
+            sx={{
+              width: 350,
+              mx: 'auto',
+              my: 4,
+              py: 3,
+              px: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              borderRadius: 'sm',
+              boxShadow: 'md',
+            }}
+            variant="outlined"
+          >
+            <form onSubmit={handleSubmit}>
+              <div>
+                <Typography level="h4" component="h1">
+                  <b>Welcome!</b>
+                </Typography>
+                <Typography level="body-sm">Sign up to continue.</Typography>
+              </div>
+              <FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  name="name"
+                  type="text"
+                  placeholder="name"
+                  value={data.name}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="johndoe@email.com"
+                  value={data.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="password"
+                  value={data.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Phone Number</FormLabel>
+                <Input
+                  name="phone_number"
+                  type="text"
+                  placeholder="phone number"
+                  value={data.phone_number}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <Button type="submit" sx={{ mt: 1, backgroundColor: "#f98306" }}>
+                Sign up
+              </Button>
+              <Typography
+                endDecorator={<Link href="/loginpage">Log in</Link>}
+                fontSize="sm"
+                sx={{ alignSelf: 'center' }}
+                // onClick={() => goToLoginPage()}
+              >
+                Don&apos;t have an account?
+              </Typography>
             </form>
-            <div className="alert alert-success mt-2" style={{display: signupdata.successMessage ? 'block' : 'none' }} role="alert">
-                {signupdata.successMessage}
-            </div>
-            <div className="mt-2 text-center">
-                <span>Already have an account? </span>
-                <span className="loginText" onClick={() => goToLoginPage()}>Login here</span> 
-            </div>
-            
-        </div>
-        </div> 
-        </div>
-  )
+          </Sheet>
+        </main>
+      </CssVarsProvider>
+    </div>
+  );
 }
-
-export default Signup

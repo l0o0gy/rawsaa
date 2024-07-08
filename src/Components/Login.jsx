@@ -1,90 +1,146 @@
+import * as React from 'react';
+import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
+import Sheet from '@mui/joy/Sheet';
+import CssBaseline from '@mui/joy/CssBaseline';
+import Typography from '@mui/joy/Typography';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Button from '@mui/joy/Button';
+import Link from '@mui/joy/Link';
+import Drawer from './Drawer';
 
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate } from "react-router-dom";
-import Navbar from './Navbar'
+function ModeToggle() {
+  const { mode, setMode } = useColorScheme();
+  const [mounted, setMounted] = React.useState(false);
 
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
-function LoginForm(props) {
-  const [state , setState] = useState({
-    email : "",
-    password : "",
-    successMessage: null
-  })
-  const handleChange = (e) => {
-    const {id , value} = e.target   
-    setState(prevState => ({
-        ...prevState,
-        [id] : value
-    }))
-}
-
-const handleSubmitClick = (e) => {
-    e.preventDefault();
-    const payload={
-        "email":state.email,
-        "password":state.password,
-    }
+  if (!mounted) {
+    return <Button variant="soft">Change mode</Button>;
   }
-
-
-  const signupPage = useNavigate()
-
-  const goToSignUpPage=()=>{
-    signupPage("/signuppage")
-  }
-
-
 
   return (
-    <div >
-      <Navbar/>
-    <div className="flex justify-center">
-      <div className=' bg-zinc-300 mt-10 p-10 rounded-md shadow-lg shadow-black-500/90 '>
-            <form>
-                <div className="">
-                <div className=" ">
-                  <label For="userName">User Name</label> <br/>
-                    <input type="text" 
-                        className="form-control w-80 p-2 rounded-md border-2 border-slate-400" 
-                        id="userName" 
-                        placeholder="Add User Name"
-                        value={state .userName}
-                        onChange={handleChange} 
-                    /> <br/>
-                    
-                <div className=" ">
-                    <label For="Password">Password</label> <br/>
-                    <input type="password" 
-                        className="form-control w-80 p-2 rounded-md border-2 border-slate-400 " 
-                        id="password" 
-                        placeholder="Password"
-                        value={state .password}
-                        onChange={handleChange} 
-                    />
-                </div> <br/>
-                <button
-                    type="submit" 
-                    className="bg-orange-500 w-80 p-2 rounded-md mt-5"
-                >
-                    log in 
-                </button>
-                </div>
-                </div>
-            </form>
-            <div className="alert alert-success mt-2" style={{display:state .successMessage ? 'block' : 'none' }} role="alert">
-                {state .successMessage}
-            </div>
-            <div className="mt-2 text-center">
-                <span>Don't have an account? </span>
-                <span className="loginText" onClick={() => goToSignUpPage()}>Sign up here</span> 
-            </div>
-            
-        </div>
-        </div>
-        </div>
-  )
+    <Button
+      variant="soft"
+      onClick={() => {
+        setMode(mode === 'light' ? 'dark' : 'light');
+      }}
+    >
+      {mode === 'light' ? 'Turn dark' : 'Turn light'}
+    </Button>
+  );
 }
 
-export default LoginForm
+export default function LoginFinal() {
+  const [data, setData] = React.useState({ email: '', password: '' });
+  const [error, setError] = React.useState(null);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitting data:", data);
+
+    fetch('https://x8ki-letl-twmt.n7.xano.io/api:B8mXd58e/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Invalid email or password');
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log("Response data:", resData);
+        // Navigate to home page or perform other actions on successful login
+        // For demo purpose, alert the user
+        // alert('Login successful!');
+        // Example: Redirect to home page
+        window.location.href = '/';
+      })
+      .catch((err) => {
+        console.error("Error:", err.message);
+        setError(err.message); // Set error state for displaying error message
+      });
+  };
+
+  return (
+    <div>
+      <Drawer />
+      <CssVarsProvider>
+        <main>
+          <ModeToggle />
+          <CssBaseline />
+          <Sheet
+            sx={{
+              width: 300,
+              mx: 'auto',
+              my: 4,
+              py: 3,
+              px: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              borderRadius: 'sm',
+              boxShadow: 'md',
+            }}
+            variant="outlined"
+          >
+            <form onSubmit={handleSubmit}>
+              <div>
+                <Typography level="h4" component="h1">
+                  <b>Welcome!</b>
+                </Typography>
+                <Typography level="body-sm">Sign in to continue.</Typography>
+              </div>
+              <FormControl>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="johndoe@email.com"
+                  value={data.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="password"
+                  value={data.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              {error && <Typography color="error">{error}</Typography>}
+              <Button type="submit" sx={{ mt: 1 /* margin top */, backgroundColor: "#f98306" }}>
+                Log in
+              </Button>
+              <Typography
+                endDecorator={<Link href="/signuppage">Sign up</Link>}
+                fontSize="sm"
+                sx={{ alignSelf: 'center' }}
+              >
+                Don&apos;t have an account?
+              </Typography>
+            </form>
+          </Sheet>
+        </main>
+      </CssVarsProvider>
+    </div>
+  );
+}

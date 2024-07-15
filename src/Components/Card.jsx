@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
@@ -19,8 +21,20 @@ const StyledCardMedia = styled(CardMedia)({
 
 function PostCard({ item }) {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    // Logic to determine if the user is authenticated
+    const authStatus = Cookies.get('isAuthenticated') === 'true';
+    setIsAuthenticated(authStatus);
+  }, []);
 
   const handleCardClick = () => {
+    if (!isAuthenticated) {
+      navigate("/Loginpage"); // Redirect to login page if not authenticated
+      return;
+    }
+
     switch (item.title) {
       case 'Houseware':
         navigate("/houseware");

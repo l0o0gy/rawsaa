@@ -22,18 +22,18 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import img from '../assets/img/rawsshaa.png'
+import img from '../assets/img/rawsshaa.png';
+import Cookies from 'js-cookie';
+
 const drawerWidth = 240;
 
-
-function ResponsiveDrawer(props) {
-  const { window } = props;
+function ResponsiveDrawer({ window, isAuthenticated = false }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [activeButton, setActiveButton] = React.useState(null);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -49,65 +49,31 @@ function ResponsiveDrawer(props) {
       setMobileOpen(!mobileOpen);
     }
   };
-  const Savepage = useNavigate()
 
-  const goToSavePage=()=>{
-    Savepage("/savepage");
-  }
-  
-  const HomePage = useNavigate()
+  const navigate = useNavigate();
 
-  const goToHomePage=()=>{
-    HomePage("/")
-  }
+  const goToPage = (path, index) => () => {
+    setActiveButton(index);
+    navigate(path);
+  };
 
-  const LoginPage = useNavigate()
-
-  const goToLoginPage=()=>{
-    LoginPage("/loginpage")
-  }
-
-  const signupPage = useNavigate()
-
-  const goToSignUpPage=()=>{
-    signupPage("/signuppage")
-  }
-
-  const addPostPage = useNavigate()
-
-  const goToaddPostPage=()=>{
-    addPostPage("/add")
-  }
-
-  const MessagePage = useNavigate()
-
-  const goToMessagePage =()=>{
-    MessagePage("/messagepage")
-  }
-
+  const handleLogout = () => {
+    Cookies.remove('isAuthenticated');
+    navigate('/');
+  };
 
   const drawer = (
     <div>
-      <img src={img} alt="logo" className='w-40 pl-3 pt-3'/>
+      <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
       <List>
-        {['Home','Saved' ,'Language'].map((text, index) => (
+        {['Home', 'Saved', 'Language'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={text === 'Home' ? goToHomePage : (text === 'Saved' ? goToSavePage : undefined)}>
-            <ListItemIcon>
-              {index % 3 === 0 ? <HomeIcon /> : (index % 3 === 1 ? < BookmarkAddedIcon/> : <LanguageIcon />)}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['Add yours','Messages','Call us'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={text === 'Add yours' ? goToaddPostPage : (text === 'Messages'? goToMessagePage :undefined)}>
+            <ListItemButton
+              onClick={text === 'Home' ? goToPage('/', index) : (text === 'Saved' ? goToPage('/savepage', index) : undefined)}
+              sx={{ backgroundColor: activeButton === index ? 'orange' : 'inherit' }}
+            >
               <ListItemIcon>
-              {index % 3 === 0 ? <AddBoxIcon /> : (index % 3 === 1 ? < MessageIcon/> : <CallIcon />)}
+                {index === 0 ? <HomeIcon /> : (index === 1 ? <BookmarkAddedIcon /> : <LanguageIcon />)}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -116,12 +82,31 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-      {isAuthenticated ? (
+        {['Add yours', 'Messages', 'Call us'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton
+              onClick={text === 'Add yours' ? goToPage('/add', index) : (text === 'Messages' ? goToPage('/messagepage', index) : undefined)}
+              sx={{ backgroundColor: activeButton === index + 3 ? 'orange' : 'inherit' }}
+            >
+              <ListItemIcon>
+                {index === 0 ? <AddBoxIcon /> : (index === 1 ? <MessageIcon /> : <CallIcon />)}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {isAuthenticated ? (
           ['Account', 'Log Out', 'Delete account'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                onClick={text === 'Log Out' ? handleLogout : undefined}
+                sx={{ backgroundColor: activeButton === index + 6 ? 'orange' : 'inherit' }}
+              >
                 <ListItemIcon>
-                  {index % 3 === 0 ? <AccountCircleIcon /> : (index % 3 === 1 ? <LogoutIcon /> : <PersonRemoveIcon />)}
+                  {index === 0 ? <AccountCircleIcon /> : (index === 1 ? <LogoutIcon /> : <PersonRemoveIcon />)}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -130,9 +115,11 @@ function ResponsiveDrawer(props) {
         ) : (
           ['Login', 'Sign Up'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton onClick={text === 'Login' ? goToLoginPage : goToSignUpPage}>
+              <ListItemButton onClick={text === 'Login' ? goToPage('/Loginpage', index + 9) : goToPage('/signuppage', index + 9)}
+                sx={{ backgroundColor: activeButton === index + 9 ? 'orange' : 'inherit' }}
+              >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <LoginIcon/> : <PersonAddIcon />}
+                  {index === 0 ? <LoginIcon /> : <PersonAddIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -148,14 +135,14 @@ function ResponsiveDrawer(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ display: { sm: 'none' } , backgroundColor: 'white', boxShadow: 'none' }}>
+      <AppBar position="fixed" sx={{ display: { sm: 'none' }, backgroundColor: 'white', boxShadow: 'none' }}>
         <Toolbar>
           <IconButton
             color="black"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2 , mt:0 }}
+            sx={{ mr: 2, mt: 0 }}
           >
             <MenuIcon />
           </IconButton>
@@ -180,7 +167,6 @@ function ResponsiveDrawer(props) {
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
-          
         >
           {drawer}
         </Drawer>
@@ -188,21 +174,20 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop:0 , width: drawerWidth, },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop: 0, width: drawerWidth },
           }}
           open
         >
           {drawer}
         </Drawer>
       </Box>
-
     </Box>
   );
 }
 
 ResponsiveDrawer.propTypes = {
-
   window: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default ResponsiveDrawer;

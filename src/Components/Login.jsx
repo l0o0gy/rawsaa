@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import Sheet from '@mui/joy/Sheet';
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -8,7 +8,8 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
-import Drawer from './Drawer';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -37,6 +38,13 @@ function ModeToggle() {
 export default function LoginFinal() {
   const [data, setData] = React.useState({ email: '', password: '' });
   const [error, setError] = React.useState(null);
+  const navigate = useNavigate();
+  const isAuthenticated = Cookies.get('isAuthenticated') === 'true';
+
+  const handleLogin = () => {
+    Cookies.set('isAuthenticated', 'true');
+    navigate('/');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,21 +73,17 @@ export default function LoginFinal() {
       })
       .then((resData) => {
         console.log("Response data:", resData);
-        // Navigate to home page or perform other actions on successful login
-        // For demo purpose, alert the user
-        // alert('Login successful!');
-        // Example: Redirect to home page
-        window.location.href = '/';
+        Cookies.set('isAuthenticated', 'true');
+        navigate('/');
       })
       .catch((err) => {
         console.error("Error:", err.message);
-        setError(err.message); // Set error state for displaying error message
+        setError(err.message);
       });
   };
 
   return (
     <div>
-      <Drawer />
       <CssVarsProvider>
         <main>
           <ModeToggle />
@@ -99,45 +103,49 @@ export default function LoginFinal() {
             }}
             variant="outlined"
           >
-            <form onSubmit={handleSubmit}>
-              <div>
+            {isAuthenticated ? (
+              <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
+                Welcome back!
+              </Typography>
+            ) : (
+              <form onSubmit={handleSubmit}>
                 <Typography level="h4" component="h1">
                   <b>Welcome!</b>
                 </Typography>
                 <Typography level="body-sm">Sign in to continue.</Typography>
-              </div>
-              <FormControl>
-                <FormLabel>Email</FormLabel>
-                <Input
-                  name="email"
-                  type="email"
-                  placeholder="johndoe@email.com"
-                  value={data.email}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  placeholder="password"
-                  value={data.password}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              {error && <Typography color="error">{error}</Typography>}
-              <Button type="submit" sx={{ mt: 1 /* margin top */, backgroundColor: "#f98306" }}>
-                Log in
-              </Button>
-              <Typography
-                endDecorator={<Link href="/signuppage">Sign up</Link>}
-                fontSize="sm"
-                sx={{ alignSelf: 'center' }}
-              >
-                Don&apos;t have an account?
-              </Typography>
-            </form>
+                <FormControl>
+                  <FormLabel>Email</FormLabel>
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="johndoe@email.com"
+                    value={data.email}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Password</FormLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                    value={data.password}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+                {error && <Typography color="error">{error}</Typography>}
+                <Button type="submit" sx={{ mt: 1, backgroundColor: "#f98306" }}>
+                  Log in
+                </Button>
+                <Typography
+                  endDecorator={<Link href="/signuppage">Sign up</Link>}
+                  fontSize="sm"
+                  sx={{ alignSelf: 'center' }}
+                >
+                  Don&apos;t have an account?
+                </Typography>
+              </form>
+            )}
           </Sheet>
         </main>
       </CssVarsProvider>

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import './App.css';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import Coverpage from './pages/Coverpage.jsx';
@@ -20,19 +21,31 @@ import Books from './pages/Books.jsx'
 import Antiques from './pages/Antiques.jsx'
 import ElectricalDevices from './pages/ElectricalDevices.jsx'
 import AddYours from './pages/AddYours.jsx';
+import ResponsiveDrawer from './Components/Drawer.jsx';
+import LoginFinal from './Components/Login.jsx';
+import Cookies from 'js-cookie';
+import { useEffect } from 'react';
+
 
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Get the authentication status from cookies
+    const authStatus = Cookies.get('isAuthenticated') === 'true';
+    setIsAuthenticated(authStatus);
+  }, []);
+
   return (
     <div className="App"> 
-    
     <BrowserRouter>
       <DataProvider>
+      <ResponsiveDrawer isAuthenticated={isAuthenticated} />
         <Routes>
           {/* <Route path='/' element={<Coverpage/>}/> */}
-          <Route path='/' element={<Homepage/>}/>
+          <Route path='/' element={<Homepage isAuthenticated={isAuthenticated}/>}/>
           <Route path='/savepage' element={<Savepage/>}/>
           <Route path='/add' element={<AddYours/>}/>
           <Route path='/houseware' element= {<Houseware/>}/>
@@ -43,13 +56,9 @@ function App() {
           <Route path='/books' element= {<Books/>}/>
           <Route path='/antiques' element= {<Antiques/>}/>
           <Route path='/electricalDevices' element= {<ElectricalDevices/>}/>
+          <Route path="/loginpage" element={<LoginFinal  />} showError={updateErrorMessage}
+          updateTitle={updateTitle}/>
 
-
-          
-          <Route path='/loginpage'
-          showError={updateErrorMessage}
-          updateTitle={updateTitle}
-          element={<Login/>}/>
           <Route path='/'
           exact={true}
           showError={updateErrorMessage} updateTitle={updateTitle} element={<Singup/>}/>

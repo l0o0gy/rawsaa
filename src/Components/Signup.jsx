@@ -10,8 +10,8 @@ import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
 import img from '../assets/img/orang.jpg';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -49,41 +49,36 @@ export default function SignUpFinal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting data:", data);
-  
-    fetch('https://x8ki-letl-twmt.n7.xano.io/api:B8mXd58e/auth/signup_1', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+    console.log('Submitting data:', data);
+
+    axios.post('https://mena.alraed1.com/register', {
+      username:'ali',
+      name:'mustafaEsam',
+      email:"mustafaesam@yahoo.com",
+      password:'mustafa.123123',
+      phoneNumber:"07837009116",
+      role:"user"
     })
       .then((res) => {
-        if (!res.ok) {
-          return res.json().then((err) => { throw new Error(err.message) });
-        }
-        return res.json();
-      })
-      .then((resData) => {
-        console.log("Response data:", resData);
+        console.log('Response data:', res.data);
         // Handle successful sign-up (e.g., redirect, show message, etc.)
       })
       .catch((err) => {
-        console.error("Error:", err.message);
+        console.error('Error:', err.message);
         // Handle errors
       });
   };
-  const LoginPage = useNavigate()
 
-  const goToLoginPage=()=>{
-    LoginPage("/loginpage")
-  }
+  const LoginPage = useNavigate();
 
+  const goToLoginPage = () => {
+    LoginPage('/loginpage');
+  };
 
   return (
     <div>
       <CssVarsProvider>
-        <img src={img} style={{ position: "fixed" }} />
+        <img src={img} style={{ position: 'fixed' }} />
         <main>
           <ModeToggle />
           <CssBaseline />
@@ -149,14 +144,14 @@ export default function SignUpFinal() {
                   onChange={handleChange}
                 />
               </FormControl>
-              <Button type="submit" sx={{ mt: 1, backgroundColor: "#f98306" }}>
+              <Button type="submit" sx={{ mt: 1, backgroundColor: '#f98306' }}>
                 Sign up
               </Button>
               <Typography
                 endDecorator={<Link href="/loginpage">Log in</Link>}
                 fontSize="sm"
                 sx={{ alignSelf: 'center' }}
-                // onClick={() => goToLoginPage()}
+                onClick={goToLoginPage}
               >
                 Don&apos;t have an account?
               </Typography>

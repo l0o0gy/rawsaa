@@ -11,6 +11,7 @@ function Houseware({  }) {
   const navigate = useNavigate();
   const [sectionPosts, setSectionPosts] = useState([]);
 
+  
 
   return (
     <div className='bg-white text-center h-screen'>

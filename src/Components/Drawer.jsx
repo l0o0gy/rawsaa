@@ -59,7 +59,8 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
 
   const handleLogout = () => {
     Cookies.remove('isAuthenticated');
-    navigate('/');
+    Cookies.remove('token');
+    navigate('/loginpage');
   };
 
   const drawer = (

@@ -10,6 +10,8 @@ import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -41,11 +43,6 @@ export default function LoginFinal() {
   const navigate = useNavigate();
   const isAuthenticated = Cookies.get('isAuthenticated') === 'true';
 
-  const handleLogin = () => {
-    Cookies.set('isAuthenticated', 'true');
-    navigate('/');
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -58,22 +55,12 @@ export default function LoginFinal() {
     e.preventDefault();
     console.log("Submitting data:", data);
 
-    fetch('https://x8ki-letl-twmt.n7.xano.io/api:B8mXd58e/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    axios.post('https://mena.alraed1.com/login', {username:'ali'})
       .then((res) => {
-        if (!res.ok) {
-          throw new Error('Invalid email or password');
-        }
-        return res.json();
-      })
-      .then((resData) => {
-        console.log("Response data:", resData);
+        console.log("Response data:", res.data);
         Cookies.set('isAuthenticated', 'true');
+        Cookies.set('token', res.data.token); 
+      
         navigate('/');
       })
       .catch((err) => {
@@ -82,8 +69,20 @@ export default function LoginFinal() {
       });
   };
 
+  // const handleGoogleSuccess = (response) => {
+  //   console.log("Google login success:", response);
+  //   // Here, you would send the token to your backend to validate and create a session
+  //   Cookies.set('isAuthenticated', 'true');
+  //   navigate('/');
+  // };
+
+  // const handleGoogleFailure = (error) => {
+  //   console.error("Google login failure:", error);
+  //   setError("Google login failed");
+  // };
+
   return (
-    <div>
+    <GoogleOAuthProvider clientId="428522722446-tkus8avc6t0d0n47nng1667l49nof2h9.apps.googleusercontent.com">
       <CssVarsProvider>
         <main>
           <ModeToggle />
@@ -137,6 +136,13 @@ export default function LoginFinal() {
                 <Button type="submit" sx={{ mt: 1, backgroundColor: "#f98306" }}>
                   Log in
                 </Button>
+                {/* <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleFailure}
+                  text="signin_with"
+                  width="260"
+                  marginTop="10px"
+                /> */}
                 <Typography
                   endDecorator={<Link href="/signuppage">Sign up</Link>}
                   fontSize="sm"
@@ -149,6 +155,6 @@ export default function LoginFinal() {
           </Sheet>
         </main>
       </CssVarsProvider>
-    </div>
+    </GoogleOAuthProvider>
   );
 }

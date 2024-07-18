@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
+import axios from 'axios';
+
 
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
@@ -22,42 +24,70 @@ const StyledCardMedia = styled(CardMedia)({
 function PostCard({ item }) {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  useEffect(() => {
-    // Logic to determine if the user is authenticated
-    const authStatus = Cookies.get('isAuthenticated') === 'true';
-    setIsAuthenticated(authStatus);
-  }, []);
+  const cookies = Cookies.get('token');
 
-  const handleCardClick = () => {
-    if (!isAuthenticated) {
-      navigate("/Loginpage"); // Redirect to login page if not authenticated
-      return;
+  // useEffect(() => {
+    
+
+  // }, []);
+  const fetchData = async () => {
+    try {
+        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+            headers: {
+                'Content-Type': 'application/json',
+                'theToken': `Bearer ${cookies}`
+            }
+        });
+        // Process data as needed
+        // console.log(data);
+        if (data.user_id) {
+          console.log('mina');
+        }else{
+          navigate('/loginpage');
+        }
+    } catch (error) {
+      console.log('hello');
+      // console.error('Error fetching data:', error);         
+
     }
-
+};
+  const handleCardClick = () => {
+    // if (!isAuthenticated) {
+    //   navigate("/Loginpage"); // Redirect to login page if not authenticated
+    //   return;
+    // }
+    
     switch (item.title) {
       case 'Houseware':
+        fetchData();
         navigate("/houseware");
         break;
       case 'Office Ware':
+        fetchData();
         navigate("/officeware");
         break;
       case 'Electronics':
+        fetchData();
         navigate("/electronics");
         break;
       case 'Furniture':
+        fetchData();
         navigate("/furniture");
         break;
       case 'Car Accessories':
+        fetchData();
         navigate("/carAccessories");
         break;
       case 'Books':
+        fetchData();
         navigate("/books");
         break;
       case 'Antiques':
+        fetchData();
         navigate("/antiques");
         break;
       case 'Electrical Devices':
+        fetchData();
         navigate("/electricalDevices");
         break;
       default:

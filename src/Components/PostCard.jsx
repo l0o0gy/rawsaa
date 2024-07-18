@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -30,20 +30,13 @@ const PostCard = ({ post }) => {
   const [expanded, setExpanded] = useState(false);
   const [showPost, setShowPost] = useState(true);
 
-  useEffect(() => {
-    const showpost = window.localStorage.getItem('MY_POST');
-    if (showpost !== null) {
-      setShowPost(JSON.parse(showpost));
-    }
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("MY_POST", JSON.stringify(showPost));
-  }, [showPost]);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  if (!post) {
+    return null; // or a placeholder like a loading spinner
+  }
 
   return (
     <div>
@@ -60,15 +53,15 @@ const PostCard = ({ post }) => {
                 <MoreVertIcon />
               </IconButton>
             }
-            title={post.itemName}
-            subheader={post.location}
+            title={post.item_name}
+            subheader={post.date}
           />
           {post.photo && (
             <CardMedia
               component="img"
               height="194"
-              image={URL.createObjectURL(post.photo)}
-              alt={post.itemName}
+              // image={URL.createObjectURL(post.photo)}
+              alt={post.item_name}
             />
           )}
           <CardContent>

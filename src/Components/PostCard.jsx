@@ -41,7 +41,7 @@ const PostCard = ({ post }) => {
   return (
     <div>
       {showPost && (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 300, }}>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -60,7 +60,7 @@ const PostCard = ({ post }) => {
             <CardMedia
               component="img"
               height="194"
-              // image={URL.createObjectURL(post.photo)}
+              image={URL.createObjectURL(post.photo)}
               alt={post.item_name}
             />
           )}

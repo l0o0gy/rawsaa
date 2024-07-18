@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AddPost from '../Components/Addpost';
 import Navbar from '../Components/Navbar';
 import Drawer from '../Components/Drawer';
 import PostCard from '../Components/PostCard';
-import AddPost from '../Components/Addpost';
 
 function Electronics() {
   const [posts, setPosts] = useState([]);

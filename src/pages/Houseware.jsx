@@ -1,17 +1,51 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import Drawer from '../Components/Drawer';
 import PostCard from '../Components/PostCard';
-import { PostContext } from '../Components/contacts/store';
-import PropTypes from 'prop-types';
+import AddPost from '../Components/Addpost';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-function Houseware({  }) {
-  const { posts } = useContext(PostContext);
+function Houseware() {
   const navigate = useNavigate();
   const [sectionPosts, setSectionPosts] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const cookies = Cookies.get('token');
 
-  
+
+  useEffect(() => {
+    axios.get(`https://mena.alraed1.com/posts`).then((res) => {
+      setPosts(res.data);
+      console.log(typeof setPosts);
+      console.log(res.data[0]);
+
+    });
+  }, []);
+
+  const fetchData = async () => {
+    try {
+        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+            headers: {
+                'Content-Type': 'application/json',
+                'theToken': `Bearer ${cookies}`
+            }
+        });
+        // Process data as needed
+        // console.log(data);
+        if (data.user_id) {
+          console.log('mina');
+        }else{
+          navigate('/loginpage');
+        }
+    } catch (error) {
+      console.log('hello');
+      // console.error('Error fetching data:', error);         
+
+    }
+};
+fetchData()
 
   return (
     <div className='bg-white text-center h-screen'>
@@ -20,10 +54,11 @@ function Houseware({  }) {
       <div className="text-center sm:ml-64 sm:mt-10">
         <h1 className="bg-amber-400">Houseware</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
-          {sectionPosts.map((post, index) => (
+        {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}
         </div>
+        <AddPost setPosts={setPosts} />
       </div>
     </div>
   );

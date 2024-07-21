@@ -12,14 +12,17 @@ function Furniture() {
   const [posts, setPosts] = useState([]);
   const cookies = Cookies.get('token');
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    axios.get(`https://mena.alraed1.com/posts`).then((res) => {
-      setPosts(res.data);
-      console.log(typeof setPosts);
-      console.log(res.data[0]);
-
-    });
+    axios.get(`https://mena.alraed1.com/posts/0/10`)
+      .then((res) => {
+        setPosts(res.data.result);
+        console.log(typeof setPosts);
+        console.log(res.data[0]);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+      });
   }, []);
 
   

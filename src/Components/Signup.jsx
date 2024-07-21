@@ -51,7 +51,7 @@ export default function SignUpFinal() {
     e.preventDefault();
     console.log('Submitting data:', data);
 
-    axios.post('https://mena.alraed1.com/register', {
+    axios.post('https://mena.alraed1.com/register ', {
       username:'ali',
       name:'mustafaEsam',
       email:"mustafaesam@yahoo.com",

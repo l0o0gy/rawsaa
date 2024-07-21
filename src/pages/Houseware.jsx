@@ -14,38 +14,59 @@ function Houseware() {
   const [posts, setPosts] = useState([]);
   const cookies = Cookies.get('token');
 
+  // useEffect(() => {
+  //   axios.get(`https://mena.alraed1.com/posts`)
+  //     .then((res) => {
+  //       setPosts(res.data);
+  //       console.log(typeof setPosts);
+  //       console.log(res.data[0]);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching posts:', error);
+  //     });
+  // }, []);
+
 
   useEffect(() => {
-    axios.get(`https://mena.alraed1.com/posts`).then((res) => {
-      setPosts(res.data);
-      console.log(typeof setPosts);
-      console.log(res.data[0]);
-
-    });
-  }, []);
-
-  const fetchData = async () => {
-    try {
+    const fetchData = async () => {
+      try {
         const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
-            headers: {
-                'Content-Type': 'application/json',
-                'theToken': `Bearer ${cookies}`
-            }
+          headers: {
+            'Content-Type': 'application/json',
+            'theToken': `Bearer ${cookies}`
+          }
         });
-        // Process data as needed
-        // console.log(data);
-        if (data.user_id) {
-          console.log('mina');
-        }else{
-          navigate('/loginpage');
-        }
-    } catch (error) {
-      console.log('hello');
-      // console.error('Error fetching data:', error);         
+          console.log('User authenticated');
+      } catch (error) {
+        console.error('Error checking role:', error);
+        navigate('/loginpage');
+      }
+    };
+    fetchData();
+  }, [cookies, navigate]);
 
-    }
-};
-fetchData()
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'theToken': `Bearer ${cookies}`
+  //         }
+  //       });
+  //       if (data.user_id) {
+  //         console.log('User authenticated');
+  //       } else {
+  //         navigate('/loginpage');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking role:', error);
+  //       navigate('/loginpage');
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [cookies, navigate]);
 
   return (
     <div className='bg-white text-center h-screen'>
@@ -54,7 +75,7 @@ fetchData()
       <div className="text-center sm:ml-64 sm:mt-10">
         <h1 className="bg-amber-400">Houseware</h1>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
-        {posts.map((post, index) => (
+          {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}
         </div>
@@ -63,9 +84,5 @@ fetchData()
     </div>
   );
 }
-
-// Houseware.propTypes = {
-//   isAuthenticated: PropTypes.func.isRequired,
-// };
 
 export default Houseware;

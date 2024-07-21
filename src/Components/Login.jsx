@@ -55,11 +55,13 @@ export default function LoginFinal() {
     e.preventDefault();
     console.log("Submitting data:", data);
 
-    axios.post('https://mena.alraed1.com/login', {username:'ali'})
+    axios.post('https://mena.alraed1.com/login', {username:'rahman',password:'mustafa.123123'})
       .then((res) => {
         console.log("Response data:", res.data);
         Cookies.set('isAuthenticated', 'true');
         Cookies.set('token', res.data.token); 
+        Cookies.get('token')
+        console.log(Cookies.get('token'));
       
         navigate('/');
       })
@@ -113,15 +115,15 @@ export default function LoginFinal() {
                 </Typography>
                 <Typography level="body-sm">Sign in to continue.</Typography>
                 <FormControl>
-                  <FormLabel>Email</FormLabel>
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="johndoe@email.com"
-                    value={data.email}
-                    onChange={handleChange}
-                  />
-                </FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  name="name"
+                  type="text"
+                  placeholder="name"
+                  value={data.name}
+                  onChange={handleChange}
+                />
+              </FormControl>
                 <FormControl>
                   <FormLabel>Password</FormLabel>
                   <Input

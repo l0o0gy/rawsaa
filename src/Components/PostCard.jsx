@@ -56,14 +56,14 @@ const PostCard = ({ post }) => {
             title={post.item_name}
             subheader={post.date}
           />
-          {post.photo && (
+          {/* {post.photo && ( */}
             <CardMedia
               component="img"
               height="194"
               image={'https://mena.alraed1.com/imgPosts/rawssha.png'}
               alt={post.item_name}
             />
-          )}
+          {/* )} */}
           <CardContent>
             <Typography variant="body2" color="text.secondary">
               {post.description}

@@ -29,7 +29,7 @@ const data = [
   { title: "Electrical Devices" }
 ];
 
-function AddPost({ setPosts}) {
+function AddPost({ setPosts }) {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
@@ -43,14 +43,31 @@ function AddPost({ setPosts}) {
     setSelectedPhoto(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const uploadImg = async () => {
+    if (!selectedPhoto) return null;
+
+    const formData = new FormData();
+    formData.append('post', selectedPhoto);
+
+    try {
+      const { data } = await axios.post('https://mena.alraed1.com/imgPosts', formData);
+      return data.filePath; // Adjust based on the response structure of your API
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const imagePath = await uploadImg();
 
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
-    const day = now.getDate();      
+    const day = now.getDate();
     const month = ('0' + (now.getMonth() + 1)).slice(-2);
     const year = now.getFullYear();
 
@@ -61,7 +78,8 @@ function AddPost({ setPosts}) {
       category: categories.map(category => category.title).join(', '),
       date: `${year}-${month}-${day}`,
       time: `${hours}:${minutes}:${seconds}`,
-      status: 'active'
+      status: 'active',
+      image_path: imagePath
     };
 
     axios.post('https://mena.alraed1.com/posts', newPost)
@@ -81,7 +99,7 @@ function AddPost({ setPosts}) {
   };
 
   const getData = () => {
-    axios.get(`https://mena.alraed1.com/posts`)
+    axios.get('https://mena.alraed1.com/posts/0/10')
       .then((res) => {
         setPosts(res.data); // Update posts state with new data
         console.log(res.data[0]);

@@ -86,7 +86,7 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
         {['Add yours', 'Messages', 'Call us'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
-              onClick={text === 'Add yours' ? goToPage('/add', index) : (text === 'Messages' ? goToPage('/messagepage', index) : undefined)}
+              onClick={text === 'Add yours' ? goToPage('/history', index) : (text === 'Messages' ? goToPage('/messagepage', index) : undefined)}
               sx={{ backgroundColor: activeButton === index + 3 ? 'orange' : 'inherit' }}
             >
               <ListItemIcon>

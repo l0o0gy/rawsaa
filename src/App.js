@@ -20,7 +20,7 @@ import CarAccessories from './pages/CarAccessories.jsx'
 import Books from './pages/Books.jsx'
 import Antiques from './pages/Antiques.jsx'
 import ElectricalDevices from './pages/ElectricalDevices.jsx'
-import AddYours from './pages/AddYours.jsx';
+import PostHistory from './pages/PostHistory.jsx';
 import ResponsiveDrawer from './Components/Drawer.jsx';
 import LoginFinal from './Components/Login.jsx';
 import Cookies from 'js-cookie';
@@ -47,7 +47,7 @@ function App() {
           {/* <Route path='/' element={<Coverpage/>}/> */}
           <Route path='/' element={<Homepage isAuthenticated={isAuthenticated}/>}/>
           <Route path='/savepage' element={<Savepage/>}/>
-          <Route path='/add' element={<AddYours/>}/>
+          <Route path='/history' element={<PostHistory />}/>
           <Route path='/houseware' element= {<Houseware/>}/>
           <Route path='/officeware' element= {<Officeware/>}/>
           <Route path='/electronics' element= {<Electronics/>}/>

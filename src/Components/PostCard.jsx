@@ -60,7 +60,7 @@ const PostCard = ({ post }) => {
             <CardMedia
               component="img"
               height="194"
-              image={URL.createObjectURL(post.photo)}
+              image={'https://mena.alraed1.com/imgPosts/rawssha.png'}
               alt={post.item_name}
             />
           )}

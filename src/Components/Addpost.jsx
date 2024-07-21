@@ -129,7 +129,7 @@ function AddPost({ setPosts }) {
           <div className='text-center p-6 border-2 bg-white mt-10'>
             <form onSubmit={handleSubmit}>
               <input type="file" accept="image/*" onChange={handlePhotoChange} /> <br />
-              {selectedPhoto && <img src={URL.createObjectURL(selectedPhoto)} alt={itemName} className='w-60' />}
+              {selectedPhoto && <img src={'https://mena.alraed1.com/imgPosts/rawssha.png'} alt={itemName} className='w-60' />}
               <TextField
                 id="outlined-basic"
                 label="Name of item"

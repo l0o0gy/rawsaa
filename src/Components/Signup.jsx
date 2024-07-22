@@ -52,12 +52,13 @@ export default function SignUpFinal() {
     console.log('Submitting data:', data);
 
     axios.post('https://mena.alraed1.com/register ', {
-      username:'ali',
-      name:'mustafaEsam',
-      email:"mustafaesam@yahoo.com",
-      password:'mustafa.123123',
-      phoneNumber:"07837009116",
-      role:"user"
+      username:data.name,
+      // name:'mustafaEsam',
+      email:data.email,
+      password:data.password,
+      phoneNumber:data.phone_number,
+      status: 'active',
+      role:"user",
     })
       .then((res) => {
         console.log('Response data:', res.data);

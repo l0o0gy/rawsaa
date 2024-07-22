@@ -67,13 +67,13 @@ const PostCard = ({ post }) => {
             sx={{ marginTop: '-13px' }}
             component="img"
             height="90"
-            image={'https://mena.alraed1.com/imgPosts/rawssha.png'}
+            image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
             alt={post.item_name}
           />
           <CardContent sx={{ marginTop: '-13px' }}>
             <Typography variant="body2" color="text.secondary">
-              {post.item_name}
-              {/* {post.description} */}
+              {/* {post.item_name} */}
+              {post.description}
             </Typography>
           </CardContent>
           <CardActions disableSpacing sx={{ marginTop: '-30px' }}>

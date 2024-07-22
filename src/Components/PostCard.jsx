@@ -9,11 +9,14 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
+import { orange } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,58 +44,84 @@ const PostCard = ({ post }) => {
   return (
     <div>
       {showPost && (
-        <Card sx={{ maxWidth: 300, }}>
+        <Card className='w-full h-60 sm:h-80'>
           <CardHeader
+            sx={{ marginLeft: '-10px', marginTop: '-10px', fontSize: '10px' }}
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              <Avatar 
+                sx={{ bgcolor:orange[300], width: 30, height: 30 }}
+                aria-label="recipe"
+              >
                 R
               </Avatar>
             }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
+               // action={
+            //   <IconButton aria-label="settings">
+            //     <MoreVertIcon />
+            //   </IconButton>
+            // }
             title={post.item_name}
             subheader={post.date}
           />
-          {/* {post.photo && ( */}
-            <CardMedia
-              component="img"
-              height="194"
-              image={'https://mena.alraed1.com/imgPosts/rawssha.png'}
-              alt={post.item_name}
-            />
-          {/* )} */}
-          <CardContent>
+          <CardMedia
+            sx={{ marginTop: '-13px' }}
+            component="img"
+            height="90"
+            image={'https://mena.alraed1.com/imgPosts/rawssha.png'}
+            alt={post.item_name}
+          />
+          <CardContent sx={{ marginTop: '-13px' }}>
             <Typography variant="body2" color="text.secondary">
-              {post.description}
+              {post.item_name}
+              {/* {post.description} */}
             </Typography>
           </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+          <CardActions disableSpacing sx={{ marginTop: '-30px' }}>
+            {/* <IconButton aria-label="add to favorites">
               <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="share">
+            </IconButton> */}
+            {/* <IconButton aria-label="share">
               <ShareIcon />
-            </IconButton>
-            <ExpandMore
+            </IconButton> */}
+            <Box 
+            sx={{ 
+              // '& button': { m: 1 } ,
+             marginTop:'3px'
+             }}>
+               <div >
+              <Button  sx={{bgcolor:orange[500] ,color:'white', width:140,hight:50}}
+              // className='bg-orange-500' 
+              >
+                Read More
+              </Button>
+              </div>
+            </Box>
+            {/* <Button 
+              variant="contained" 
+              sx={{ backgroundColor: 'orange', ml: 1 }}
+              onClick={handleExpandClick}
+            >
+              Read More
+            </Button> */}
+            {/* <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label="show more"
             >
               <ExpandMoreIcon />
-            </ExpandMore>
+            </ExpandMore> */}
           </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
+
+          {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph>Additional Information:</Typography>
               <Typography paragraph>
-                {/* Add any additional information or content here */}
+                Add any additional information or content here
               </Typography>
             </CardContent>
-          </Collapse>
+          </Collapse> */}
+
         </Card>
       )}
     </div>

@@ -55,7 +55,7 @@ export default function LoginFinal() {
     e.preventDefault();
     console.log("Submitting data:", data);
 
-    axios.post('https://mena.alraed1.com/login', {username:'rahman',password:'mustafa.123123'})
+    axios.post('https://mena.alraed1.com/login', {username:data.name ,password:data.password})
       .then((res) => {
         console.log("Response data:", res.data);
         Cookies.set('isAuthenticated', 'true');

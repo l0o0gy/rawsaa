@@ -75,7 +75,7 @@ function Houseware() {
       <Drawer />
       <div className="text-center sm:ml-64 sm:mt-10">
         <h1 >Houseware</h1>
-        <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+        <div className='grid grid-cols-2 ml-2  mt-3 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
           {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}

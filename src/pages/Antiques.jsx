@@ -38,7 +38,7 @@ function Antiques() {
             'theToken': `Bearer ${cookies}`
           }
         });
-          console.log('User authenticated');
+          console.log(data);
       } catch (error) {
         console.error('Error checking role:', error);
         navigate('/loginpage');

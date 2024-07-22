@@ -27,6 +27,8 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import img from '../assets/img/rawsshaa.png';
 import Cookies from 'js-cookie';
+import SearchIcon from '@mui/icons-material/Search';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const drawerWidth = 240;
 
@@ -62,6 +64,10 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
     Cookies.remove('token');
     navigate('/loginpage');
   };
+
+  const handleBackbutton=()=>{
+    navigate(-1);
+  }
 
   const drawer = (
     <div>
@@ -148,6 +154,27 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: 'flex', justifyContent:'center' }}>
+            <input type="text" placeholder="search..." className="w-5/6 mt-1  border h-8 rounded-full p-2 pr-3 " />
+            <IconButton
+            color="black"
+            // aria-label="back"
+            // edge="start"
+            // sx={{ ml: 0, mt: 0 }}
+           > 
+           <SearchIcon />
+          </IconButton>
+          </Box>
+          <IconButton
+            color="black"
+            aria-label="back"
+            edge="start"
+            onClick={handleBackbutton}
+            sx={{ ml: 2, mt: 0 }}
+          >
+            <ArrowForwardIosIcon/>
+          </IconButton>
+          
         </Toolbar>
       </AppBar>
       <Box

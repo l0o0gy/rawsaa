@@ -6,6 +6,8 @@ import Drawer from '../Components/Drawer'
 import PostCard from '../Components/PostCard';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 import { useContext } from 'react';
 import { PostContext } from '../Components/contacts/store';
@@ -46,12 +48,14 @@ function Antiques() {
   }, [cookies, navigate]);
 
   return (
-    <div className='bg-white text-center h-screen'>
-      <Navbar/>
+    <div className=' text-center h-screen bg-slate-50'>
+      {/* <Navbar/> */}
       <Drawer/>
-      <div className=" text-center bg-pink-300 sm:ml-64 sm:mt-10 ">
+      {/* <input type='text' placeholder='search...' className=' w-60 sm:w-80 sm:ml-5 border h-10 mt-5  rounded-md p-2  ' /> */}
+          {/* <button type='submit' className='mt-2 bg-orange-500 hover:bg-orange-600 p-2 rounded-md text-white drop-shadow-md ml-1 sm:w-10 z-0'><SearchIcon/></button> */}
+      <div className=" text-center sm:ml-64 sm:mt-10 ">
         <h1>Antiques</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+        <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
          {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}

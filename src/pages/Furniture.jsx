@@ -45,12 +45,12 @@ function Furniture() {
   }, [cookies, navigate]);
 
   return (
-    <div className='bg-white text-center h-screen'>
+    <div className='bg-slate-50 text-center h-screen'>
       <Navbar/>
       <Drawer/>
-      <div className=" text-center bg-amber-500 sm:ml-64 sm:mt-10 ">
+      <div className=" text-center  sm:ml-64 sm:mt-10 ">
         <h1>Furniture</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+        <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
         {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}

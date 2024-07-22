@@ -14,6 +14,7 @@ function Houseware() {
   const [posts, setPosts] = useState([]);
   const cookies = Cookies.get('token');
 
+  
   useEffect(() => {
     axios.get(`https://mena.alraed1.com/posts/0/10`)
       .then((res) => {
@@ -69,12 +70,12 @@ function Houseware() {
   // }, [cookies, navigate]);
 
   return (
-    <div className='bg-white text-center h-screen'>
+    <div className='bg-slate-50 text-center h-screen'>
       <Navbar />
       <Drawer />
       <div className="text-center sm:ml-64 sm:mt-10">
-        <h1 className="bg-amber-400">Houseware</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+        <h1 >Houseware</h1>
+        <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
           {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}

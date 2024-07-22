@@ -10,6 +10,10 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { v4 as uuidv4 } from 'uuid';
+import Cookies from 'js-cookie';
+
+
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -38,16 +42,25 @@ function AddPost({ setPosts }) {
   const [showBox, setShowBox] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [img_id ,setImgId] = useState('')
+  const cookies = Cookies.get('token');
+
 
   const handlePhotoChange = (e) => {
     setSelectedPhoto(e.target.files[0]);
+
   };
 
-  const uploadImg = async () => {
+  const uploadImg = async (id) => {
     if (!selectedPhoto) return null;
 
+    const renamedFile = new File([selectedPhoto], `${id}.jpg`, {
+      type: selectedPhoto.type,
+      lastModified: selectedPhoto.lastModified,
+    });
+
     const formData = new FormData();
-    formData.append('post', selectedPhoto);
+    formData.append('post', renamedFile);
 
     try {
       const { data } = await axios.post('https://mena.alraed1.com/imgPosts', formData);
@@ -60,8 +73,26 @@ function AddPost({ setPosts }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const getuser_id = 0
 
-    const imagePath = await uploadImg();
+
+    try {
+      const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+        headers: {
+          'Content-Type': 'application/json',
+          'theToken': `Bearer ${cookies}`
+        }
+      });
+        console.log(data);
+        getuser_id = data.user_id
+        console.log(getuser_id)
+    } catch (error) {
+      console.error('Error checking role:', error);
+      // navigate('/loginpage');
+    }
+
+    const id = uuidv4();
+    await uploadImg(id);
 
     const now = new Date();
     const hours = now.getHours();
@@ -71,15 +102,16 @@ function AddPost({ setPosts }) {
     const month = ('0' + (now.getMonth() + 1)).slice(-2);
     const year = now.getFullYear();
 
+
     const newPost = {
-      user_id: '1',
+      user_id:getuser_id,
       item_name: itemName,
       description: description,
       category: categories.map(category => category.title).join(', '),
       date: `${year}-${month}-${day}`,
       time: `${hours}:${minutes}:${seconds}`,
       status: 'active',
-      image_path: imagePath
+      img_id: id
     };
 
     axios.post('https://mena.alraed1.com/posts', newPost)
@@ -96,6 +128,7 @@ function AddPost({ setPosts }) {
         setAlertMessage('Error adding post');
         setAlertOpen(true);
       });
+
   };
 
   const getData = () => {
@@ -117,6 +150,12 @@ function AddPost({ setPosts }) {
     setAlertOpen(false);
   };
 
+  // const generateUniqueId = () => {
+  //   const id = uuidv4();
+  //   console.log(`Generated unique ID: ${id}`);
+  //   return id;
+  // };
+
   return (
     <div>
       <Box sx={{ '& > :not(style)': { m: 1, backgroundColor: 'rgb(219, 110, 31)', color: 'white', position: 'fixed', bottom: 20, right: 20 } }}>
@@ -127,9 +166,13 @@ function AddPost({ setPosts }) {
       {showBox && (
         <Box className="flex justify-center fixed sm:ml-96 z-10">
           <div className='text-center p-6 border-2 bg-white mt-10'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
               <input type="file" accept="image/*" onChange={handlePhotoChange} /> <br />
-              {selectedPhoto && <img src={'https://mena.alraed1.com/imgPosts/rawssha.png'} alt={itemName} className='w-60' />}
+              {selectedPhoto && <img src={`https://mena.alraed1.com/imgPosts/${img_id}.jpg`} 
+              alt={img_id} 
+              onChange={(e) => setImgId(e.target.value)}
+              className='w-60' 
+               />}
               <TextField
                 id="outlined-basic"
                 label="Name of item"
@@ -182,7 +225,7 @@ function AddPost({ setPosts }) {
                   <TextField {...params} label="Checkboxes" placeholder="Categories" />
                 )}
               />
-              <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md w-full"> Add </button>
+              <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md w-full" > Add </button>
             </form>
           </div>
         </Box>

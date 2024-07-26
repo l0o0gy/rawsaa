@@ -12,6 +12,7 @@ import img from '../assets/img/orang.jpg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Alert from '@mui/joy/Alert';
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -38,6 +39,8 @@ function ModeToggle() {
 
 export default function SignUpFinal() {
   const [data, setData] = useState({ name: '', email: '', password: '', phone_number: '' });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,22 +54,26 @@ export default function SignUpFinal() {
     e.preventDefault();
     console.log('Submitting data:', data);
 
-    axios.post('https://mena.alraed1.com/register ', {
-      username:data.name,
-      // name:'mustafaEsam',
-      email:data.email,
-      password:data.password,
-      phoneNumber:data.phone_number,
+    axios.post('https://mena.alraed1.com/register', {
+      username: data.name,
+      email: data.email,
+      password: data.password,
+      phoneNumber: data.phone_number,
       status: 'active',
-      role:"user",
+      role: 'user',
     })
       .then((res) => {
         console.log('Response data:', res.data);
-        // Handle successful sign-up (e.g., redirect, show message, etc.)
+        setSuccessMessage('Sign-up successful! Redirecting to login page...');
+        setErrorMessage('');
+        setTimeout(() => {
+          goToLoginPage();
+        }, 3000); // Redirect after 3 seconds
       })
       .catch((err) => {
         console.error('Error:', err.message);
-        // Handle errors
+        setErrorMessage('Sign-up failed. Please try again.');
+        setSuccessMessage('');
       });
   };
 
@@ -148,6 +155,16 @@ export default function SignUpFinal() {
               <Button type="submit" sx={{ mt: 1, backgroundColor: '#f98306' }}>
                 Sign up
               </Button>
+              {successMessage && (
+                <Alert severity="success" sx={{ mt: 2 }}>
+                  {successMessage}
+                </Alert>
+              )}
+              {errorMessage && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                  {errorMessage}
+                </Alert>
+              )}
               <Typography
                 endDecorator={<Link href="/loginpage">Log in</Link>}
                 fontSize="sm"

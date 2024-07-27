@@ -7,8 +7,6 @@ import Addpost from '../Components/Addpost';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-
-
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'item_name', headerName: 'Item Name', width: 90 },
@@ -20,18 +18,15 @@ const columns = [
   { field: 'delete', headerName: 'Delete', width: 90 },
 ];
 
-// const rows = [
-//   { id: '', itemName: '', description: ' ', category: '', date: '', time: '' },
-// ];
-
 export default function AddYours() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [history, setHistoryState] = useState([]);
+  const [getuser_id, setGetuserId] = useState(0); // State for storing user_id
   const cookies = Cookies.get('token');
 
   useEffect(() => {
-    const fetchData = async () => {
+    // Function to fetch user ID
+    const fetchUserId = async () => {
       try {
         const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
           headers: {
@@ -39,44 +34,52 @@ export default function AddYours() {
             'theToken': `Bearer ${cookies}`
           }
         });
-          console.log('User authenticated');
+        console.log('Fetched user_id:', data.user_id);
+        setGetuserId(data.user_id); // Update state with user_id
       } catch (error) {
         console.error('Error checking role:', error);
-        navigate('/loginpage');
+        // Navigate to login page or handle the error
+        // navigate('/loginpage');
       }
     };
-    fetchData();
-  }, [cookies, navigate]);
+
+    // Fetch user ID and then fetch postsCategory
+    fetchUserId();
+  }, [cookies]);
 
   useEffect(() => {
-    const historyData = () => {
-      fetch(`https://mena.alraed1.com/posts`)
-        .then((res) => res.json())
-        .then((resData) => {
-          console.log(resData);
-          setHistoryState(resData);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    };
-    historyData();
-  }, []);
+    if (getuser_id === 0) return; // Do nothing if user_id is not yet set
 
-  if (isAuthenticated) {
-    return null; // Render nothing or a loader while redirecting
-  }
+    // Fetch postsCategory only if getuser_id is valid
+    axios.get(`https://mena.alraed1.com/userPosts/${getuser_id}/0/20`)
+      .then((res) => {
+        console.log('Fetched posts:', res.data.result);
+        setHistoryState(res.data.result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [getuser_id]);
+
+  const handlePostAdded = () => {
+    if (getuser_id === 0) return; // Do nothing if user_id is not yet set
+
+    // Refresh postsCategory when a new post is added
+    axios.get(`https://mena.alraed1.com/userPosts/${getuser_id}/0/20`)
+      .then((res) => {
+        setHistoryState(res.data.result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <>
-      <Drawer isAuthenticated={isAuthenticated} />
-      <Addpost />
-      <div className=' mt-20 ml-3 mr-3 w-screen sm:ml-64 '
-      //  style={{ marginLeft: 250 ,textAlign:'center'}}
-       >
-        <div style={{ height: 570, 
-          // width: '99%'
-           }}>
+      <Drawer />
+      <Addpost  onPostAdded={handlePostAdded} />
+      <div className=' mt-20 ml-3 mr-3 w-screen sm:ml-64 '>
+        <div style={{ height: 570 }}>
           <DataGrid
             rows={history}
             columns={columns}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
-import AddPost from '../Components/Addpost';
+import Addpost from '../Components/Addpost';
 import Navbar from '../Components/Navbar'
 import Drawer from '../Components/Drawer'
 import PostCard from '../Components/PostCard';
@@ -46,11 +46,24 @@ function Antiques() {
     };
     fetchData();
   }, [cookies, navigate]);
+  const handlePostAdded=()=>{
+    axios.get(`https://mena.alraed1.com/postsCategory/Antiques/0/10`)
+    .then((res) => {
+      setPosts(res.data.result);
+      console.log(typeof setPosts);
+      console.log(res.data[0]);
+    })
+    .catch((error) => {
+      console.error('Error fetching posts:', error);
+    });
+  }
 
   return (
     <div className=' text-center h-screen bg-slate-50'>
       {/* <Navbar/> */}
       <Drawer/>
+      <Addpost  onPostAdded={handlePostAdded} />
+
       {/* <input type='text' placeholder='search...' className=' w-60 sm:w-80 sm:ml-5 border h-10 mt-5  rounded-md p-2  ' /> */}
           {/* <button type='submit' className='mt-2 bg-orange-500 hover:bg-orange-600 p-2 rounded-md text-white drop-shadow-md ml-1 sm:w-10 z-0'><SearchIcon/></button> */}
       <div className=" text-center sm:ml-64 sm:mt-10 ">
@@ -60,7 +73,7 @@ function Antiques() {
             <PostCard key={index} post={post} />
           ))}
         </div>
-        <AddPost setPosts={setPosts} />
+        {/* <AddPost setPosts={setPosts} /> */}
     </div>
     </div>
   )

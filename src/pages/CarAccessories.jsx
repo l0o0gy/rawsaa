@@ -6,6 +6,8 @@ import axios from 'axios';
 import AddPost from '../Components/Addpost';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import Addpost from '../Components/Addpost';
+
 
 
 
@@ -45,9 +47,22 @@ function CarAccessories() {
     fetchData();
   }, [cookies, navigate]);
 
+  const handlePostAdded=()=>{
+    axios.get(`https://mena.alraed1.com/postsCategory/Car Accessories/0/10`)
+    .then((res) => {
+      setPosts(res.data.result);
+      console.log(typeof setPosts);
+      console.log(res.data[0]);
+    })
+    .catch((error) => {
+      console.error('Error fetching posts:', error);
+    });
+  }
+
   return (
     <div className='bg-slate-50 text-center h-screen'>
-      <Navbar/>
+      {/* <Navbar/> */}
+      <Addpost  onPostAdded={handlePostAdded} />
       <Drawer/>
       <div className=" text-center  sm:ml-64 sm:mt-10 ">
         <h1>CarAccessories</h1>

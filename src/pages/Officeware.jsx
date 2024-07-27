@@ -3,7 +3,7 @@ import Drawer from '../Components/Drawer'
 import PostCard from '../Components/PostCard';
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import AddPost from '../Components/Addpost';
+import Addpost from '../Components/Addpost';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,11 +43,25 @@ function Officeware() {
     };
     fetchData();
   }, [cookies, navigate]);
+
+    
+const handlePostAdded=()=>{
+  axios.get(`https://mena.alraed1.com/postsCategory/Houseware/0/10`)
+  .then((res) => {
+    setPosts(res.data.result);
+    console.log(typeof setPosts);
+    console.log(res.data[0]);
+  })
+  .catch((error) => {
+    console.error('Error fetching posts:', error);
+  });
+}
   
   return (
     <div className='bg-slate-50 text-center h-screen'>
       {/* <Navbar/> */}
       <Drawer/>
+      <Addpost  onPostAdded={handlePostAdded} />
       <div className=" text-center  sm:ml-64 sm:mt-10 ">
         <h1>Officeware</h1>
         <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
@@ -55,7 +69,7 @@ function Officeware() {
             <PostCard key={index} post={post} />
           ))}
         </div>
-        <AddPost setPosts={setPosts} />
+        {/* <AddPost setPosts={setPosts} /> */}
     </div>
     </div>
   )

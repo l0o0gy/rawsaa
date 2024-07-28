@@ -44,6 +44,7 @@ export default function SignUpFinal() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [photo,setPhoto] = useState('')
+  
 
 
   const handleChange = (e) => {
@@ -154,10 +155,11 @@ export default function SignUpFinal() {
               <FormControl>
                 <FormLabel>Photo</FormLabel>
                 <input type="file" accept="image/*" 
-                // onChange={handlePhotoChange}
-                onChange={(e) => setPhoto(e.target.value)} />
+                onChange={handlePhotoChange}
+                // onChange={(e) => handlePhotoChange(e.target.value)}
+                 />
                 {/* {photo && <img src={`https://mena.alraed1.com/imgUsers/${img_id}.jpg`} 
-              // alt={img_id} 
+              alt={img_id} 
               
               className='w-60' 
               />} */}

@@ -62,7 +62,6 @@ export default function LoginFinal() {
         Cookies.set('token', res.data.token); 
         Cookies.get('token')
         console.log(Cookies.get('token'));
-      
         navigate('/');
       })
       .catch((err) => {
@@ -82,7 +81,6 @@ export default function LoginFinal() {
   //   console.error("Google login failure:", error);
   //   setError("Google login failed");
   // };
-
   return (
     <GoogleOAuthProvider clientId="428522722446-tkus8avc6t0d0n47nng1667l49nof2h9.apps.googleusercontent.com">
       <CssVarsProvider>
@@ -104,11 +102,6 @@ export default function LoginFinal() {
             }}
             variant="outlined"
           >
-            {isAuthenticated ? (
-              <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
-                Welcome back!
-              </Typography>
-            ) : (
               <form onSubmit={handleSubmit}>
                 <Typography level="h4" component="h1">
                   <b>Welcome!</b>
@@ -153,7 +146,7 @@ export default function LoginFinal() {
                   Don&apos;t have an account?
                 </Typography>
               </form>
-            )}
+            
           </Sheet>
         </main>
       </CssVarsProvider>

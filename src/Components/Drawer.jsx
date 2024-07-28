@@ -29,13 +29,49 @@ import img from '../assets/img/rawsshaa.png';
 import Cookies from 'js-cookie';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import axios from 'axios';
+import {useLocation} from 'react-router-dom';
 
 const drawerWidth = 240;
-
-function ResponsiveDrawer({ window, isAuthenticated = false }) {
+function ResponsiveDrawer({ window }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeButton, setActiveButton] = React.useState(null);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [checkToken, setIsAuthenticated] = React.useState(Cookies.get('token'));
+
+  
+  React.useEffect(() => {
+    const handleCookieChange = async () => {
+      try {
+        const cookies = Cookies.get('token'); // Assuming 'token' is the cookie name
+        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+          headers: {
+            'Content-Type': 'application/json',
+            'theToken': `Bearer ${cookies}`
+          }
+        });
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching authentication status:', error);
+        Cookies.remove('token');
+      }
+    };
+    // Set up a mutation observer to watch for changes in the cookies
+    const observer = new MutationObserver(handleCookieChange);
+    observer.observe(document, {
+      attributes: true,
+      attributeFilter: ['cookie'],
+    });
+  
+    // Initial check
+    handleCookieChange();
+  
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  
+  const location = useLocation();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -60,39 +96,70 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
   };
 
   const handleLogout = () => {
-    Cookies.remove('isAuthenticated');
     Cookies.remove('token');
-    navigate('/loginpage');
+    navigate('/Loginpage');
   };
 
-  const handleBackbutton=()=>{
+  const handleBackbutton = () => {
     navigate(-1);
-  }
-
+  };
   const drawer = (
     <div>
       <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
       <List>
-        {['Home', 'Saved', 'Language'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={text === 'Home' ? goToPage('/', index) : (text === 'Saved' ? goToPage('/savepage', index) : undefined)}
-              sx={{ backgroundColor: activeButton === index ? 'orange' : 'inherit' }}
-            >
-              <ListItemIcon>
-                {index === 0 ? <HomeIcon /> : (index === 1 ? <BookmarkAddedIcon /> : <LanguageIcon />)}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem key="Home" disablePadding>
+          <ListItemButton
+            onClick={goToPage('/')}
+            sx={{
+              backgroundColor: location.pathname === '/' ? 'orange' : 'inherit',
+              '&:hover': {
+                backgroundColor: location.pathname === '/' ? 'orange' : 'lightgray',
+              }
+            }}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Saved" disablePadding>
+          <ListItemButton
+            onClick={goToPage('/savepage')}
+            sx={{ backgroundColor: location.pathname === '/savepage' ? 'orange' : 'inherit',
+              '&:hover': {
+                backgroundColor: location.pathname === '/savepage' ? 'orange' : 'lightgray',
+              }
+             }}
+          >
+            <ListItemIcon>
+              <BookmarkAddedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Saved" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Language" disablePadding>
+          <ListItemButton
+            onClick={goToPage('/languagepage')}
+            sx={{ backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'inherit',
+              '&:hover': {
+                backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'lightgray',
+              }
+             }}
+          >
+            <ListItemIcon>
+              <LanguageIcon />
+            </ListItemIcon>
+            <ListItemText primary="Language" />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
       <List>
-        {['Add yours', 'Messages', 'Call us'].map((text, index) => (
+        {['History', 'Messages', 'Call us'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
-              onClick={text === 'Add yours' ? goToPage('/history', index) : (text === 'Messages' ? goToPage('/messagepage', index) : undefined)}
+              onClick={text === 'History' ? goToPage('/history', index) : (text === 'Messages' ? goToPage('/messagepage', index) : undefined)}
               sx={{ backgroundColor: activeButton === index + 3 ? 'orange' : 'inherit' }}
             >
               <ListItemIcon>
@@ -105,7 +172,7 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
       </List>
       <Divider />
       <List>
-        {isAuthenticated ? (
+        {checkToken ? (
           ['Account', 'Log Out', 'Delete account'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
@@ -138,7 +205,6 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -154,16 +220,16 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', justifyContent:'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <input type="text" placeholder="search..." className="w-5/6 mt-1  border h-8 rounded-full p-2 pr-3 " />
             <IconButton
-            color="black"
+              color="black"
             // aria-label="back"
             // edge="start"
             // sx={{ ml: 0, mt: 0 }}
-           > 
-           <SearchIcon />
-          </IconButton>
+            >
+              <SearchIcon />
+            </IconButton>
           </Box>
           <IconButton
             color="black"
@@ -172,9 +238,9 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
             onClick={handleBackbutton}
             sx={{ ml: 2, mt: 0 }}
           >
-            <ArrowForwardIosIcon/>
+            <ArrowForwardIosIcon />
           </IconButton>
-          
+
         </Toolbar>
       </AppBar>
       <Box
@@ -215,7 +281,6 @@ function ResponsiveDrawer({ window, isAuthenticated = false }) {
 
 ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
-  isAuthenticated: PropTypes.bool,
 };
 
 export default ResponsiveDrawer;

@@ -18,7 +18,7 @@ function Books() {
 
 
   useEffect(() => {
-    axios.get(`https://mena.alraed1.com/posts/0/10`)
+    axios.get(`https://mena.alraed1.com/postsCategory/Books/0/10`)
       .then((res) => {
         setPosts(res.data.result);
         console.log(typeof setPosts);

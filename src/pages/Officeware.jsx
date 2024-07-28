@@ -14,7 +14,7 @@ function Officeware() {
   const cookies = Cookies.get('token');
 
   useEffect(() => {
-    axios.get(`https://mena.alraed1.com/posts/0/10`)
+    axios.get(`https://mena.alraed1.com/postsCategory/Houseware/0/10`)
       .then((res) => {
         setPosts(res.data.result);
         console.log(typeof setPosts);
@@ -44,7 +44,6 @@ function Officeware() {
     fetchData();
   }, [cookies, navigate]);
 
-    
 const handlePostAdded=()=>{
   axios.get(`https://mena.alraed1.com/postsCategory/Houseware/0/10`)
   .then((res) => {

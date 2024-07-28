@@ -15,7 +15,7 @@ function Electronics() {
   const cookies = Cookies.get('token');
   
   useEffect(() => {
-    axios.get(`https://mena.alraed1.com/posts/0/10`)
+    axios.get(`https://mena.alraed1.com/postsCategory/Electronics/0/10`)
       .then((res) => {
         setPosts(res.data.result);
         console.log(typeof setPosts);

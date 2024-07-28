@@ -41,30 +41,34 @@ const PostCard = ({ post }) => {
     return null; // or a placeholder like a loading spinner
   }
 
+
   return (
     <div>
       {showPost && (
-        <Card className='w-full h-60 sm:h-80'>
+        <Card sx={{hight:500}}>
           <CardHeader
             sx={{ marginLeft: '-10px', marginTop: '-10px', fontSize: '10px' }}
             avatar={
-              <Avatar 
-                sx={{ bgcolor:orange[300], width: 30, height: 30 }}
-                aria-label="recipe"
-              >
-                R
-              </Avatar>
+              <img
+               style={{maxWidth:50,objectFit:'cover', borderRadius:100
+               }}
+                // sx={{ bgcolor:orange[300], width: 20}}
+                // aria-label="recipe"
+                // src={`https://ui-avatars.com/api/?name=${post.user_name}&background=ffb74d`}
+                src={`https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg`}
+              />
+              
             }
                // action={
             //   <IconButton aria-label="settings">
             //     <MoreVertIcon />
             //   </IconButton>
             // }
-            title={post.item_name}
+            title={post.user_name}
             subheader={post.date}
           />
           <CardMedia
-            sx={{ marginTop: '-13px' }}
+            sx={{ marginTop: '-13px'}}
             component="img"
             height="90"
             image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
@@ -72,7 +76,7 @@ const PostCard = ({ post }) => {
           />
           <CardContent sx={{ marginTop: '-13px' }}>
             <Typography variant="body2" color="text.secondary">
-              {/* {post.item_name} */}
+              {post.item_name}
               {post.description}
             </Typography>
           </CardContent>

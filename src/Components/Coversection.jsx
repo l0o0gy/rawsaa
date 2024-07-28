@@ -14,7 +14,7 @@ function Coversection() {
             The first Web App  in iraq to changing your old stuff that you don't need anymore with what you need it, faster than you think and without any cost </p>
             <div className='hidden sm:flex'>
             <input type='text' placeholder='search...' className=' w-60 sm:w-80 sm:ml-5 border h-10 mt-5  rounded-md p-2 ' />
-            <button type='submit' className='mt-2 bg-orange-500 hover:bg-orange-600 p-2 rounded-md text-white drop-shadow-md ml-1 sm:w-10 z-0'><SearchIcon/></button>
+            <button type='submit' className='mt-5 bg-orange-500 hover:bg-orange-600 p-2 rounded-md text-white drop-shadow-md ml-1 sm:w-10 sm:h-10 z-0'><SearchIcon/></button>
             </div>
           
         </div>

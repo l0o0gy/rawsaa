@@ -13,6 +13,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Alert from '@mui/joy/Alert';
+import { v4 as uuidv4 } from 'uuid';
+
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -41,6 +43,8 @@ export default function SignUpFinal() {
   const [data, setData] = useState({ name: '', email: '', password: '', phone_number: '' });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [photo,setPhoto] = useState('')
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,17 +54,25 @@ export default function SignUpFinal() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting data:', data);
+
+    let img_id = 0 ;
+    const id = uuidv4();
+    await uploadImg(id);
+
+
+    // console.log('Submitting data:', data);
 
     axios.post('https://mena.alraed1.com/register', {
+
       username: data.name,
       email: data.email,
       password: data.password,
       phoneNumber: data.phone_number,
       status: 'active',
       role: 'user',
+      img_id:id
     })
       .then((res) => {
         console.log('Response data:', res.data);
@@ -75,6 +87,7 @@ export default function SignUpFinal() {
         setErrorMessage('Sign-up failed. Please try again.');
         setSuccessMessage('');
       });
+
   };
 
   const LoginPage = useNavigate();
@@ -83,10 +96,36 @@ export default function SignUpFinal() {
     LoginPage('/loginpage');
   };
 
+  const handlePhotoChange = (e) => {
+    setPhoto(e.target.files[0]);
+  };
+
+
+
+  const uploadImg = async (id) => {
+    if (!photo) return null;
+
+    const renamedFile = new File([photo], `${id}.jpg`, {
+      type: photo.type,
+      lastModified: photo.lastModified,
+    });
+
+    const formData = new FormData();
+    formData.append('user', renamedFile);
+
+    try {
+      const { data } = await axios.post('https://mena.alraed1.com/imgUsers', formData);
+      return data.filePath; // Adjust based on the response structure of your API
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return null;
+    }
+  };
+
   return (
     <div>
       <CssVarsProvider>
-        <img src={img} style={{ position: 'fixed' }} />
+        {/* <img src={img} style={{ position: 'fixed' }} /> */}
         <main>
           <ModeToggle />
           <CssBaseline />
@@ -112,6 +151,26 @@ export default function SignUpFinal() {
                 </Typography>
                 <Typography level="body-sm">Sign up to continue.</Typography>
               </div>
+              <FormControl>
+                <FormLabel>Photo</FormLabel>
+                <input type="file" accept="image/*" 
+                // onChange={handlePhotoChange}
+                onChange={(e) => setPhoto(e.target.value)} />
+                {/* {photo && <img src={`https://mena.alraed1.com/imgUsers/${img_id}.jpg`} 
+              // alt={img_id} 
+              
+              className='w-60' 
+              />} */}
+              </FormControl>
+
+              {/* <FormControl>
+                <FormLabel>Photo</FormLabel>
+                <Input
+                  name="photo"
+                  type="file"
+                  onChange={handlePhotoChange}
+                />
+              </FormControl> */}
               <FormControl>
                 <FormLabel>Name</FormLabel>
                 <Input

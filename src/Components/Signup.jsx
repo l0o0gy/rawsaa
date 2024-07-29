@@ -11,7 +11,10 @@ import Link from '@mui/joy/Link';
 import img from '../assets/img/orang.jpg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
+import IconButton from '@mui/joy/IconButton';
 import Alert from '@mui/joy/Alert';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -44,6 +47,8 @@ export default function SignUpFinal() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [photo,setPhoto] = useState('')
+  const [showPassword, setShowPassword] = useState(false);
+
   
 
 
@@ -121,6 +126,10 @@ export default function SignUpFinal() {
       console.error('Error uploading image:', error);
       return null;
     }
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -201,6 +210,11 @@ export default function SignUpFinal() {
                   placeholder="password"
                   value={data.password}
                   onChange={handleChange}
+                  endDecorator={
+                    <IconButton onClick={handleTogglePasswordVisibility}>
+                      {showPassword ? <Visibility/> : <VisibilityOff  />}
+                    </IconButton>
+                  }
                 />
               </FormControl>
               <FormControl>

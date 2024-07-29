@@ -17,33 +17,32 @@ import HomeIcon from '@mui/icons-material/Home';
 import MessageIcon from '@mui/icons-material/Message';
 import LanguageIcon from '@mui/icons-material/Language';
 import CallIcon from '@mui/icons-material/Call';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import { useNavigate } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import img from '../assets/img/rawsshaa.png';
-import Cookies from 'js-cookie';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useNavigate, useLocation } from 'react-router-dom';
+import img from '../assets/img/rawsshaa.png';
+import Cookies from 'js-cookie';
 import axios from 'axios';
-import {useLocation} from 'react-router-dom';
 
 const drawerWidth = 240;
+
 function ResponsiveDrawer({ window }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeButton, setActiveButton] = React.useState(null);
   const [isClosing, setIsClosing] = React.useState(false);
   const [checkToken, setIsAuthenticated] = React.useState(Cookies.get('token'));
 
-  
   React.useEffect(() => {
     const handleCookieChange = async () => {
       try {
-        const cookies = Cookies.get('token'); // Assuming 'token' is the cookie name
+        const cookies = Cookies.get('token');
         const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
@@ -56,21 +55,20 @@ function ResponsiveDrawer({ window }) {
         Cookies.remove('token');
       }
     };
-    // Set up a mutation observer to watch for changes in the cookies
+
     const observer = new MutationObserver(handleCookieChange);
     observer.observe(document, {
       attributes: true,
       attributeFilter: ['cookie'],
     });
-  
-    // Initial check
+
     handleCookieChange();
-  
+
     return () => {
       observer.disconnect();
     };
   }, []);
-  
+
   const location = useLocation();
 
   const handleDrawerClose = () => {
@@ -103,13 +101,14 @@ function ResponsiveDrawer({ window }) {
   const handleBackbutton = () => {
     navigate(-1);
   };
+
   const drawer = (
     <div>
       <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
       <List>
         <ListItem key="Home" disablePadding>
           <ListItemButton
-            onClick={goToPage('/')}
+            onClick={goToPage('/', 0)}
             sx={{
               backgroundColor: location.pathname === '/' ? 'orange' : 'inherit',
               '&:hover': {
@@ -125,12 +124,13 @@ function ResponsiveDrawer({ window }) {
         </ListItem>
         <ListItem key="Saved" disablePadding>
           <ListItemButton
-            onClick={goToPage('/savepage')}
-            sx={{ backgroundColor: location.pathname === '/savepage' ? 'orange' : 'inherit',
+            onClick={goToPage('/savepage', 1)}
+            sx={{
+              backgroundColor: location.pathname === '/savepage' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/savepage' ? 'orange' : 'lightgray',
               }
-             }}
+            }}
           >
             <ListItemIcon>
               <BookmarkAddedIcon />
@@ -140,12 +140,13 @@ function ResponsiveDrawer({ window }) {
         </ListItem>
         <ListItem key="Language" disablePadding>
           <ListItemButton
-            onClick={goToPage('/languagepage')}
-            sx={{ backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'inherit',
+            onClick={goToPage('/languagepage', 2)}
+            sx={{
+              backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'lightgray',
               }
-             }}
+            }}
           >
             <ListItemIcon>
               <LanguageIcon />
@@ -156,55 +157,150 @@ function ResponsiveDrawer({ window }) {
       </List>
       <Divider />
       <List>
-        {['History', 'Messages', 'Call us'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              onClick={text === 'History' ? goToPage('/history', index) : (text === 'Messages' ? goToPage('/messagepage', index) : undefined)}
-              sx={{ backgroundColor: activeButton === index + 3 ? 'orange' : 'inherit' }}
-            >
-              <ListItemIcon>
-                {index === 0 ? <AddBoxIcon /> : (index === 1 ? <MessageIcon /> : <CallIcon />)}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem key="History" disablePadding>
+          <ListItemButton
+            onClick={goToPage('/history', 3)}
+            sx={{
+              backgroundColor: location.pathname === '/history' ? 'orange' : 'inherit',
+              '&:hover': {
+                backgroundColor: location.pathname === '/history' ? 'orange' : 'lightgray',
+              }
+            }}
+          >
+            <ListItemIcon>
+              <AddBoxIcon />
+            </ListItemIcon>
+            <ListItemText primary="History" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Messages" disablePadding>
+          <ListItemButton
+            onClick={goToPage('/messagepage', 4)}
+            sx={{
+              backgroundColor: location.pathname === '/messagepage' ? 'orange' : 'inherit',
+              '&:hover': {
+                backgroundColor: location.pathname === '/messagepage' ? 'orange' : 'lightgray',
+              }
+            }}
+          >
+            <ListItemIcon>
+              <MessageIcon />
+            </ListItemIcon>
+            <ListItemText primary="Messages" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Call us" disablePadding>
+          <ListItemButton
+            onClick={goToPage('/contact', 5)}
+            sx={{
+              backgroundColor: location.pathname === '/contact' ? 'orange' : 'inherit',
+              '&:hover': {
+                backgroundColor: location.pathname === '/contact' ? 'orange' : 'lightgray',
+              }
+            }}
+          >
+            <ListItemIcon>
+              <CallIcon />
+            </ListItemIcon>
+            <ListItemText primary="Call us" />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
       <List>
         {checkToken ? (
-          ['Account', 'Log Out', 'Delete account'].map((text, index) => (
-            <ListItem key={text} disablePadding>
+          <>
+            <ListItem key="Account" disablePadding>
               <ListItemButton
-                onClick={text === 'Log Out' ? handleLogout : undefined}
-                sx={{ backgroundColor: activeButton === index + 6 ? 'orange' : 'inherit' }}
+                onClick={goToPage('/account', 6)}
+                sx={{
+                  backgroundColor: location.pathname === '/account' ? 'orange' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: location.pathname === '/account' ? 'orange' : 'lightgray',
+                  }
+                }}
               >
                 <ListItemIcon>
-                  {index === 0 ? <AccountCircleIcon /> : (index === 1 ? <LogoutIcon /> : <PersonRemoveIcon />)}
+                  <AccountCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary="Account" />
               </ListItemButton>
             </ListItem>
-          ))
+            <ListItem key="Log Out" disablePadding>
+              <ListItemButton
+                onClick={handleLogout}
+                sx={{
+                  backgroundColor: location.pathname === '/logout' ? 'orange' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: location.pathname === '/logout' ? 'orange' : 'lightgray',
+                  }
+                }}
+              >
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log Out" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem key="Delete account" disablePadding>
+              <ListItemButton
+                onClick={goToPage('/deleteaccount', 7)}
+                sx={{
+                  backgroundColor: location.pathname === '/deleteaccount' ? 'orange' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: location.pathname === '/deleteaccount' ? 'orange' : 'lightgray',
+                  }
+                }}
+              >
+                <ListItemIcon>
+                  <PersonRemoveIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delete account" />
+              </ListItemButton>
+            </ListItem>
+          </>
         ) : (
-          ['Login', 'Sign Up'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton onClick={text === 'Login' ? goToPage('/Loginpage', index + 9) : goToPage('/signuppage', index + 9)}
-                sx={{ backgroundColor: activeButton === index + 9 ? 'orange' : 'inherit' }}
+          <>
+            <ListItem key="Login" disablePadding>
+              <ListItemButton
+                onClick={goToPage('/loginpage', 8)}
+                sx={{
+                  backgroundColor: location.pathname === '/loginpage' ? 'orange' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: location.pathname === '/loginpage' ? 'orange' : 'lightgray',
+                  }
+                }}
               >
                 <ListItemIcon>
-                  {index === 0 ? <LoginIcon /> : <PersonAddIcon />}
+                  <LoginIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary="Login" />
               </ListItemButton>
             </ListItem>
-          ))
+            <ListItem key="Sign Up" disablePadding>
+              <ListItemButton
+                onClick={goToPage('/signuppage', 9)}
+                sx={{
+                  backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'lightgray',
+                  }
+                }}
+              >
+                <ListItemIcon>
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sign Up" />
+              </ListItemButton>
+            </ListItem>
+          </>
         )}
       </List>
     </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -221,13 +317,8 @@ function ResponsiveDrawer({ window }) {
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <input type="text" placeholder="search..." className="w-5/6 mt-1  border h-8 rounded-full p-2 pr-3 " />
-            <IconButton
-              color="black"
-            // aria-label="back"
-            // edge="start"
-            // sx={{ ml: 0, mt: 0 }}
-            >
+            <input type="text" placeholder="search..." className="w-5/6 mt-1 border h-8 rounded-full p-2 pr-3" />
+            <IconButton color="black">
               <SearchIcon />
             </IconButton>
           </Box>
@@ -240,7 +331,6 @@ function ResponsiveDrawer({ window }) {
           >
             <ArrowForwardIosIcon />
           </IconButton>
-
         </Toolbar>
       </AppBar>
       <Box

@@ -25,6 +25,7 @@ import ResponsiveDrawer from './Components/Drawer.jsx';
 import LoginFinal from './Components/Login.jsx';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
+import PostPage from './pages/PostPage.jsx';
 
 
 function App() {
@@ -73,6 +74,8 @@ function App() {
           errorMessage={errorMessage}
           hideError={updateErrorMessage}
           element={<AlertComponent/>}/>
+          <Route path="/posts/:postId" element={<PostPage />} />
+
         </Routes>
         </DataProvider>
       </BrowserRouter>

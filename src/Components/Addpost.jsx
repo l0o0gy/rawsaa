@@ -71,7 +71,8 @@ function AddPost({ setPosts, onPostAdded }) {
     e.preventDefault();
     let getuser_id = 0;
     let getuser_name = " ";
-
+    let getuser_number = 0;
+  
     try {
       const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
         headers: {
@@ -80,18 +81,19 @@ function AddPost({ setPosts, onPostAdded }) {
         }
       });       
       console.log(data);
-
+  
       getuser_id = data.user_id;
       getuser_name = data.usrename ;
-      
-
+      getuser_number =  data.user_number; 
+      console.log(getuser_number);
+  
     } catch (error) {
       console.error('Error checking role:', error);
     }
-
+  
     const id = uuidv4();
     await uploadImg(id);
-
+  
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
@@ -99,10 +101,11 @@ function AddPost({ setPosts, onPostAdded }) {
     const day = now.getDate();
     const month = ('0' + (now.getMonth() + 1)).slice(-2);
     const year = now.getFullYear();
-
+  
     const newPost = {
       user_id: getuser_id,
       user_name : getuser_name,
+      user_number :getuser_number, 
       item_name: itemName,
       description: description,
       category: categories.map(category => category.title).join(', '),
@@ -111,7 +114,8 @@ function AddPost({ setPosts, onPostAdded }) {
       status: 'active',
       img_id: id
     };
-
+    console.log(newPost);
+  
     axios.post('https://mena.alraed1.com/posts', newPost)
       .then((res) => {
         setShowBox(false);
@@ -126,7 +130,7 @@ function AddPost({ setPosts, onPostAdded }) {
         setAlertOpen(true);
       });
   };
-
+  
   const getData = () => {
     axios.get('https://mena.alraed1.com/posts/0/10')
       .then((res) => {

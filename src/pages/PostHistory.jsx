@@ -17,6 +17,16 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Stack from '@mui/material/Stack';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  })
 
 export default function MediaControlCard() {
   const theme = useTheme();
@@ -24,6 +34,7 @@ export default function MediaControlCard() {
   const [history, setHistoryState] = useState([]);
   const [getuser_id, setGetuserId] = useState(0);
   const cookies = Cookies.get('token');
+  
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -70,12 +81,22 @@ export default function MediaControlCard() {
       });
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="mt-20 ml-4 sm:ml-64 sm:mt-5">
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
         {history.map((post) => (
           <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', 
-            gridTemplateColumns: 'auto 1fr' , gap: 2 ,width:{xs:350}}}>
+            gridTemplateColumns: 'auto 1fr' , gap: 2 ,width:{xs:350,sm:"auto"}}}>
             <CardMedia
               component="img"
               sx={{ width: { xs: '100%', sm: 200 }, height:{xs:'100%'}, objectFit: 'cover' }}
@@ -98,9 +119,29 @@ export default function MediaControlCard() {
                 </Typography>
               </CardContent>
               <Stack direction="row" spacing={2} sx={{ mb: 2,ml:2 }}>
-                <Button variant="outlined" startIcon={<DeleteIcon />} color="error" sx={{width:{xs:90}}}>
+                <Button variant="outlined" startIcon={<DeleteIcon />} color="error" sx={{width:{xs:90}}} onClick={handleClickOpen}>
                   Delete
-                </Button>
+                </Button> 
+                <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose}>Agree</Button>
+        </DialogActions>
+      </Dialog>
+ 
                 <Button variant="contained" endIcon={<EditIcon />} sx={{ bgcolor: '#f97806',width:{xs:90} }}>
                   Edit
                 </Button>

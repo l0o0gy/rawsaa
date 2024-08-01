@@ -30,6 +30,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import img from '../assets/img/rawsshaa.png';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Stack from '@mui/material/Stack';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import Button from '@mui/material/Button';
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  })
 
 const drawerWidth = 240;
 
@@ -49,7 +62,8 @@ function ResponsiveDrawer({ window }) {
             'theToken': `Bearer ${cookies}`
           }
         });
-        console.log(data);
+        // console.log(data);
+
       } catch (error) {
         console.error('Error fetching authentication status:', error);
         Cookies.remove('token');
@@ -101,6 +115,17 @@ function ResponsiveDrawer({ window }) {
   const handleBackbutton = () => {
     navigate(-1);
   };
+  
+  
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  }; 
 
   const drawer = (
     <div>
@@ -244,7 +269,7 @@ function ResponsiveDrawer({ window }) {
             </ListItem>
             <ListItem key="Delete account" disablePadding>
               <ListItemButton
-                onClick={goToPage('/deleteaccount', 7)}
+                onClick={handleClickOpen}
                 sx={{
                   backgroundColor: location.pathname === '/deleteaccount' ? 'orange' : 'inherit',
                   '&:hover': {
@@ -255,7 +280,7 @@ function ResponsiveDrawer({ window }) {
                 <ListItemIcon>
                   <PersonRemoveIcon />
                 </ListItemIcon>
-                <ListItemText primary="Delete account" />
+                <ListItemText primary="Delete account"  />
               </ListItemButton>
             </ListItem>
           </>
@@ -365,6 +390,25 @@ function ResponsiveDrawer({ window }) {
           {drawer}
         </Drawer>
       </Box>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose}>Agree</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

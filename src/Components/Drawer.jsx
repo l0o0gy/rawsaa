@@ -397,16 +397,17 @@ function ResponsiveDrawer({ window }) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>{"Are you sure you want to delete your account? "}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+          Once your account is deleted, all your data will be permanently lost, 
+          and you will not be able to recover it or access any of your previous activities.
+          This action cannot be undone, and you will have to create a new account if you wish to use our services again.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleClose}>Delete</Button>
+          <Button onClick={handleClose}>Undo</Button>
         </DialogActions>
       </Dialog>
     </Box>

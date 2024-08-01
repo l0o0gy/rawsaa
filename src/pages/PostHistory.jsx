@@ -1,31 +1,31 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Drawer from '../Components/Drawer';
-import Addpost from '../Components/Addpost';
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'item_name', headerName: 'Item Name', width: 90 },
-  { field: 'description', headerName: 'Description', width: 250 },
-  { field: 'category', headerName: 'Category', width: 130 },
-  { field: 'date', headerName: 'Date', width: 130 },
-  { field: 'time', headerName: 'Time', width: 130 },
-  { field: 'edit', headerName: 'Edit', width: 90 },
-  { field: 'delete', headerName: 'Delete', width: 90 },
-];
-
-export default function AddYours() {
+export default function MediaControlCard() {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [history, setHistoryState] = useState([]);
-  const [getuser_id, setGetuserId] = useState(0); // State for storing user_id
+  const [getuser_id, setGetuserId] = useState(0);
   const cookies = Cookies.get('token');
 
   useEffect(() => {
-    // Function to fetch user ID
     const fetchUserId = async () => {
       try {
         const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
@@ -35,22 +35,19 @@ export default function AddYours() {
           }
         });
         console.log('Fetched user_id:', data.user_id);
-        setGetuserId(data.user_id); // Update state with user_id
+        setGetuserId(data.user_id);
       } catch (error) {
         console.error('Error checking role:', error);
-        // Navigate to login page or handle the error
-        // navigate('/loginpage');
+        navigate('/loginpage');
       }
     };
 
-    // Fetch user ID and then fetch postsCategory
     fetchUserId();
-  }, [cookies]);
+  }, [cookies, navigate]);
 
   useEffect(() => {
-    if (getuser_id === 0) return; // Do nothing if user_id is not yet set
+    if (getuser_id === 0) return;
 
-    // Fetch postsCategory only if getuser_id is valid
     axios.get(`https://mena.alraed1.com/userPosts/${getuser_id}/0/20`)
       .then((res) => {
         console.log('Fetched posts:', res.data.result);
@@ -62,9 +59,8 @@ export default function AddYours() {
   }, [getuser_id]);
 
   const handlePostAdded = () => {
-    if (getuser_id === 0) return; // Do nothing if user_id is not yet set
+    if (getuser_id === 0) return;
 
-    // Refresh postsCategory when a new post is added
     axios.get(`https://mena.alraed1.com/userPosts/${getuser_id}/0/20`)
       .then((res) => {
         setHistoryState(res.data.result);
@@ -75,19 +71,44 @@ export default function AddYours() {
   };
 
   return (
-    <>
-      <Drawer />
-      <Addpost  onPostAdded={handlePostAdded} />
-      <div className=' mt-20 ml-3 mr-3 w-screen sm:ml-64 '>
-        <div style={{ height: 570 }}>
-          <DataGrid
-            rows={history}
-            columns={columns}
-            pageSizeOptions={[5, 10]}
-            checkboxSelection
-          />
-        </div>
-      </div>
-    </>
+    <div className="mt-20 ml-4 sm:ml-64 sm:mt-5">
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+        {history.map((post) => (
+          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', 
+            gridTemplateColumns: 'auto 1fr' , gap: 2 ,width:{xs:350}}}>
+            <CardMedia
+              component="img"
+              sx={{ width: { xs: '100%', sm: 200 }, height:{xs:'100%'}, objectFit: 'cover' }}
+              image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
+              alt={post.item_name}
+            />
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
+                <Typography component="div"  sx={{fontSize:{xs:17 , sm:30}}}>
+                  Name of item: {post.item_name}
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary" component="div">
+                  Description: {post.description}
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary" component="div">
+                  Date of post: {post.date}
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary" component="div">
+                  Time of post: {post.time}
+                </Typography>
+              </CardContent>
+              <Stack direction="row" spacing={2} sx={{ mb: 2,ml:2 }}>
+                <Button variant="outlined" startIcon={<DeleteIcon />} color="error" sx={{width:{xs:90}}}>
+                  Delete
+                </Button>
+                <Button variant="contained" endIcon={<EditIcon />} sx={{ bgcolor: '#f97806',width:{xs:90} }}>
+                  Edit
+                </Button>
+              </Stack>
+            </Box>
+          </Card>
+        ))}
+      </Box>
+    </div>
   );
 }

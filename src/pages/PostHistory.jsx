@@ -129,16 +129,15 @@ export default function MediaControlCard() {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>{" Are you absolutely sure you want to delete this post?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+          Once deleted,the post will be permanently removed and cannot be recovered.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleClose}>Delete</Button>
+          <Button onClick={handleClose}>Undo</Button>
         </DialogActions>
       </Dialog>
  

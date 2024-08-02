@@ -63,7 +63,7 @@ function CarAccessories() {
     <div className='bg-slate-50 text-center h-screen'>
       {/* <Navbar/> */}
       <Addpost  onPostAdded={handlePostAdded} />
-      <Drawer/>
+      {/* <Drawer/> */}
       <div className=" text-center  sm:ml-64 sm:mt-10 ">
         <h1>CarAccessories</h1>
         <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>

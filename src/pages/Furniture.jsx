@@ -60,7 +60,7 @@ const handlePostAdded=()=>{
   return (
     <div className='bg-slate-50 text-center h-screen'>
       <Navbar/>
-      <Drawer/>
+      {/* <Drawer/> */}
       <Addpost  onPostAdded={handlePostAdded} />
 
       <div className=" text-center  sm:ml-64 sm:mt-10 ">

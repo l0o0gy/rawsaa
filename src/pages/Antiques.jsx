@@ -61,7 +61,7 @@ function Antiques() {
   return (
     <div className=' text-center h-screen bg-slate-50'>
       {/* <Navbar/> */}
-      <Drawer/>
+      {/* <Drawer/> */}
       <Addpost  onPostAdded={handlePostAdded} />
 
       {/* <input type='text' placeholder='search...' className=' w-60 sm:w-80 sm:ml-5 border h-10 mt-5  rounded-md p-2  ' /> */}

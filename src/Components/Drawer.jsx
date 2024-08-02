@@ -163,7 +163,7 @@ function ResponsiveDrawer({ window }) {
             <ListItemText primary="Saved" />
           </ListItemButton>
         </ListItem>
-        <ListItem key="Language" disablePadding>
+        {/* <ListItem key="Language" disablePadding>
           <ListItemButton
             onClick={goToPage('/languagepage', 2)}
             sx={{
@@ -178,7 +178,7 @@ function ResponsiveDrawer({ window }) {
             </ListItemIcon>
             <ListItemText primary="Language" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
       <Divider />
       <List>
@@ -214,7 +214,7 @@ function ResponsiveDrawer({ window }) {
             <ListItemText primary="Messages" />
           </ListItemButton>
         </ListItem>
-        <ListItem key="Call us" disablePadding>
+        {/* <ListItem key="Call us" disablePadding>
           <ListItemButton
             onClick={goToPage('/contact', 5)}
             sx={{
@@ -229,7 +229,7 @@ function ResponsiveDrawer({ window }) {
             </ListItemIcon>
             <ListItemText primary="Call us" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
       <Divider />
       <List>
@@ -237,11 +237,11 @@ function ResponsiveDrawer({ window }) {
           <>
             <ListItem key="Account" disablePadding>
               <ListItemButton
-                onClick={goToPage('/account', 6)}
+                onClick={goToPage('/accountpage', 6)}
                 sx={{
-                  backgroundColor: location.pathname === '/account' ? 'orange' : 'inherit',
+                  backgroundColor: location.pathname === '/accountpage' ? 'orange' : 'inherit',
                   '&:hover': {
-                    backgroundColor: location.pathname === '/account' ? 'orange' : 'lightgray',
+                    backgroundColor: location.pathname === '/accountpage' ? 'orange' : 'lightgray',
                   }
                 }}
               >

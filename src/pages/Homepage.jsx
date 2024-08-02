@@ -13,7 +13,7 @@ function Homepage({ isAuthenticated }) {
     <div className='bg-white text-center h-screen'>
       {/* <Navbar /> */}
       <Addpost />
-      <Drawer isAuthenticated={isAuthenticated} />
+      {/* <Drawer isAuthenticated={isAuthenticated} /> */}
       <Coversection />
       <div className="mr-2 grid grid-cols-2 sm:grid-cols-4 sm:ml-64 sm:mt-10">
         {items.map(item => (

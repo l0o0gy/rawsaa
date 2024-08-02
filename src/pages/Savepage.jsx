@@ -29,7 +29,7 @@ function Savepage() {
   return (
     <div className='text-center h-screen'>
       {/* <Navbar /> */}
-      <Drawer isAuthenticated={isAuthenticated} />
+      {/* <Drawer isAuthenticated={isAuthenticated} /> */}
       <div className="text-center bg-red-100 sm:ml-64 sm:mt-10 p-4 flex-row">
         <div style={{display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, width:'100%',height:'100%' }}>
           {savedPosts.length > 0 ? (

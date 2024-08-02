@@ -1,4 +1,3 @@
-// SignUpFinal.js
 import React, { useState } from 'react';
 import { CssVarsProvider } from '@mui/joy/styles';
 import Sheet from '@mui/joy/Sheet';
@@ -161,7 +160,8 @@ export default function  SignUpFinal() {
               onChange={handleChange}
             />
           </FormControl>
-          <Button type="submit" sx={{ mt: 1, backgroundColor: '#f98306' }}>
+          <Button type="submit" sx={{ mt: 1, backgroundColor: '#f98306' , width:'full'
+          }}>
             Sign up
           </Button>
           {successMessage && <Alert severity="success" sx={{ mt: 2 }}>{successMessage}</Alert>}

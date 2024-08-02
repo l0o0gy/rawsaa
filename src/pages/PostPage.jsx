@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
+
 const PostPage = () => {
   const location = useLocation();
   const { post } = location.state || {};
@@ -17,6 +18,7 @@ const PostPage = () => {
   return (
     <div className=' ml-16 sm:ml-64 sm:grid grid-cols-2 sm:border-2 mt-3 w-3/4 overflow-hidden'>
       <div className='max-w-md max-h-min'>
+
         <img 
           className='max-w-full max-h-full'
           src={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`} 

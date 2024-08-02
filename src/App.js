@@ -26,6 +26,7 @@ import LoginFinal from './Components/Login.jsx';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import PostPage from './pages/PostPage.jsx';
+import Account from './pages/Account.jsx';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
           <Route path='/books' element= {<Books/>}/>
           <Route path='/antiques' element= {<Antiques/>}/>
           <Route path='/electricalDevices' element= {<ElectricalDevices/>}/>
+          <Route path="/accountpage" element={<Account/>}/>
           <Route path="/loginpage" element={<LoginFinal  />} showError={updateErrorMessage}
           updateTitle={updateTitle}/>
 

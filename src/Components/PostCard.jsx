@@ -13,6 +13,12 @@ import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+
+import PropTypes from 'prop-types';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Skeleton from '@mui/material/Skeleton';
 
 const PostCard = ({ post }) => {
   const [isBookmarked, setIsBookmarked] = useState(() => {
@@ -37,34 +43,41 @@ const PostCard = ({ post }) => {
       setIsBookmarked(false);
     }
   };
-
   return (
     <div>
       {post && (
-        <Card sx={{ height: '100%' }}>
-          <CardHeader
+        <Card sx={{ height: '100%' }}>            
+          <Stack direction="row" spacing={0} 
             sx={{
-              marginLeft: '-10px',
-              marginTop: '-10px',
+              // marginLeft: '10px',
+              marginTop: '10px',
               fontSize: '10px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-            }}
-            avatar={
-              <img
-                style={{ maxWidth: 50, objectFit: 'cover', borderRadius: 100 }}
-                src={`https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg`}
-                alt="User Avatar"
-              />
-            }
-            title={post.user_name}
-            subheader={post.date}
-            action={
-              <IconButton onClick={handleBookmarkClick}>
-                {isBookmarked ? <BookmarkAddedIcon /> : <BookmarkAddIcon />}
-              </IconButton>
-            }
-          />
+               display: 'flex',
+                justifyContent:'space-between',
+                height:70,
+               }}
+                         >
+            <Avatar
+              src="https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg"
+              alt="User Avatar"
+              sx={{ marginLeft: '10px'}}
+            />
+            <CardHeader
+              sx={{
+                fontSize: '10px',
+                marginTop:'-10px',
+                // display: 'flex',
+                // justifyContent:'space-evenly'
+               }}
+
+              title={post.user_name}
+              subheader={post.date}
+
+           />  
+            <IconButton onClick={handleBookmarkClick}>
+              {isBookmarked ? <BookmarkAddedIcon /> : <BookmarkAddIcon />}
+            </IconButton>
+          </Stack>
           <CardMedia
             sx={{ marginTop: '-13px' }}
             component="img"
@@ -77,17 +90,11 @@ const PostCard = ({ post }) => {
               {post.item_name}
             </Typography>
           </CardContent>
-          <CardActions disableSpacing sx={{ marginTop: '-30px' }}>
             <Link to={`/posts/${post.id}`} state={{ post }} style={{ textDecoration: 'none' }}>
-              <Box sx={{ marginTop: '3px' }}>
-                <Button
-                  sx={{ bgcolor: orange[500], color: 'white', width: 'full'}}
-                >
-                  Read More
-                </Button>
-              </Box>
+              <button  className='mb-2 p-2 bg-orange-500  text-white rounded w-11/12'>
+               Read More
+              </button>
             </Link>
-          </CardActions>
         </Card>
       )}
     </div>

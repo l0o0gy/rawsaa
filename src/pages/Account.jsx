@@ -74,16 +74,17 @@ function Account() {
   };
 
   return (
-    <div className="ml-64 mt-2 text-center align-middle">
-      <Stack direction="row" spacing={2} sx={{ marginBottom: '20px' }}>
+    <div className=" ml-5 mt-14 sm:ml-64 sm:mt-2  ">
+      <Box>
+        <Stack direction="row" spacing={2} sx={{ marginBottom: '20px' }}>
         <Avatar
           src="https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg"
           alt="User Avatar"
-          sx={{ width: 200, height: 200 }}
+          sx={{ width: {xs:100 , sm:200}, height: {xs:100 , sm:200} }}
         />
-        <div className="ml-5">
-          <h1 className="text-3xl ml-10 mt-20 text-slate-800">{data.name}</h1>
-          <p className="text-2xl text-slate-500">{data.user_number}</p>
+        <div className=" sm:ml-5">
+          <h1 className="  text-xl  mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">{data.name}</h1>
+          <p className="  text-lg sm:text-2xl sm:ml-10 text-slate-500">{data.user_number}</p>
         </div>
       </Stack>
       <Divider />
@@ -91,11 +92,12 @@ function Account() {
         component="form"
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns:{xs:'1fr', sm:'repeat(2, 1fr)'},
           gap: 2,
-          mt: 2,
-          mx: 'auto',
-          maxWidth: '600px',
+          mt: {xs:1 ,sm:2},
+          // mx: 'auto',
+          maxWidth: { xs:'350px',sm:'800px'},
+          textAlign:'start'
         }}
         noValidate
         autoComplete="off"
@@ -162,17 +164,36 @@ function Account() {
           />
         </Box>
       </Box>
-      <div className="mt-5">
+      <div className="mt-5 rounded-md	">
         {isEditing ? (
-          <Button variant="contained" color="primary" onClick={handleUpdateClick}>
+          <Button
+           variant="contained"
+          //  color='none'
+           sx={{
+            backgroundColor: 'orange',
+            '&:hover': { backgroundColor: 'orange' },
+            width: {xs:350,sm:800},
+            marginBottom:{xs:2}          
+          }}
+           onClick={handleUpdateClick} >
             Update
           </Button>
         ) : (
-          <Button variant="contained" color="secondary" onClick={handleEditClick}>
+          <Button 
+          variant="contained" 
+          // color='none'
+          sx={{
+            backgroundColor: 'orange',
+            '&:hover': { backgroundColor: 'orange' },
+            width: {xs:350,sm:800},
+            marginBottom:{xs:2}
+          }}          onClick={handleEditClick} >
             Edit
           </Button>
         )}
       </div>
+      </Box>
+      
     </div>
   );
 }

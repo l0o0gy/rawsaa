@@ -29,7 +29,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate, useLocation } from 'react-router-dom';
 import img from '../assets/img/rawsshaa.png';
 import Cookies from 'js-cookie';
-import axios from 'axios'; // Correct import for axios
+import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -37,14 +37,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const drawerWidth = 240;
 
-function ResponsiveDrawer({ window,setResults}) {
+function ResponsiveDrawer({ window, handleSearch }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeButton, setActiveButton] = React.useState(null);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -127,26 +126,18 @@ function ResponsiveDrawer({ window,setResults}) {
   const fetchData = (value) => {
     axios.get(`https://mena.alraed1.com/postSearch/${value}`)
       .then((response) => {
-        console.log(response.data);
-        const results = response.data.filter((data) => {
-          return data; 
-        });
-        
-        setResults(results);
-      })
+        console.log(response.data)
+            })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   };
-  
-  
-  const handleSearch = (value) => {
+
+  const handleInputChange = (value) => {
     setSearchInput(value);
     fetchData(value);
+    handleSearch(value); // Call the parent component's handleSearch prop
   };
-
- 
-
   const drawer = (
     <div>
       <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
@@ -324,13 +315,13 @@ function ResponsiveDrawer({ window,setResults}) {
             </ListItem>
             <ListItem key="Sign Up" disablePadding>
               <ListItemButton
-                onClick={goToPage('/signuppage', 9)}
-                sx={{
-                  backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'inherit',
-                  '&:hover': {
-                    backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'lightgray',
-                  },
-                }}
+                 onClick={goToPage('/signuppage', 9)}
+                 sx={{
+                   backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'inherit',
+                   '&:hover': {
+                     backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'lightgray',
+                   },
+                 }}
               >
                 <ListItemIcon>
                   <PersonAddIcon />
@@ -366,11 +357,10 @@ function ResponsiveDrawer({ window,setResults}) {
               type="text"
               placeholder="search..."
               className="w-5/6 mt-1 border h-8 rounded-full p-2 pr-3 text-black"
-              value={seachinput}
               onInput={(e) => handleSearch(e.target.value)}
             />
             <IconButton color="black" >
-              <SearchIcon />
+            <SearchIcon />
             </IconButton>
           </Box>
           <IconButton
@@ -411,7 +401,6 @@ function ResponsiveDrawer({ window,setResults}) {
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop: 0, width: drawerWidth },
           }}
-          open
         >
           {drawer}
         </Drawer>
@@ -423,10 +412,15 @@ function ResponsiveDrawer({ window,setResults}) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Are you sure you want to delete your account? "}</DialogTitle>
+        <DialogTitle>
+          {"Are you sure you want to delete your account? "}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Once your account is deleted, all your data will be permanently lost, and you will not be able to recover it or access any of your previous activities. This action cannot be undone, and you will have to create a new account if you wish to use our services again.
+            Once your account is deleted, all your data will be permanently
+            lost, and you will not be able to recover it or access any of your
+            previous activities. This action cannot be undone, and you will have
+            to create a new account if you wish to use our services again.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -438,8 +432,10 @@ function ResponsiveDrawer({ window,setResults}) {
   );
 }
 
+
 ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
+  handleSearch: PropTypes.func.isRequired,
 };
 
 export default ResponsiveDrawer;

@@ -18,7 +18,7 @@ function Account() {
   const [formData, setFormData] = useState({});
   const [getuser_id, setGetuser_Id] = useState(0);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const cookies = Cookies.get('token');
+  const cookies = Cookies.get('token'); 
 
   useEffect(() => {
     const fetchUserData = async () => {

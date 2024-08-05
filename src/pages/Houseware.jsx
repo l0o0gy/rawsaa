@@ -6,10 +6,12 @@ import PostCard from '../Components/PostCard';
 import Addpost from '../Components/Addpost';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import ResultList from '../Components/ResultList'
 
 function Houseware() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [results,setResults] = useState([])
   const cookies = Cookies.get('token');
 
   
@@ -55,41 +57,21 @@ const handlePostAdded=()=>{
     console.error('Error fetching posts:', error);
   });
 }
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'theToken': Bearer ${cookies}
-  //         }
-  //       });
-  //       if (data.user_id) {
-  //         console.log('User authenticated');
-  //       } else {
-  //         navigate('/loginpage');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error checking role:', error);
-  //       navigate('/loginpage');
-  //     }
-  //   };
 
-  //   fetchData();
-  // }, [cookies, navigate]);
 
   return (
     <div className='bg-slate-50 text-center h-screen'>
       <Navbar />
-      <Drawer />
+      <Drawer setResults={setResults} />
+      <ResultList results={results}/>
       <Addpost  onPostAdded={handlePostAdded} />
 
       <div className="text-center sm:ml-64 sm:mt-10">
         <h1 >Houseware</h1>
         <div className='grid grid-cols-2 ml-2  mt-3 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
-          {posts.map((post, index) => (
+          {posts.map((post, index ) => (
             <PostCard key={index} post={post} />
-          ))}
+          ))} 
         </div>
         {/* <AddPost setPosts={setPosts} /> */}
       </div>

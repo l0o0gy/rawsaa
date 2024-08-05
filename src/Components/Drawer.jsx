@@ -44,7 +44,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const drawerWidth = 240;
 
-function ResponsiveDrawer({ window }) {
+function ResponsiveDrawer({ window,setResults}) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [activeButton, setActiveButton] = React.useState(null);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -128,11 +128,17 @@ function ResponsiveDrawer({ window }) {
     axios.get(`https://mena.alraed1.com/postSearch/${value}`)
       .then((response) => {
         console.log(response.data);
+        const results = response.data.filter((data) => {
+          return data; 
+        });
+        
+        setResults(results);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   };
+  
   
   const handleSearch = (value) => {
     setSearchInput(value);

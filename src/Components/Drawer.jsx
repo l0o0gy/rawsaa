@@ -29,8 +29,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useNavigate, useLocation } from 'react-router-dom';
 import img from '../assets/img/rawsshaa.png';
 import Cookies from 'js-cookie';
-import axios from 'axios';
-import Stack from '@mui/material/Stack';
+import axios from 'axios'; // Correct import for axios
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -39,10 +38,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  })
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const drawerWidth = 240;
 
@@ -51,6 +49,7 @@ function ResponsiveDrawer({ window }) {
   const [activeButton, setActiveButton] = React.useState(null);
   const [isClosing, setIsClosing] = React.useState(false);
   const [checkToken, setIsAuthenticated] = React.useState(Cookies.get('token'));
+  const [seachinput, setSearchInput] = React.useState('');
 
   React.useEffect(() => {
     const handleCookieChange = async () => {
@@ -59,11 +58,10 @@ function ResponsiveDrawer({ window }) {
         const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
-            'theToken': `Bearer ${cookies}`
-          }
+            'theToken': `Bearer ${cookies}`,
+          },
         });
         // console.log(data);
-
       } catch (error) {
         console.error('Error fetching authentication status:', error);
         Cookies.remove('token');
@@ -112,11 +110,10 @@ function ResponsiveDrawer({ window }) {
     navigate('/Loginpage');
   };
 
-  const handleBackbutton = () => {
+  const handleBackButton = () => {
     navigate(-1);
   };
-  
-  
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -125,7 +122,24 @@ function ResponsiveDrawer({ window }) {
 
   const handleClose = () => {
     setOpen(false);
-  }; 
+  };
+
+  const fetchData = (value) => {
+    axios.get(`https://mena.alraed1.com/postSearch/${value}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+  
+  const handleSearch = (value) => {
+    setSearchInput(value);
+    fetchData(value);
+  };
+
+ 
 
   const drawer = (
     <div>
@@ -138,7 +152,7 @@ function ResponsiveDrawer({ window }) {
               backgroundColor: location.pathname === '/' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/' ? 'orange' : 'lightgray',
-              }
+              },
             }}
           >
             <ListItemIcon>
@@ -154,7 +168,7 @@ function ResponsiveDrawer({ window }) {
               backgroundColor: location.pathname === '/savepage' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/savepage' ? 'orange' : 'lightgray',
-              }
+              },
             }}
           >
             <ListItemIcon>
@@ -170,7 +184,7 @@ function ResponsiveDrawer({ window }) {
               backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/languagepage' ? 'orange' : 'lightgray',
-              }
+              },
             }}
           >
             <ListItemIcon>
@@ -189,7 +203,7 @@ function ResponsiveDrawer({ window }) {
               backgroundColor: location.pathname === '/history' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/history' ? 'orange' : 'lightgray',
-              }
+              },
             }}
           >
             <ListItemIcon>
@@ -205,7 +219,7 @@ function ResponsiveDrawer({ window }) {
               backgroundColor: location.pathname === '/messagepage' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/messagepage' ? 'orange' : 'lightgray',
-              }
+              },
             }}
           >
             <ListItemIcon>
@@ -221,7 +235,7 @@ function ResponsiveDrawer({ window }) {
               backgroundColor: location.pathname === '/contact' ? 'orange' : 'inherit',
               '&:hover': {
                 backgroundColor: location.pathname === '/contact' ? 'orange' : 'lightgray',
-              }
+              },
             }}
           >
             <ListItemIcon>
@@ -242,7 +256,7 @@ function ResponsiveDrawer({ window }) {
                   backgroundColor: location.pathname === '/accountpage' ? 'orange' : 'inherit',
                   '&:hover': {
                     backgroundColor: location.pathname === '/accountpage' ? 'orange' : 'lightgray',
-                  }
+                  },
                 }}
               >
                 <ListItemIcon>
@@ -258,7 +272,7 @@ function ResponsiveDrawer({ window }) {
                   backgroundColor: location.pathname === '/logout' ? 'orange' : 'inherit',
                   '&:hover': {
                     backgroundColor: location.pathname === '/logout' ? 'orange' : 'lightgray',
-                  }
+                  },
                 }}
               >
                 <ListItemIcon>
@@ -274,13 +288,13 @@ function ResponsiveDrawer({ window }) {
                   backgroundColor: location.pathname === '/deleteaccount' ? 'orange' : 'inherit',
                   '&:hover': {
                     backgroundColor: location.pathname === '/deleteaccount' ? 'orange' : 'lightgray',
-                  }
+                  },
                 }}
               >
                 <ListItemIcon>
                   <PersonRemoveIcon />
                 </ListItemIcon>
-                <ListItemText primary="Delete account"  />
+                <ListItemText primary="Delete account" />
               </ListItemButton>
             </ListItem>
           </>
@@ -293,7 +307,7 @@ function ResponsiveDrawer({ window }) {
                   backgroundColor: location.pathname === '/loginpage' ? 'orange' : 'inherit',
                   '&:hover': {
                     backgroundColor: location.pathname === '/loginpage' ? 'orange' : 'lightgray',
-                  }
+                  },
                 }}
               >
                 <ListItemIcon>
@@ -309,7 +323,7 @@ function ResponsiveDrawer({ window }) {
                   backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'inherit',
                   '&:hover': {
                     backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'lightgray',
-                  }
+                  },
                 }}
               >
                 <ListItemIcon>
@@ -342,8 +356,14 @@ function ResponsiveDrawer({ window }) {
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <input type="text" placeholder="search..." className="w-5/6 mt-1 border h-8 rounded-full p-2 pr-3" />
-            <IconButton color="black">
+            <input
+              type="text"
+              placeholder="search..."
+              className="w-5/6 mt-1 border h-8 rounded-full p-2 pr-3 text-black"
+              value={seachinput}
+              onInput={(e) => handleSearch(e.target.value)}
+            />
+            <IconButton color="black" >
               <SearchIcon />
             </IconButton>
           </Box>
@@ -351,7 +371,7 @@ function ResponsiveDrawer({ window }) {
             color="black"
             aria-label="back"
             edge="start"
-            onClick={handleBackbutton}
+            onClick={handleBackButton}
             sx={{ ml: 2, mt: 0 }}
           >
             <ArrowForwardIosIcon />
@@ -400,9 +420,7 @@ function ResponsiveDrawer({ window }) {
         <DialogTitle>{"Are you sure you want to delete your account? "}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-          Once your account is deleted, all your data will be permanently lost, 
-          and you will not be able to recover it or access any of your previous activities.
-          This action cannot be undone, and you will have to create a new account if you wish to use our services again.
+            Once your account is deleted, all your data will be permanently lost, and you will not be able to recover it or access any of your previous activities. This action cannot be undone, and you will have to create a new account if you wish to use our services again.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

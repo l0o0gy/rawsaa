@@ -6,9 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -25,16 +22,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  })
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function MediaControlCard() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [history, setHistoryState] = useState([]);
   const [getuser_id, setGetuserId] = useState(0);
+  const [deleteId, setDeleteId] = useState(null); 
+  const [open, setOpen] = useState(false);
   const cookies = Cookies.get('token');
-  
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -81,31 +79,41 @@ export default function MediaControlCard() {
       });
   };
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
+    setDeleteId(id); 
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setDeleteId(null); 
+  };
+
+  const deletePost = async () => {
+    if (!deleteId) return; 
+    try {
+      await axios.delete(`https://mena.alraed1.com/deletePosts/${deleteId}`);
+      handlePostAdded();
+      handleClose();
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
   };
 
   return (
-    <div className="mt-20 ml-4 sm:ml-64 sm:mt-5">
+    <div className="mt-20 ml-4 sm:ml-64 sm:mt-20">
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
         {history.map((post) => (
-          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', 
-            gridTemplateColumns: 'auto 1fr' , gap: 2 ,width:{xs:350,sm:"auto"}}}>
+          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 350, sm: "auto" } }}>
             <CardMedia
               component="img"
-              sx={{ width: { xs: '100%', sm: 200 }, height:{xs:'100%'}, objectFit: 'cover' }}
+              sx={{ width: { xs: '100%', sm: 200 }, height: { xs: '100%' }, objectFit: 'cover' }}
               image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
               alt={post.item_name}
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
-                <Typography component="div"  sx={{fontSize:{xs:17 , sm:30}}}>
+                <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
                   Name of item: {post.item_name}
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary" component="div">
@@ -118,11 +126,26 @@ export default function MediaControlCard() {
                   Time of post: {post.time}
                 </Typography>
               </CardContent>
-              <Stack direction="row" spacing={2} sx={{ mb: 2,ml:2 }}>
-                <Button variant="outlined" startIcon={<DeleteIcon />} color="error" sx={{width:{xs:90}}} onClick={handleClickOpen}>
+              <Stack direction="row" spacing={2} sx={{ mb: 2, ml: 2 }}>
+                <Button
+                  variant="outlined"
+                  startIcon={<DeleteIcon />}
+                  color="error"
+                  sx={{ width: { xs: 90 } }}
+                  onClick={() => handleClickOpen(post.id)}
+                >
                   Delete
-                </Button> 
-                <Dialog
+                </Button>
+                <Button variant="contained" endIcon={<EditIcon />} sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
+                  Edit
+                </Button>
+              </Stack>
+            </Box>
+          </Card>
+        ))}
+      </Box>
+
+      <Dialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -132,23 +155,14 @@ export default function MediaControlCard() {
         <DialogTitle>{" Are you absolutely sure you want to delete this post?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-          Once deleted,the post will be permanently removed and cannot be recovered.
+            Once deleted, the post will be permanently removed and cannot be recovered.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Delete</Button>
-          <Button onClick={handleClose}>Undo</Button>
+          <Button onClick={deletePost}>Delete</Button>
+          <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
- 
-                <Button variant="contained" endIcon={<EditIcon />} sx={{ bgcolor: '#f97806',width:{xs:90} }}>
-                  Edit
-                </Button>
-              </Stack>
-            </Box>
-          </Card>
-        ))}
-      </Box>
     </div>
   );
 }

@@ -29,11 +29,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const StyledCardMedia = styled(CardMedia)({
-  height: 400,
+const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   width: '100%',
-  objectFit: 'cover'
-});
+  objectFit: 'cover',
+  height: 200, 
+  [theme.breakpoints.up('sm')]: {
+    height: 400, 
+  },
+}));
 
 const PostCard = ({ post }) => {
   const [isBookmarked, setIsBookmarked] = useState(() => {
@@ -66,7 +69,7 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: {sm:345} }}>
       <CardHeader
         avatar={
           <Avatar src="https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg" alt="User Avatar" />

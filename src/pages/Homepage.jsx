@@ -26,12 +26,12 @@ function Homepage({ isAuthenticated }) {
   };
 
   return (
-    <div className='bg-white text-center h-screen'>
+    <div className=' text-center h-screen  bg-white'>
       <ResponsiveDrawer handleSearch={handleSearch} />
       {searchTerm === '' ? (
         <>
           <Addpost />
-          <Coversection />
+          <Coversection  />
           <div className="mr-2 grid grid-cols-2 sm:grid-cols-4 sm:ml-64 sm:mt-10">
             {items.map(item => (
               <Card key={item.id} item={item} isAuthenticated={isAuthenticated} />

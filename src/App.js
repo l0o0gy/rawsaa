@@ -41,7 +41,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App"> 
+    <div className="bg-gray-100"> 
     <BrowserRouter>
       <DataProvider>
       <ResponsiveDrawer isAuthenticated={isAuthenticated} />

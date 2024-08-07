@@ -59,7 +59,7 @@ function Antiques() {
   }
 
   return (
-    <div className=' text-center h-screen bg-slate-50'>
+    <div className=' text-center h-screen '>
       {/* <Navbar/> */}
       {/* <Drawer/> */}
       <Addpost  onPostAdded={handlePostAdded} />

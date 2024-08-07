@@ -60,7 +60,7 @@ const handlePostAdded=()=>{
 
 
   return (
-    <div className='bg-slate-50 text-center h-screen'>
+    <div className=' text-center h-screen'>
       <Navbar />
       <Drawer setResults={setResults} />
       <ResultList results={results}/>

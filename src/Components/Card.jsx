@@ -96,7 +96,7 @@ function PostCard({ item }) {
   };
 
   return (
-    <StyledCard>
+    <StyledCard style={{backgroundColor:'white'}}>
       <CardActionArea onClick={handleCardClick}>
         <StyledCardMedia
           component="img"

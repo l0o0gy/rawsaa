@@ -27,11 +27,13 @@ function Savepage() {
   }
 
   return (
-    <div className='text-center h-screen'>
-      {/* <Navbar /> */}
-      {/* <Drawer isAuthenticated={isAuthenticated} /> */}
-      <div className="text-center bg-red-100 sm:ml-64 sm:mt-10 p-4 flex-row">
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, width:'100%',height:'100%' }}>
+    <div className=' text-center '>
+      <div className="text-center  sm:ml-64 sm:mt-10 p-4 ">
+        <div  className='  grid-cols-2 grid sm:grid-cols-3 gap-4 w-full'
+        // style={{ 
+        //   display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 4, width: '100%' 
+        //   }}
+          >
           {savedPosts.length > 0 ? (
             savedPosts.map(post => <PostCard key={post.id} post={post} />)
           ) : (

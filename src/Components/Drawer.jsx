@@ -136,7 +136,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const handleInputChange = (value) => {
     setSearchInput(value);
     fetchData(value);
-    handleSearch(value); // Call the parent component's handleSearch prop
+    handleSearch(value); 
   };
   const drawer = (
     <div>
@@ -338,8 +338,8 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+    <Box sx={{ display: 'flex'}}>
+      <CssBaseline  />
       <AppBar position="fixed" sx={{ display: { sm: 'none' }, backgroundColor: 'white', boxShadow: 'none' }}>
         <Toolbar>
           <IconButton

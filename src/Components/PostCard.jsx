@@ -18,16 +18,6 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import { Link } from 'react-router-dom';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   width: '100%',
@@ -44,7 +34,6 @@ const PostCard = ({ post }) => {
     return savedPosts.some(savedPost => savedPost.id === post.id);
   });
 
-  const [expanded, setExpanded] = useState(false);
 
   if (!post) {
     return null;
@@ -64,9 +53,6 @@ const PostCard = ({ post }) => {
     }
   };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <Card sx={{ maxWidth: {sm:345} }}>

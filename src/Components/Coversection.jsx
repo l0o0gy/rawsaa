@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 function Coversection() {
   return (
-    <div className=' mb-3 sm:mb-0 sm:ml-0 '>
+    <div className=' mb-3 sm:mb-0 sm:ml-0 bg-gray-100'>
       <div className=' grid grid-cols-2'>
         <div className='  w-80 text-start pl-4 sm:ml-60 sm:w-3/4 '>
           <h1 className='mt-20 text-xl font-bold ml-0 sm:text-4xl sm:ml-5  ' >

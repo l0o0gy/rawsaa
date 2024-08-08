@@ -66,15 +66,13 @@ function Antiques() {
 
       {/* <input type='text' placeholder='search...' className=' w-60 sm:w-80 sm:ml-5 border h-10 mt-5  rounded-md p-2  ' /> */}
           {/* <button type='submit' className='mt-2 bg-orange-500 hover:bg-orange-600 p-2 rounded-md text-white drop-shadow-md ml-1 sm:w-10 z-0'><SearchIcon/></button> */}
-      <div className=" text-center sm:ml-64 sm:mt-10 ">
-        <h1>Antiques</h1>
-        <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
-         {posts.map((post, index) => (
+      <div className="text-center sm:ml-60 ">
+        <div className='grid grid-cols-2 ml-1  mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 sm:gap-4 gap-3  p-1 sm:mb-5'>
+          {posts.map((post, index ) => (
             <PostCard key={index} post={post} />
-          ))}
+          ))} 
         </div>
-        {/* <AddPost setPosts={setPosts} /> */}
-    </div>
+      </div>
     </div>
   )
 }

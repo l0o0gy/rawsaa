@@ -109,7 +109,7 @@ function Account() {
             <FormLabel>First Name</FormLabel>
             <TextField
               name="name"
-              value={formData.name || ''}
+              value={formData.first_name || ''}
               onChange={handleChange}
               disabled={!isEditing}
               fullWidth
@@ -119,7 +119,7 @@ function Account() {
             <FormLabel>Last Name</FormLabel>
             <TextField
               name="lastName"
-              value={formData.lastName || ''}
+              value={formData.last_name || ''}
               onChange={handleChange}
               disabled={!isEditing}
               fullWidth
@@ -139,7 +139,7 @@ function Account() {
             <FormLabel>Location</FormLabel>
             <TextField
               name="location"
-              value={formData.location || ''}
+              value={formData.user_location || ''}
               onChange={handleChange}
               disabled={!isEditing}
               fullWidth

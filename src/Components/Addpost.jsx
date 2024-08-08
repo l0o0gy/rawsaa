@@ -60,7 +60,7 @@ function AddPost({ setPosts, onPostAdded }) {
 
     try {
       const { data } = await axios.post('https://mena.alraed1.com/imgPosts', formData);
-      return data.filePath; // Adjust based on the response structure of your API
+      return data.filePath;
     } catch (error) {
       console.error('Error uploading image:', error);
       return null;
@@ -121,8 +121,8 @@ function AddPost({ setPosts, onPostAdded }) {
         setShowBox(false);
         setAlertMessage('Post successfully added');
         setAlertOpen(true);
-        getData(); // Update posts after successful addition
-        onPostAdded(); // Notify parent to refresh posts
+        getData(); 
+        onPostAdded(); 
       })
       .catch((err) => {
         setShowBox(false);
@@ -134,7 +134,7 @@ function AddPost({ setPosts, onPostAdded }) {
   const getData = () => {
     axios.get('https://mena.alraed1.com/posts/0/10')
       .then((res) => {
-        setPosts(res.data); // Update posts state with new data
+        setPosts(res.data); 
       })
       .catch((err) => {
         console.log(err);

@@ -20,6 +20,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -30,8 +37,10 @@ export default function MediaControlCard() {
   const navigate = useNavigate();
   const [history, setHistoryState] = useState([]);
   const [getuser_id, setGetuserId] = useState(0);
-  const [deleteId, setDeleteId] = useState(null); 
+  const [deleteId, setDeleteId] = useState(null);
   const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [editPost, setEditPost] = useState(null);
   const cookies = Cookies.get('token');
 
   useEffect(() => {
@@ -80,17 +89,24 @@ export default function MediaControlCard() {
   };
 
   const handleClickOpen = (id) => {
-    setDeleteId(id); 
+    setDeleteId(id);
     setOpen(true);
+  };
+
+  const handleClickOpenEdit = (post) => {
+    setEditPost(post);
+    setEdit(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setDeleteId(null); 
+    setEdit(false);
+    setDeleteId(null);
+    setEditPost(null);
   };
 
   const deletePost = async () => {
-    if (!deleteId) return; 
+    if (!deleteId) return;
     try {
       await axios.delete(`https://mena.alraed1.com/deletePosts/${deleteId}`);
       handlePostAdded();
@@ -102,9 +118,9 @@ export default function MediaControlCard() {
 
   return (
     <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr',sm: 'repeat(1, 1fr)',lg:'repeat(2, 1fr)' }, gap: 1 ,marginLeft:{xs:0,sm:1} ,marginRight:{xs:0,sm:1}}}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: 1, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 1 } }}>
         {history.map((post) => (
-          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" },padding:1 ,border:'1px solid gray',borderRadius:"2px" }}>
+          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
             <CardMedia
               component="img"
               sx={{ width: { xs: '100%', sm: 200 }, height: { xs: '100%' }, objectFit: 'cover' }}
@@ -136,7 +152,11 @@ export default function MediaControlCard() {
                 >
                   Delete
                 </Button>
-                <Button variant="contained" endIcon={<EditIcon />} sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
+                <Button
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  onClick={() => handleClickOpenEdit(post)}
+                  sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
                   Edit
                 </Button>
               </Stack>
@@ -146,13 +166,91 @@ export default function MediaControlCard() {
       </Box>
 
       <Dialog
+        fullScreen
+        open={edit}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: 'relative' }}>
+          <Toolbar style={{ backgroundColor: 'orange' }}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Edit your Post
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              Save
+            </Button>
+          </Toolbar>
+        </AppBar>
+        {editPost && (
+          <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+            <CardMedia
+              component="img"
+              sx={{ width: { xs: '100%', sm: 300 }, height: { xs: '100%' }, objectFit: 'cover' }}
+              image={`https://mena.alraed1.com/imgPosts/${editPost.img_id}.jpg`}
+              alt={editPost.item_name}
+              action={
+                <Button
+                variant="contained"
+                endIcon={<EditIcon />}
+                sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
+                Edit
+              </Button>
+              }
+            />
+            <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
+              <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
+                Name of item: {editPost.item_name}
+                action={}
+              </Typography>
+              <Button
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  sx={{ bgcolor: '#f97806' }}>
+                 
+                </Button>
+              <Divider />
+              <Typography variant="subtitle1" color="text.secondary" component="div">
+                Description: {editPost.description}
+              </Typography>
+              <Button
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
+                  Edit
+                </Button>
+              <Divider />
+              <Typography variant="subtitle1" color="text.secondary" component="div">
+                Category: {editPost.category}
+              </Typography>
+              <Button
+                  variant="contained"
+                  endIcon={<EditIcon />}
+                  sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
+                  Edit
+                </Button>
+                </CardContent>
+            </Box>
+          </List>
+        )}
+      </Dialog>
+
+      <Dialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{" Are you absolutely sure you want to delete this post?"}</DialogTitle>
+        <DialogTitle>{"Are you absolutely sure you want to delete this post?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             Once deleted, the post will be permanently removed and cannot be recovered.

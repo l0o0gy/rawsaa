@@ -17,15 +17,22 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   width: '100%',
   objectFit: 'cover',
-  height: 200, 
+  height: 200,
   [theme.breakpoints.up('sm')]: {
-    height: 400, 
+    height: 400,
   },
+  [theme.breakpoints.up('md')]: {
+    height: 250,
+    width:250,
+  },
+  backgroundColor:'red'
+  
 }));
 
 const PostCard = ({ post }) => {
@@ -55,26 +62,32 @@ const PostCard = ({ post }) => {
 
 
   return (
-    <Card sx={{ maxWidth: {sm:345} }}>
-      <CardHeader
+    <Card sx={{ maxWidth: {sm:345}, maxHeight: {sm:460} , border:'1px  solid gray' , borderRadius:"1px"}}>
+      <CardHeader sx={{height:{xs:80}}}
         avatar={
           <Avatar src="https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg" alt="User Avatar" />
         }
         action={
           <IconButton onClick={handleBookmarkClick} aria-label="bookmark">
-          {isBookmarked ? <BookmarkAddedIcon /> : <BookmarkAddIcon />}
+          {isBookmarked ? <BookmarkAddedIcon style={{color:"orange"}}/> : <BookmarkAddIcon  />}
           </IconButton>
         }
-        title={post.user_name}
-        subheader={post.date}
+        title={post.user_name} 
+        subheader={post.date} 
       />
-      <StyledCardMedia
+      <Box   style={{
+          display:'flex',
+          justifyContent:'center'
+        }}>
+      <StyledCardMedia 
         component="img"
+      
         image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
         alt={post.item_name}
       />
+      </Box>
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" style={{fontSize:'20px'}}>
           {post.item_name}
         </Typography>
       </CardContent>

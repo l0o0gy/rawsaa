@@ -9,6 +9,8 @@ function Savepage() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [savedPosts, setSavedPosts] = useState([]);
+  const [seachinput, setSearchInput] = React.useState('');
+
 
   useEffect(() => {
     const authStatus = Cookies.get('isAuthenticated') === 'true';
@@ -29,7 +31,7 @@ function Savepage() {
   return (
     <div className=' text-center '>
       <div className="text-center  sm:ml-64 sm:mt-10 p-4 ">
-        <div  className='  grid-cols-2 grid sm:grid-cols-3 gap-4 w-full'
+        <div  className='  grid grid-cols-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 '
         // style={{ 
         //   display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 4, width: '100%' 
         //   }}

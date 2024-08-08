@@ -101,10 +101,10 @@ export default function MediaControlCard() {
   };
 
   return (
-    <div className="mt-20 ml-4 sm:ml-64 sm:mt-20">
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+    <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr',sm: 'repeat(1, 1fr)',lg:'repeat(2, 1fr)' }, gap: 1 ,marginLeft:{xs:0,sm:1} ,marginRight:{xs:0,sm:1}}}>
         {history.map((post) => (
-          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 350, sm: "auto" } }}>
+          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" },padding:1 ,border:'1px solid gray',borderRadius:"2px" }}>
             <CardMedia
               component="img"
               sx={{ width: { xs: '100%', sm: 200 }, height: { xs: '100%' }, objectFit: 'cover' }}

@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
-import { CssVarsProvider } from '@mui/joy/styles';
-import Sheet from '@mui/joy/Sheet';
-import CssBaseline from '@mui/joy/CssBaseline';
-import Typography from '@mui/joy/Typography';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Link from '@mui/joy/Link';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Alert from '@mui/material/Alert';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import IconButton from '@mui/joy/IconButton';
-import Alert from '@mui/joy/Alert';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function  SignUpFinal() {
+const theme = createTheme();
+
+export default function SignUpFinal() {
   const [data, setData] = useState({ name: '', email: '', password: '', phone_number: '' });
+  const [photo, setPhoto] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [photo, setPhoto] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -32,36 +39,12 @@ export default function  SignUpFinal() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const id = uuidv4();
-    await uploadImg(id);
-
-    axios.post('https://mena.alraed1.com/register', {
-      username: data.name,
-      email: data.email,
-      password: data.password,
-      user_number: data.phone_number,
-      status: 'active',
-      role: 'user',
-      img_id: id ,
-    }) 
-      .then((res) => {
-        setSuccessMessage('Sign-up successful! Redirecting to login page...');
-        setErrorMessage('');
-        setTimeout(() => {
-          navigate('/loginpage');
-        }, 3000);
-      }) 
-      .catch((err) => {
-        setErrorMessage('Sign-up failed. Please try again.');
-        setSuccessMessage('');
-      });
-
-  };
-
   const handlePhotoChange = (e) => {
     setPhoto(e.target.files[0]);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const uploadImg = async (id) => {
@@ -84,99 +67,144 @@ export default function  SignUpFinal() {
     }
   };
 
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const id = uuidv4();
+    await uploadImg(id);
+
+    axios.post('https://mena.alraed1.com/register', {
+      username: data.name,
+      email: data.email,
+      password: data.password,
+      user_number: data.phone_number,
+      status: 'active',
+      role: 'user',
+      img_id: id,
+    })
+      .then((res) => {
+        setSuccessMessage('Sign-up successful! Redirecting to login page...');
+        setErrorMessage('');
+        setTimeout(() => {
+          navigate('/loginpage');
+        }, 3000);
+      })
+      .catch((err) => {
+        setErrorMessage('Sign-up failed. Please try again.');
+        setSuccessMessage('');
+      });
   };
 
   return (
-    <CssVarsProvider>
-      <CssBaseline />
-      <Sheet
-        sx={{
-          width: 350,
-          mx: 'auto',
-          my: 4,
-          py: 3,
-          px: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          borderRadius: 'sm',
-          boxShadow: 'md',
-        }}
-        variant="outlined"
-      >
-        <form onSubmit={handleSubmit}>
-          <Typography level="h4" component="h1">
-            <b>Welcome!</b>
-          </Typography>
-          <Typography level="body-sm">Sign up to continue.</Typography>
-          <FormControl>
-            <FormLabel>Photo</FormLabel>
-            <input type="file" accept="image/*" onChange={handlePhotoChange} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Name</FormLabel>
-            <Input
-              name="name"
-              type="text"
-              placeholder="Name"
-              value={data.name}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input
-              name="email"
-              type="email"
-              placeholder="johndoe@email.com"
-              value={data.email}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <Input
-              name="password"
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Password"
-              value={data.password}
-              onChange={handleChange}
-              endDecorator={
-                <IconButton onClick={handleTogglePasswordVisibility}>
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              }
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Phone Number</FormLabel>
-            <Input
-              name="phone_number"
-              type="text"
-              placeholder="Phone number"
-              value={data.phone_number}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <Button type="submit" sx={{ mt: 1, backgroundColor: '#f98306' , width:'full'
-          }}>
-            Sign up
-          </Button>
-          {successMessage && <Alert severity="success" sx={{ mt: 2 }}>{successMessage}</Alert>}
-          {errorMessage && <Alert severity="error" sx={{ mt: 2 }}>{errorMessage}</Alert>}
-          <Typography
-            endDecorator={<Link href="/loginpage">Log in</Link>}
-            fontSize="sm"
-            sx={{ alignSelf: 'center' }}
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage:
+              'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'left',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            Already have an account?
-          </Typography>
-        </form>
-      </Sheet>
-    </CssVarsProvider>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <FormControl fullWidth margin="normal">
+                <FormLabel>Photo</FormLabel>
+                <input type="file" accept="image/*" onChange={handlePhotoChange} />
+              </FormControl>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="name"
+                value={data.name}
+                onChange={handleChange}
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={data.email}
+                onChange={handleChange}
+              />
+              <FormControl fullWidth margin="normal">
+                <FormLabel>Password</FormLabel>
+                <TextField
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  value={data.password}
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton onClick={handleTogglePasswordVisibility}>
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    ),
+                  }}
+                />
+              </FormControl>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="phone_number"
+                label="Phone Number"
+                type="text"
+                value={data.phone_number}
+                onChange={handleChange}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, backgroundColor: '#f98306' }}
+              >
+                Sign Up
+              </Button>
+              {successMessage && <Alert severity="success" sx={{ mt: 2 }}>{successMessage}</Alert>}
+              {errorMessage && <Alert severity="error" sx={{ mt: 2 }}>{errorMessage}</Alert>}
+              <Typography
+                endDecorator={<Link href="/loginpage">Log in</Link>}
+                fontSize="sm"
+                sx={{ alignSelf: 'center' }}
+              >
+                Already have an account?
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 }
-
-// export default SignUpFinal;

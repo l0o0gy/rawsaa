@@ -1,51 +1,31 @@
-import React, { useState } from 'react';
-import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
-import Sheet from '@mui/joy/Sheet';
-import CssBaseline from '@mui/joy/CssBaseline';
-import Typography from '@mui/joy/Typography';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Link from '@mui/joy/Link';
-import IconButton from '@mui/joy/IconButton';
+import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = useState(false);
+const theme = createTheme();
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <Button variant="soft">Change mode</Button>;
-  }
-
-  return (
-    <Button
-      variant="soft"
-      onClick={() => {
-        setMode(mode === 'light' ? 'dark' : 'light');
-      }}
-    >
-      {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>
-  );
-}
-
-export default function LoginFinal() {
+export default function LoginPage() {
   const [data, setData] = useState({ email: '', password: '' });
-  const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const isAuthenticated = Cookies.get('isAuthenticated') === 'true';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,22 +35,16 @@ export default function LoginFinal() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitting data:", data);
-
-    axios.post('https://mena.alraed1.com/login', { username: data.name, password: data.password })
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post('https://mena.alraed1.com/login', { email: data.email, password: data.password })
       .then((res) => {
-        console.log("Response data:", res.data);
         Cookies.set('isAuthenticated', 'true');
-        Cookies.set('token', res.data.token); 
-        Cookies.get('token')
-        console.log(Cookies.get('token'));
+        Cookies.set('token', res.data.token);
         navigate('/');
       })
       .catch((err) => {
-        console.error("Error:", err.message);
-        setError(err.message);
+        setError('Invalid email or password.');
       });
   };
 
@@ -79,78 +53,110 @@ export default function LoginFinal() {
   };
 
   return (
-    <GoogleOAuthProvider clientId="428522722446-tkus8avc6t0d0n47nng1667l49nof2h9.apps.googleusercontent.com">
-      <CssVarsProvider>
-        <main>
-          <ModeToggle />
-          <CssBaseline />
-          <Sheet
+    <>
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage:
+              'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'left',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
             sx={{
-              width: 300,
-              mx: 'auto',
-              my: 4,
-              py: 3,
-              px: 2,
+              my: 8,
+              mx: 4,
               display: 'flex',
               flexDirection: 'column',
-              gap: 2,
-              borderRadius: 'sm',
-              boxShadow: 'md',
+              alignItems: 'center',
             }}
-            variant="outlined"
           >
-            <form onSubmit={handleSubmit}>
-              <Typography level="h4" component="h1">
-                <b>Welcome!</b>
-              </Typography>
-              <Typography level="body-sm">Sign in to continue.</Typography>
-              <FormControl>
-                <FormLabel>Name</FormLabel>
-                <Input
-                  name="name"
-                  type="text"
-                  placeholder="name"
-                  value={data.name}
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="password"
-                  value={data.password}
-                  onChange={handleChange}
-                  endDecorator={
-                    <IconButton onClick={handleTogglePasswordVisibility}>
-                      {showPassword ? <Visibility/> : <VisibilityOff  />}
-                    </IconButton>
-                  }
-                />
-              </FormControl>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign In
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={data.email}
+                onChange={handleChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                autoComplete="current-password"
+                value={data.password}
+                onChange={handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <Button onClick={handleTogglePasswordVisibility}>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </Button>
+                  ),
+                }}
+              />
               {error && <Typography color="error">{error}</Typography>}
-              <Button type="submit" sx={{ mt: 1, backgroundColor: "#f98306" }}>
-                Log in
-              </Button>
-              {/* <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleFailure}
-                text="signin_with"
-                width="260"
-                marginTop="10px"
-              /> */}
-              <Typography
-                endDecorator={<Link href="/signuppage">Sign up</Link>}
-                fontSize="sm"
-                sx={{ alignSelf: 'center' }}
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, backgroundColor: "#f98306" }}
               >
-                Don&apos;t have an account?
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/signuppage" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 5 }}>
+                {'Copyright © '}
+                <Link color="inherit" href="https://mui.com/">
+                  Rawssha WebApp
+                </Link>{' '}
+                {new Date().getFullYear()}
+                {'.'}
               </Typography>
-            </form>
-          </Sheet>
-        </main>
-      </CssVarsProvider>
-    </GoogleOAuthProvider>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
+    </>
   );
 }

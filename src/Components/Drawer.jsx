@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -49,6 +49,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [checkToken, setIsAuthenticated] = React.useState(Cookies.get('token'));
   const [seachinput, setSearchInput] = React.useState('');
+  const [user_id,setUser_Id] =useState()
 
   React.useEffect(() => {
     const handleCookieChange = async () => {
@@ -60,11 +61,13 @@ function ResponsiveDrawer({ window, handleSearch }) {
             'theToken': `Bearer ${cookies}`,
           },
         });
-        // console.log(data);
+        console.log(data);        
       } catch (error) {
         console.error('Error fetching authentication status:', error);
         Cookies.remove('token');
       }
+
+      
     };
 
     const observer = new MutationObserver(handleCookieChange);
@@ -127,6 +130,8 @@ function ResponsiveDrawer({ window, handleSearch }) {
     axios.get(`https://mena.alraed1.com/postSearch/${value}`)
       .then((response) => {
         console.log(response.data)
+        console.log("value:",value);
+
             })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -138,6 +143,20 @@ function ResponsiveDrawer({ window, handleSearch }) {
     fetchData(value);
     handleSearch(value); 
   };
+  const DeleteUserAccount = ({  }) => {
+      const deleteUser = async () => {
+        try {
+          const response = await axios.delete(`https://mena.alraed1.com/deleteUser/${user_id}`);
+          console.log(`User with ${user_id} deleted successfully`);
+          console.log(user_id);
+          
+        } catch (error) {
+          console.error("Error deleting user:", error);
+        }
+      };
+  
+      deleteUser();
+  }
   const drawer = (
     <div>
       <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
@@ -358,11 +377,13 @@ function ResponsiveDrawer({ window, handleSearch }) {
               placeholder="search..."
               className="w-5/6 mt-1 border h-8 rounded-full p-2 pr-3 text-black"
               onInput={(e) => handleSearch(e.target.value)}
+              onClick={handleInputChange}
+
             />
             <IconButton color="black" >
             <SearchIcon />
             </IconButton>
-          </Box>
+          </Box> 
           <IconButton
             color="black"
             aria-label="back"
@@ -402,9 +423,11 @@ function ResponsiveDrawer({ window, handleSearch }) {
             '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop: 0, width: drawerWidth },
           }}
         >
-          {drawer}
+          {drawer}  
         </Drawer>
+
       </Box>
+    
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -424,7 +447,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Delete</Button>
+          <Button onClick={DeleteUserAccount}>Delete</Button>
           <Button onClick={handleClose}>Undo</Button>
         </DialogActions>
       </Dialog>

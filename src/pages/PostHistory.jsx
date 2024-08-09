@@ -20,17 +20,31 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CloseIcon from '@mui/icons-material/Close';
+import TextField from '@mui/material/TextField';
+import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const data = [
+  { title: "Houseware" },
+  { title: "Office Ware" },
+  { title: "Electronics" },
+  { title: "Furniture" },
+  { title: "Car Accessories" },
+  { title: "Books" },
+  { title: "Antiques" },
+  { title: "Electrical Devices" }
+];
 
 export default function MediaControlCard() {
   const theme = useTheme();
@@ -116,17 +130,54 @@ export default function MediaControlCard() {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditPost(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  useEffect(() => {
+    if (!editPost || !editPost.id) return;
+
+    const updatePost = async () => {
+      try {
+        await axios.put(`https://mena.alraed1.com/updatePost/${editPost.id}`, editPost);
+        console.log(`Post ${editPost.id} updated successfully`);
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
+    };
+
+    updatePost();
+  }, [editPost]);
+
+  const handleCategoryChange = (event) => {
+    const { value } = event.target;
+    setEditPost(prev => ({
+      ...prev,
+      category: value
+    }));
+  };
+
   return (
     <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: 1, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 1 } }}>
         {history.map((post) => (
           <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
-            <CardMedia
-              component="img"
-              sx={{ width: { xs: '100%', sm: 200 }, height: { xs: '100%' }, objectFit: 'cover' }}
-              image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
-              alt={post.item_name}
-            />
+          
+              <CardMedia
+                component="img"
+                sx={{
+                  width: { xs: '100%', sm: 200 }, height: { xs: '100%' },
+                  objectFit: 'cover',
+                }}
+                image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
+                alt={post.item_name}
+              />
+
+
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
                 <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
@@ -191,53 +242,64 @@ export default function MediaControlCard() {
         </AppBar>
         {editPost && (
           <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
             <CardMedia
               component="img"
-              sx={{ width: { xs: '100%', sm: 300 }, height: { xs: '100%' }, objectFit: 'cover' }}
+              sx={{ width: { xs: '100%', sm: 400 }, height: { xs: '100%' }, objectFit: 'cover' }}
               image={`https://mena.alraed1.com/imgPosts/${editPost.img_id}.jpg`}
               alt={editPost.item_name}
-              action={
-                <Button
-                variant="contained"
-                endIcon={<EditIcon />}
-                sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
-                Edit
-              </Button>
-              }
             />
+            </Box>
             <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
               <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
-              <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
-                Name of item: {editPost.item_name}
-                action={}
-              </Typography>
-              <Button
-                  variant="contained"
-                  endIcon={<EditIcon />}
-                  sx={{ bgcolor: '#f97806' }}>
-                 
-                </Button>
-              <Divider />
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Description: {editPost.description}
-              </Typography>
-              <Button
-                  variant="contained"
-                  endIcon={<EditIcon />}
-                  sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
-                  Edit
-                </Button>
-              <Divider />
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Category: {editPost.category}
-              </Typography>
-              <Button
-                  variant="contained"
-                  endIcon={<EditIcon />}
-                  sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
-                  Edit
-                </Button>
-                </CardContent>
+                <Typography component="div" variant="subtitle1"  
+                // sx={{ fontSize: { xs: 17, sm: 30 } }}
+                color="text.secondary"
+                >
+                  Name of item:
+                  <TextField
+                    name="item_name"
+                    value={editPost.item_name || ''}
+                    onChange={handleChange}
+                    fullWidth
+                  />
+                </Typography>
+                <Divider />
+                <Typography variant="subtitle1" color="text.secondary" component="div">
+                  Description:
+                  <TextField
+                    name="description"
+                    value={editPost.description || ''}
+                    onChange={handleChange}
+                    fullWidth
+                  />
+                </Typography>
+                <Divider />
+                <Typography variant="subtitle1" color="text.secondary" component="div" 
+                sx={{display:'grid',gridTemplateColumns:'repeat(2,fr)'}}
+                >
+                  Category:
+                  <FormGroup  >
+                    {data.map((category) => (
+                      <FormControlLabel 
+                        key={category.title}
+                        control={
+                          <Checkbox
+                            checked={editPost.category === category.title}
+                            onChange={handleCategoryChange}
+                            value={category.title}
+                          />
+                        }
+                        label={category.title}
+                      />
+                    ))}
+                  </FormGroup>
+                </Typography>
+              </CardContent>
             </Box>
           </List>
         )}

@@ -37,6 +37,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -49,7 +50,10 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [checkToken, setIsAuthenticated] = React.useState(Cookies.get('token'));
   const [seachinput, setSearchInput] = React.useState('');
+  const [open ,setOpen]=React.useState(false);
   const [user_id,setUser_Id] =useState()
+  const navigate = useNavigate();
+
 
   React.useEffect(() => {
     const handleCookieChange = async () => {
@@ -61,10 +65,18 @@ function ResponsiveDrawer({ window, handleSearch }) {
             'theToken': `Bearer ${cookies}`,
           },
         });
-        console.log(data);        
+
+        if (data.user_id) {
+          setUser_Id(data.user_id);
+          setIsAuthenticated(true);
+        } else {
+          setUser_Id(null);
+          setIsAuthenticated(false);
+        }
       } catch (error) {
-        console.error('Error fetching authentication status:', error);
+        console.error('mina:', error);
         Cookies.remove('token');
+        setIsAuthenticated(false);
       }
 
       
@@ -100,8 +112,6 @@ function ResponsiveDrawer({ window, handleSearch }) {
     }
   };
 
-  const navigate = useNavigate();
-
   const goToPage = (path, index) => () => {
     setActiveButton(index);
     navigate(path);
@@ -109,14 +119,13 @@ function ResponsiveDrawer({ window, handleSearch }) {
 
   const handleLogout = () => {
     Cookies.remove('token');
-    navigate('/Loginpage');
+    setIsAuthenticated(false);
+    navigate('/loginpage');
   };
 
   const handleBackButton = () => {
     navigate(-1);
   };
-
-  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -129,34 +138,34 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const fetchData = (value) => {
     axios.get(`https://mena.alraed1.com/postSearch/${value}`)
       .then((response) => {
-        console.log(response.data)
-        console.log("value:",value);
-
-            })
+        console.log(response.data);
+        console.log("value:", value);
+      })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   };
 
-  const handleInputChange = (value) => {
+  const handleInputChange = (event) => {
+    const value = event.target.value;
     setSearchInput(value);
     fetchData(value);
     handleSearch(value); 
   };
-  const DeleteUserAccount = ({  }) => {
-      const deleteUser = async () => {
-        try {
-          const response = await axios.delete(`https://mena.alraed1.com/deleteUser/${user_id}`);
-          console.log(`User with ${user_id} deleted successfully`);
-          console.log(user_id);
-          
-        } catch (error) {
-          console.error("Error deleting user:", error);
-        }
-      };
-  
-      deleteUser();
-  }
+
+  const deleteUserAccount = async () => {
+    try {
+      if (user_id) {
+        await axios.delete(`https://mena.alraed1.com/deleteUser/${user_id}`);
+        console.log(`User with ${user_id} deleted successfully`);
+        setUser_Id(null);
+        handleLogout();
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   const drawer = (
     <div>
       <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
@@ -447,14 +456,13 @@ function ResponsiveDrawer({ window, handleSearch }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={DeleteUserAccount}>Delete</Button>
+          <Button onClick={deleteUserAccount}>Delete</Button>
           <Button onClick={handleClose}>Undo</Button>
         </DialogActions>
       </Dialog>
     </Box>
   );
 }
-
 
 ResponsiveDrawer.propTypes = {
   window: PropTypes.func,

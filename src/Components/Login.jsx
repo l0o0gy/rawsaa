@@ -18,6 +18,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import img from '../assets/img/logologo.jpg'
+
 
 const theme = createTheme();
 
@@ -64,7 +66,7 @@ export default function LoginPage() {
           md={7}
           sx={{
             backgroundImage:
-              'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+            `url(${img})`,
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',

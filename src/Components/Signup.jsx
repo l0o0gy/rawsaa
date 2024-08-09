@@ -20,6 +20,7 @@ import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import img from '../assets/img/logologo.jpg'
 
 const theme = createTheme();
 
@@ -95,7 +96,7 @@ export default function SignUpFinal() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} sx={{ overflow: 'hidden' }}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -105,24 +106,24 @@ export default function SignUpFinal() {
           md={7}
           sx={{
             backgroundImage:
-              'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+              `url(${img})`,
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'left',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} >
           <Box
             sx={{
-              my: 8,
+              my: 2,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ bgcolor: 'secondary.main', backgroundColor: 'orange' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -157,12 +158,15 @@ export default function SignUpFinal() {
                 value={data.email}
                 onChange={handleChange}
               />
-              <FormControl fullWidth margin="normal">
-                <FormLabel>Password</FormLabel>
+              <FormControl fullWidth >
                 <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
                   value={data.password}
                   onChange={handleChange}
                   InputProps={{

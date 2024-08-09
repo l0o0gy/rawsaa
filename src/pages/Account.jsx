@@ -82,7 +82,7 @@ function Account() {
             sx={{ width: { xs: 100, sm: 200 }, height: { xs: 100, sm: 200 } }}
           />
           <div className="sm:ml-5">
-            <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">{data.name}</h1>
+          <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">{data.username}</h1>
             <p className="text-lg sm:text-2xl sm:ml-10 text-slate-500">{data.user_number}</p>
           </div>
         </Stack>
@@ -108,7 +108,7 @@ function Account() {
           <Box>
             <FormLabel>First Name</FormLabel>
             <TextField
-              name="name"
+              name="first_name"
               value={formData.first_name || ''}
               onChange={handleChange}
               disabled={!isEditing}
@@ -118,7 +118,7 @@ function Account() {
           <Box>
             <FormLabel>Last Name</FormLabel>
             <TextField
-              name="lastName"
+              name="last_name"
               value={formData.last_name || ''}
               onChange={handleChange}
               disabled={!isEditing}
@@ -138,7 +138,7 @@ function Account() {
           <Box>
             <FormLabel>Location</FormLabel>
             <TextField
-              name="location"
+              name="user_location"
               value={formData.user_location || ''}
               onChange={handleChange}
               disabled={!isEditing}

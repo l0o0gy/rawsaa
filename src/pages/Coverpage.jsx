@@ -30,10 +30,10 @@ function Coverpage() {
     <div className=' text-center'>
         <h1 className=' text-2xl mt-20 font-bold m-5 sm:text-5xl  sm:mt-40 ' >
             Rawssa with others and get what you need.</h1>
-        <p className=' m-10  text-sm mt-0 sm:text-lg text-orange-300 sm:mt-5 sm:m-80 sm:mb-0'>
+        <p className=' m-10  text-sm mt-0 sm:text-lg text-green-400 sm:mt-5 sm:m-80 sm:mb-0'>
             The first Web App  in iraq to changing your old stuff that you don't need anymore with what you need it, faster than you think and without any cost </p>
         <button onClick={() => gotToNewPage()} 
-            className='mt-2 bg-orange-500 hover:bg-orange-600 p-2 rounded-md  text-white drop-shadow-md w-40'> 
+            className='mt-2 bg-green-400 hover:bg-green-500 p-2 rounded-md  text-white drop-shadow-md w-40'> 
             Get started 
         </button>
     </div>

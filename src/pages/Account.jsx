@@ -11,6 +11,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import ResponsiveDrawer from '../Components/Drawer'
 
 function Account() {
   const [data, setData] = useState({});
@@ -74,6 +75,7 @@ function Account() {
 
   return (
     <div className="ml-5 mt-14 sm:ml-64 sm:mt-2">
+      <ResponsiveDrawer />
       <Box>
         <Stack direction="row" spacing={2} sx={{ marginBottom: '20px' }}>
           <Avatar

@@ -30,9 +30,7 @@ const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     height: 250,
     width:250,
-  },
-  backgroundColor:'red'
-  
+  },  
 }));
 
 const PostCard = ({ post }) => {
@@ -69,7 +67,7 @@ const PostCard = ({ post }) => {
         }
         action={
           <IconButton onClick={handleBookmarkClick} aria-label="bookmark">
-          {isBookmarked ? <BookmarkAddedIcon style={{color:"orange"}}/> : <BookmarkAddIcon  />}
+          {isBookmarked ? <BookmarkAddedIcon style={{color:"#fa7305"}}/> : <BookmarkAddIcon  />}
           </IconButton>
         }
         title={post.user_name} 

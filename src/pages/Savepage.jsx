@@ -4,6 +4,8 @@ import Navbar from '../Components/Navbar';
 import Drawer from '../Components/Drawer';
 import Cookies from 'js-cookie';
 import PostCard from '../Components/PostCard';
+import ResponsiveDrawer from '../Components/Drawer'
+
 
 function Savepage() {
   const navigate = useNavigate();
@@ -29,8 +31,10 @@ function Savepage() {
   }
 
   return (
+    <>
+    <ResponsiveDrawer/>
     <div className=' text-center '>
-      <div className="text-center  sm:ml-64 sm:mt-10 p-4 ">
+      <div className="text-center  sm:ml-60 sm:mt-10 p-4 ">
         <div  className='  grid grid-cols-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 '
         // style={{ 
         //   display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 4, width: '100%' 
@@ -44,6 +48,8 @@ function Savepage() {
         </div>
       </div>
     </div>
+    </>
+    
   );
 }
 

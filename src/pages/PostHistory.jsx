@@ -30,6 +30,8 @@ import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import ResponsiveDrawer from '../Components/Drawer'
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -162,11 +164,13 @@ export default function MediaControlCard() {
   };
 
   return (
-    <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: 1, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 1 } }}>
-        {history.map((post) => (
-          <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
-          
+    <>
+      < ResponsiveDrawer />
+      <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: 1, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 1 } }}>
+          {history.map((post) => (
+            <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
+
               <CardMedia
                 component="img"
                 sx={{
@@ -178,151 +182,152 @@ export default function MediaControlCard() {
               />
 
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
-                <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
-                  Name of item: {post.item_name}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Description: {post.description}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Date of post: {post.date}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Time of post: {post.time}
-                </Typography>
-              </CardContent>
-              <Stack direction="row" spacing={2} sx={{ mb: 2, ml: 2 }}>
-                <Button
-                  variant="outlined"
-                  startIcon={<DeleteIcon />}
-                  color="error"
-                  sx={{ width: { xs: 90 } }}
-                  onClick={() => handleClickOpen(post.id)}
-                >
-                  Delete
-                </Button>
-                <Button
-                  variant="contained"
-                  endIcon={<EditIcon />}
-                  onClick={() => handleClickOpenEdit(post)}
-                  sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
-                  Edit
-                </Button>
-              </Stack>
-            </Box>
-          </Card>
-        ))}
-      </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
+                  <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
+                    Name of item: {post.item_name}
+                  </Typography>
+                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                    Description: {post.description}
+                  </Typography>
+                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                    Date of post: {post.date}
+                  </Typography>
+                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                    Time of post: {post.time}
+                  </Typography>
+                </CardContent>
+                <Stack direction="row" spacing={2} sx={{ mb: 2, ml: 2 }}>
+                  <Button
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    color="error"
+                    sx={{ width: { xs: 90 } }}
+                    onClick={() => handleClickOpen(post.id)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="contained"
+                    endIcon={<EditIcon />}
+                    onClick={() => handleClickOpenEdit(post)}
+                    sx={{ bgcolor: '#f97806', width: { xs: 90 } }}>
+                    Edit
+                  </Button>
+                </Stack>
+              </Box>
+            </Card>
+          ))}
+        </Box>
 
-      <Dialog
-        fullScreen
-        open={edit}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: 'relative' }}>
-          <Toolbar style={{ backgroundColor: 'orange' }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Edit your Post
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              Save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        {editPost && (
-          <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+        <Dialog
+          fullScreen
+          open={edit}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar sx={{ position: 'relative' }}>
+            <Toolbar style={{ backgroundColor: 'orange' }}>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                Edit your Post
+              </Typography>
+              <Button autoFocus color="inherit" onClick={handleClose}>
+                Save
+              </Button>
+            </Toolbar>
+          </AppBar>
+          {editPost && (
+            <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
               <Box sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <CardMedia
-              component="img"
-              sx={{ width: { xs: '100%', sm: 400 }, height: { xs: '100%' }, objectFit: 'cover' }}
-              image={`https://mena.alraed1.com/imgPosts/${editPost.img_id}.jpg`}
-              alt={editPost.item_name}
-            />
-            </Box>
-            <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-              <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
-                <Typography component="div" variant="subtitle1"  
-                // sx={{ fontSize: { xs: 17, sm: 30 } }}
-                color="text.secondary"
-                >
-                  Name of item:
-                  <TextField
-                    name="item_name"
-                    value={editPost.item_name || ''}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Typography>
-                <Divider />
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Description:
-                  <TextField
-                    name="description"
-                    value={editPost.description || ''}
-                    onChange={handleChange}
-                    fullWidth
-                  />
-                </Typography>
-                <Divider />
-                <Typography variant="subtitle1" color="text.secondary" component="div" 
-                sx={{display:'grid',gridTemplateColumns:'repeat(2,fr)'}}
-                >
-                  Category:
-                  <FormGroup  >
-                    {data.map((category) => (
-                      <FormControlLabel 
-                        key={category.title}
-                        control={
-                          <Checkbox
-                            checked={editPost.category === category.title}
-                            onChange={handleCategoryChange}
-                            value={category.title}
-                          />
-                        }
-                        label={category.title}
-                      />
-                    ))}
-                  </FormGroup>
-                </Typography>
-              </CardContent>
-            </Box>
-          </List>
-        )}
-      </Dialog>
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: { xs: '100%', sm: 400 }, height: { xs: '100%' }, objectFit: 'cover' }}
+                  image={`https://mena.alraed1.com/imgPosts/${editPost.img_id}.jpg`}
+                  alt={editPost.item_name}
+                />
+              </Box>
+              <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+                <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
+                  <Typography component="div" variant="subtitle1"
+                    // sx={{ fontSize: { xs: 17, sm: 30 } }}
+                    color="text.secondary"
+                  >
+                    Name of item:
+                    <TextField
+                      name="item_name"
+                      value={editPost.item_name || ''}
+                      onChange={handleChange}
+                      fullWidth
+                    />
+                  </Typography>
+                  <Divider />
+                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                    Description:
+                    <TextField
+                      name="description"
+                      value={editPost.description || ''}
+                      onChange={handleChange}
+                      fullWidth
+                    />
+                  </Typography>
+                  <Divider />
+                  <Typography variant="subtitle1" color="text.secondary" component="div"
+                    sx={{ display: 'grid', gridTemplateColumns: 'repeat(2,fr)' }}
+                  >
+                    Category:
+                    <FormGroup  >
+                      {data.map((category) => (
+                        <FormControlLabel
+                          key={category.title}
+                          control={
+                            <Checkbox
+                              checked={editPost.category === category.title}
+                              onChange={handleCategoryChange}
+                              value={category.title}
+                            />
+                          }
+                          label={category.title}
+                        />
+                      ))}
+                    </FormGroup>
+                  </Typography>
+                </CardContent>
+              </Box>
+            </List>
+          )}
+        </Dialog>
 
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Are you absolutely sure you want to delete this post?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Once deleted, the post will be permanently removed and cannot be recovered.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={deletePost}>Delete</Button>
-          <Button onClick={handleClose}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>{"Are you absolutely sure you want to delete this post?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Once deleted, the post will be permanently removed and cannot be recovered.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={deletePost}>Delete</Button>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 }

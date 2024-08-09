@@ -12,6 +12,7 @@ import { useData } from "../Components/contacts/store";
 import { useContext } from 'react';
 import { PostContext } from '../Components/contacts/store';
 
+
 function Antiques() {
   const [posts, setPosts] = useState([]);
   const cookies = Cookies.get('token');

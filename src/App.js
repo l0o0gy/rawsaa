@@ -35,7 +35,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Get the authentication status from cookies
     const authStatus = Cookies.get('isAuthenticated') === 'true';
     setIsAuthenticated(authStatus);
   }, []);
@@ -44,7 +43,7 @@ function App() {
     <div className="App"> 
     <BrowserRouter>
       <DataProvider>
-      <ResponsiveDrawer isAuthenticated={isAuthenticated} />
+      {/* <ResponsiveDrawer isAuthenticated={isAuthenticated} /> */}
         <Routes>
           {/* <Route path='/' element={<Coverpage/>}/> */}
           <Route path='/' element={<Homepage isAuthenticated={isAuthenticated}/>}/>

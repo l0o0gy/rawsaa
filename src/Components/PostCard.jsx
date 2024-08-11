@@ -63,7 +63,9 @@ const PostCard = ({ post }) => {
     <Card sx={{ maxWidth: {sm:345}, maxHeight: {sm:460} , border:'1px  solid gray' , borderRadius:"1px"}}>
       <CardHeader sx={{height:{xs:80}}}
         avatar={
-          <Avatar src="https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg" alt="User Avatar" />
+          <Avatar  src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : 
+          `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=ffbe52&color=fff`} 
+          alt="User Avatar" />
         }
         action={
           <IconButton onClick={handleBookmarkClick} aria-label="bookmark">

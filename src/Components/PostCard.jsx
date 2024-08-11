@@ -63,8 +63,8 @@ const PostCard = ({ post }) => {
     <Card sx={{ maxWidth: {sm:345}, maxHeight: {sm:460} , border:'1px  solid gray' , borderRadius:"1px"}}>
       <CardHeader sx={{height:{xs:80}}}
         avatar={
-          <Avatar  src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : 
-          `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=ffbe52&color=fff`} 
+          <Avatar  src={post.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${post.img_id}.jpg` : 
+          `https://ui-avatars.com/api/?name=${post.first_name}+${post.last_name}&background=ffbe52&color=fff`} 
           alt="User Avatar" />
         }
         action={

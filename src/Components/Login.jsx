@@ -18,7 +18,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import img from '../assets/img/logologo.jpg'
+import img from '../assets/img/rawsshalogo.jpg'
 
 
 const theme = createTheme();

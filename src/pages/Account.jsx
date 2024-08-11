@@ -19,18 +19,18 @@ function Account() {
   const [formData, setFormData] = useState({});
   const [getuser_id, setGetuser_Id] = useState(0);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const cookies = Cookies.get('token'); 
+  const cookies = Cookies.get('token');
 
   useEffect(() => {
     const fetchUserData = async () => {
-        const response = await axios.get('https://mena.alraed1.com/checkRole', {
-          headers: {
-            'Content-Type': 'application/json',
-            theToken: `Bearer ${cookies}`,
-          },
-        });
-        // console.log(response.data);
-        setGetuser_Id(response.data.user_id);
+      const response = await axios.get('https://mena.alraed1.com/checkRole', {
+        headers: {
+          'Content-Type': 'application/json',
+          theToken: `Bearer ${cookies}`,
+        },
+      });
+      // console.log(response.data);
+      setGetuser_Id(response.data.user_id);
     };
 
     fetchUserData();
@@ -38,9 +38,9 @@ function Account() {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-        const response = await axios.get(`https://mena.alraed1.com/userInfo/${getuser_id}`);
-        setData(response.data);
-        setFormData(response.data);
+      const response = await axios.get(`https://mena.alraed1.com/userInfo/${getuser_id}`);
+      setData(response.data);
+      setFormData(response.data);
     };
     fetchUserInfo();
   }, [getuser_id]);
@@ -50,24 +50,25 @@ function Account() {
   };
 
   const handleUpdateClick = async () => {
-      const response = await axios.put(
-        `https://mena.alraed1.com/updateInfo/${getuser_id}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            theToken: `Bearer ${cookies}`,
-          },
-        }
-      );
-      console.log('User info updated:', response.data); 
-      setShowSuccessAlert(true);
-      setTimeout(() => setShowSuccessAlert(false), 3000);
+    const response = await axios.put(
+      `https://mena.alraed1.com/updateInfo/${getuser_id}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          theToken: `Bearer ${cookies}`,
+        },
+      }
+    );
+    console.log('User info updated:', response.data);
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 3000);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, 
+    setFormData({
+      ...formData,
       [name]: value,
 
     });
@@ -79,12 +80,13 @@ function Account() {
       <Box>
         <Stack direction="row" spacing={2} sx={{ marginBottom: '20px' }}>
           <Avatar
-            src="https://mena.alraed1.com/imgUsers/2dcccde4-67f3-486c-8d42-55d4cda172d4.jpg"
+            src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : 
+            `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=ffbe52&color=fff`} 
             alt="User Avatar"
             sx={{ width: { xs: 100, sm: 200 }, height: { xs: 100, sm: 200 } }}
           />
           <div className="sm:ml-5">
-          <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">{data.username}</h1>
+            <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">{data.username}</h1>
             <p className="text-lg sm:text-2xl sm:ml-10 text-slate-500">{data.user_number}</p>
           </div>
         </Stack>

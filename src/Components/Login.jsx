@@ -53,6 +53,9 @@ export default function LoginPage() {
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const goToPage = (path) => () => {
+    navigate(path);
+  };
 
   return (
     <>
@@ -140,10 +143,12 @@ export default function LoginPage() {
                     Forgot password?
                   </Link>
                 </Grid>
-                <Grid item>
-                  <Link href="/signuppage" variant="body2">
+                <Grid item             
+                onClick={goToPage('/signuppage')}
+                >
+                  {/* <Link href="/signuppage" variant="body2"> */}
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  {/* </Link> */}
                 </Grid>
               </Grid>
               <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 5 }}>

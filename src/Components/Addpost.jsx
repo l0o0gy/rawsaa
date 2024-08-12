@@ -34,7 +34,7 @@ const data = [
 ];
 
 function AddPost() {
-  const { setPosts, onPostAdded }=useState(null)
+  const { posts, setPosts }=useState(null)
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
@@ -44,7 +44,7 @@ function AddPost() {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [img_id, setImgId] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const cookies = Cookies.get('token');
 
 
@@ -147,7 +147,7 @@ function AddPost() {
         setAlertMessage('Post successfully added');
         setAlertOpen(true);
         getData(); 
-        onPostAdded(); 
+        // onPostAdded(); 
     } catch(err){
       console.log(err)
         setShowBox(false);

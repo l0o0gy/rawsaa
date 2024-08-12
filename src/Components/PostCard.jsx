@@ -18,6 +18,7 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
+import UserInfoPost from './userInfoPost';
 
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
@@ -44,44 +45,16 @@ const PostCard = ({ post }) => {
     return null;
   }
 
-  const handleBookmarkClick = () => {
-    let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
-    
-    if (!isBookmarked) {
-      savedPosts = [...savedPosts, post];
-      localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
-      setIsBookmarked(true);
-    } else {
-      savedPosts = savedPosts.filter(savedPost => savedPost.id !== post.id);
-      localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
-      setIsBookmarked(false);
-    }
-  };
-
 
   return (
     <Card sx={{ maxWidth: {sm:345}, maxHeight: {sm:460} , border:'1px  solid gray' , borderRadius:"1px"}}>
-      <CardHeader sx={{height:{xs:80}}}
-        avatar={
-          <Avatar  src={post.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${post.img_id}.jpg` : 
-          `https://ui-avatars.com/api/?name=${post.first_name}+${post.last_name}&background=ffbe52&color=fff`} 
-          alt="User Avatar" />
-        }
-        action={
-          <IconButton onClick={handleBookmarkClick} aria-label="bookmark">
-          {isBookmarked ? <BookmarkAddedIcon style={{color:"#fa7305"}}/> : <BookmarkAddIcon  />}
-          </IconButton>
-        }
-        title={post.user_name} 
-        subheader={post.date} 
-      />
-      <Box   style={{
+          <UserInfoPost userid={post.user_id} date={post.date} post={post} postId={post.id}/>
+          <Box   style={{
           display:'flex',
           justifyContent:'center'
         }}>
-      <StyledCardMedia 
+      <StyledCardMedia
         component="img"
-      
         image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
         alt={post.item_name}
       />

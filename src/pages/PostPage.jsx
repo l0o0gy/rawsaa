@@ -108,7 +108,7 @@ const PostPage = () => {
                 </TableCell>
                 <TableCell>
                   <Typography component="div" sx={{ fontSize: { xs: 17, sm: 22 } }}>
-                    {post.user_name}
+                    {post.first_name + ' ' + post.last_name}
                   </Typography>
                 </TableCell>
               </TableRow>

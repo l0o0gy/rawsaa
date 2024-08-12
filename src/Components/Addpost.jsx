@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -12,6 +12,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { v4 as uuidv4 } from 'uuid';
 import Cookies from 'js-cookie';
+import PhotoLibraryRoundedIcon from '@mui/icons-material/PhotoLibraryRounded';
+
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -31,7 +33,8 @@ const data = [
   { title: "Electrical Devices" }
 ];
 
-function AddPost({ setPosts, onPostAdded }) {
+function AddPost() {
+  const { setPosts, onPostAdded }=useState(null)
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
@@ -41,7 +44,29 @@ function AddPost({ setPosts, onPostAdded }) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [img_id, setImgId] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
   const cookies = Cookies.get('token');
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+          headers: {
+            'Content-Type': 'application/json',
+            'theToken': `Bearer ${cookies}`
+          }
+        });
+        console.log('User authenticated');
+        setIsAuthenticated(true); 
+      } catch (error) {
+        console.error('Error checking role:', error);
+        setIsAuthenticated(false);
+      }
+    };
+
+    fetchData();
+  }, [cookies]);
 
   const handlePhotoChange = (e) => {
     setSelectedPhoto(e.target.files[0]);
@@ -67,28 +92,27 @@ function AddPost({ setPosts, onPostAdded }) {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let getuser_id = 0;
-    let getuser_name = " ";
     let getuser_number = 0;
-  
+  let data={}
     try {
-      const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+        data = await axios.get('https://mena.alraed1.com/checkRole', {
         headers: {
           'Content-Type': 'application/json',
           'theToken': `Bearer ${cookies}`
         }
       });       
-      console.log(data);
-  
-      getuser_id = data.user_id;
-      getuser_name = data.usrename ;
-      getuser_number =  data.user_number; 
-      console.log(getuser_number);
-  
+      console.log(data.data);
+      getuser_id = data.data.user_id;
+      getuser_number =  data.data.user_number;
+      setIsAuthenticated(true);
+      console.log(true)
     } catch (error) {
       console.error('Error checking role:', error);
+      setIsAuthenticated(false);
     }
   
     const id = uuidv4();
@@ -104,7 +128,9 @@ function AddPost({ setPosts, onPostAdded }) {
   
     const newPost = {
       user_id: getuser_id,
-      user_name : getuser_name,
+      first_name:data.data.first_name,
+      last_name:data.data.last_name,
+      imgUser_id:data.data.imgUser_id,
       user_number :getuser_number, 
       item_name: itemName,
       description: description,
@@ -115,20 +141,19 @@ function AddPost({ setPosts, onPostAdded }) {
       img_id: id
     };
     console.log(newPost);
-  
+  try{
     axios.post('https://mena.alraed1.com/posts', newPost)
-      .then((res) => {
         setShowBox(false);
         setAlertMessage('Post successfully added');
         setAlertOpen(true);
         getData(); 
         onPostAdded(); 
-      })
-      .catch((err) => {
+    } catch(err){
+      console.log(err)
         setShowBox(false);
         setAlertMessage('Error adding post');
         setAlertOpen(true);
-      });
+      };
   };
   
   const getData = () => {
@@ -148,21 +173,33 @@ function AddPost({ setPosts, onPostAdded }) {
   const handleAlertClose = () => {
     setAlertOpen(false);
   };
+  const closeDialog=()=>{
+    setShowBox(false)
+  }
 
   return (
     <div>
+      {isAuthenticated &&
       <Box sx={{ '& > :not(style)': { m: 1, backgroundColor: 'rgb(219, 110, 31)', color: 'white', position: 'fixed', bottom: 20, right: 20 } }}>
         <Fab color="" aria-label="add" onClick={handleClick}>
           <AddIcon />
         </Fab>
       </Box>
-      {showBox && (
-        <Box className="flex justify-center fixed sm:ml-96 z-10">
-          <div className='text-center p-6 border-2 bg-white mt-10'>
+}
+      {showBox && isAuthenticated && (
+        <Box className="fixed sm:ml-96 z-10 mt-14">
+          <div className='text-center p-6 border-2 bg-white shadow-orange-400 shadow-lg'>
             <form onSubmit={handleSubmit}>
-              <input type="file" accept="image/*" onChange={handlePhotoChange} /> <br />
-              {selectedPhoto && <img src={`https://mena.alraed1.com/imgPosts/${img_id}.jpg`} 
-              alt={img_id} 
+            <label
+                for="imgPost"
+                className="  bg-gray-500 p-2 rounded px-4 "
+              >
+            <PhotoLibraryRoundedIcon />
+            <span class='pl-1'>Add post {isAuthenticated} Photo</span>
+            </label>
+            <input type="file"  required  hidden id='imgPost' accept="image/*" onChange={handlePhotoChange} /> <br />
+              {selectedPhoto && <img src={`https://mena.alraed1.com/imgPosts/${img_id}.jpg`}
+              alt={img_id}
               onChange={(e) => setImgId(e.target.value)}
               className='w-60' 
               />}
@@ -218,7 +255,10 @@ function AddPost({ setPosts, onPostAdded }) {
                   <TextField {...params} label="Checkboxes" placeholder="Categories" />
                 )}
               />
-              <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md w-full"> Add </button>
+              <div class='flex justify-evenly'>
+              <button type="submit" className="bg-orange-500 hover:bg-orange-600 p-2 rounded-md mt-2 text-white drop-shadow-md px-20 "> Add </button>
+              <button onClick={closeDialog} className="bg-gray-500 hover:bg-gray-800 p-2 rounded-md mt-2 text-white drop-shadow-md px-20 "> Close </button>
+              </div>
             </form>
           </div>
         </Box>

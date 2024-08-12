@@ -5,30 +5,44 @@ import Drawer from '../Components/Drawer';
 import Cookies from 'js-cookie';
 import PostCard from '../Components/PostCard';
 import ResponsiveDrawer from '../Components/Drawer'
-
+import axios from 'axios';
 
 function Savepage() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const cookies = Cookies.get('token');  
+  const [isAuthenticated, setIsAuthenticated] = useState();
   const [savedPosts, setSavedPosts] = useState([]);
   const [seachinput, setSearchInput] = React.useState('');
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+          headers: {
+            'Content-Type': 'application/json',
+            'theToken': `Bearer ${cookies}`
+          }
+        });
+        console.log('User authenticated');
+        setIsAuthenticated(true); // Set to true if authenticated
+      } catch (error) {
+        console.error('Error checking role:', error);
+        navigate('/loginpage'); // Redirect to login if not authenticated
+      }
+    };
+
+    fetchData();
+  }, [cookies, navigate]);
 
   useEffect(() => {
-    const authStatus = Cookies.get('isAuthenticated') === 'true';
-    setIsAuthenticated(authStatus);
+    if (isAuthenticated) {
 
-    if (!authStatus) {
-      navigate('/Loginpage'); 
-    } else {
+
+    
       const savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
       setSavedPosts(savedPosts);
-    }
-  }, [navigate]);
-
-  if (!isAuthenticated) {
-    return null;
   }
+  }, [isAuthenticated]);
 
   return (
     <>

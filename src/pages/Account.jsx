@@ -12,82 +12,138 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import ResponsiveDrawer from '../Components/Drawer'
+import { v4 as uuidv4 } from 'uuid';
+import TransformRoundedIcon from '@mui/icons-material/TransformRounded';
 
 function Account() {
   const [data, setData] = useState({});
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [imgsrc, setImgsrc] = useState(null);
+
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const [getuser_id, setGetuser_Id] = useState(0);
+  const [userInfo, setuserInfo] = useState(0);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const cookies = Cookies.get('token');
+  const cookies = Cookies.get("token");
+
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const response = await axios.get('https://mena.alraed1.com/checkRole', {
+      const response = await axios.get("https://mena.alraed1.com/checkRole", {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           theToken: `Bearer ${cookies}`,
         },
       });
-      // console.log(response.data);
-      setGetuser_Id(response.data.user_id);
+      console.log(response.data);
+      setuserInfo(response.data);
     };
 
     fetchUserData();
   }, [cookies]);
+    const handlePhotoChange = async(e) => {
+    setSelectedPhoto(e.target.files[0])
+    
+
+  };
+
+  const uploadImg = async (id) => {
+    if (!selectedPhoto) return null;
+    const renamedFile = new File([selectedPhoto], `${id}.jpg`, {
+      type: selectedPhoto.type,
+      lastModified: selectedPhoto.lastModified,
+    });
+
+    const formData = new FormData();
+    formData.append('user', renamedFile);
+       await axios.post('https://mena.alraed1.com/imgUsers', formData);
+  return 'done'
+  };
+
+  const fetchUserInfo = async () => {
+    const response = await axios.get(
+      `https://mena.alraed1.com/userInfo/${userInfo.user_id}`
+    );
+    setData(response.data);
+    setFormData(response.data);
+    setImgsrc(response.data.img_id)
+
+  };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await axios.get(`https://mena.alraed1.com/userInfo/${getuser_id}`);
+      const response = await axios.get(
+        `https://mena.alraed1.com/userInfo/${userInfo.user_id}`
+      );
       setData(response.data);
       setFormData(response.data);
+      console.log(response.data.img_id)
+      setImgsrc(response.data.img_id)
     };
     fetchUserInfo();
-  }, [getuser_id]);
+  }, [userInfo.user_id]);
 
-  const handleEditClick = () => {
+  const handleEditClick = async() => {
     setIsEditing(true);
   };
 
   const handleUpdateClick = async () => {
+    if(selectedPhoto){
+      setImgsrc(0)
+    }
+    let id=uuidv4()
+    await uploadImg(id);
+      formData.img_id=id
     const response = await axios.put(
-      `https://mena.alraed1.com/updateInfo/${getuser_id}`,
+      `https://mena.alraed1.com/updateInfo/${userInfo.user_id}`,
       formData,
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           theToken: `Bearer ${cookies}`,
         },
       }
     );
-    console.log('User info updated:', response.data);
+
+    console.log("User info updated:", response.data);
+    fetchUserInfo();
     setShowSuccessAlert(true);
-    setTimeout(() => setShowSuccessAlert(false), 3000);
+    setTimeout(() => setShowSuccessAlert(false),fetchUserInfo(), 3000);
+
+
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
     <div className="ml-5 mt-14 sm:ml-64 sm:mt-2">
       <ResponsiveDrawer />
       <Box>
-        <Stack direction="row" spacing={2} sx={{ marginBottom: '20px' }}>
-          <Avatar
-            src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : 
-            `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=ffbe52&color=fff`} 
+        <Stack direction="row" spacing={2} sx={{ marginBottom: "20px" }}>
+        <Avatar
+            src={imgsrc != 0 ?`https://mena.alraed1.com/imgUsers/${imgsrc}.jpg`:`https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
             alt="User Avatar"
             sx={{ width: { xs: 100, sm: 200 }, height: { xs: 100, sm: 200 } }}
           />
+          <input
+            type="file"
+            required
+            hidden
+            id="imgPost"
+            accept="image/*"
+            onChange={handlePhotoChange}
+          />
+          <br />
           <div className="sm:ml-5">
-            <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">{data.username}</h1>
-            <p className="text-lg sm:text-2xl sm:ml-10 text-slate-500">{data.user_number}</p>
+            <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">
+              {data.first_name + " " + data.last_name}
+            </h1>
+            <p className="text-lg sm:text-2xl sm:ml-10 text-slate-500">
+              {data.user_number}
+            </p>
           </div>
         </Stack>
         <Divider />
@@ -160,6 +216,9 @@ function Account() {
             />
           </Box>
           <Box>
+          <label for="imgPost" className=" absolute bg-slate-500 p-2 px-4 rounded ml-20 mt-[30px]"><TransformRoundedIcon/><span class='pl-1'>Change Photo</span></label>
+          </Box>
+          {/* <Box>
             <FormLabel>Password</FormLabel>
             <TextField
               name="password"
@@ -169,15 +228,15 @@ function Account() {
               disabled={!isEditing}
               fullWidth
             />
-          </Box>
+          </Box> */}
         </Box>
         <div className="mt-5 rounded-md">
           {isEditing ? (
             <Button
               variant="contained"
               sx={{
-                backgroundColor: 'orange',
-                '&:hover': { backgroundColor: 'orange' },
+                backgroundColor: "orange",
+                "&:hover": { backgroundColor: "orange" },
                 width: { xs: 350, sm: 800 },
                 marginBottom: { xs: 2 },
               }}

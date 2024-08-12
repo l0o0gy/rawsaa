@@ -84,7 +84,7 @@ function Furniture() {
   return (
     <div className='text-center h-screen'>
       <ResponsiveDrawer handleSearch={handleSearch} />
-      <Addpost onPostAdded={handlePostAdded} />
+      <Addpost handleSubmit={handlePostAdded} />
       <div className='mt-16 sm:mt-0'>
         {searchTerm === '' ? (
           <div className="text-center sm:ml-60">

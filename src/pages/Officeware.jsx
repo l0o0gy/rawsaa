@@ -16,6 +16,7 @@ function Officeware() {
   const cookies = Cookies.get('token');
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
 
   const items = useData();
 
@@ -25,7 +26,7 @@ function Officeware() {
     axios
       .get(`https://mena.alraed1.com/postSearch/${term}`)
       .then((response) => {
-        const filteredPosts = response.data.filter(post => post.category === 'Officeware');
+        const filteredPosts = response.data.filter(post => post.category === 'Office Ware');
         setPosts(filteredPosts);
         setIsSearching(false);  
       })
@@ -36,7 +37,7 @@ function Officeware() {
   };
 
   useEffect(() => {
-    axios.get(`https://mena.alraed1.com/postsCategory/Officeware/0/10`)
+    axios.get(`https://mena.alraed1.com/postsCategory/Office Ware/0/10`)
       .then((res) => {
         setPosts(res.data.result);
         console.log(typeof setPosts);
@@ -67,7 +68,7 @@ function Officeware() {
   }, [cookies, navigate]);
 
 const handlePostAdded=()=>{
-  axios.get(`https://mena.alraed1.com/postsCategory/Officeware/0/10`)
+  axios.get(`https://mena.alraed1.com/postsCategory/Office Ware/0/10`)
   .then((res) => {
     setPosts(res.data.result);
     console.log(typeof setPosts);

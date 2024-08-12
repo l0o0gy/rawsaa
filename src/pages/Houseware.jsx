@@ -15,7 +15,7 @@ function Houseware() {
   const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const items = useData();
 
@@ -68,7 +68,7 @@ function Houseware() {
   }, [isAuthenticated]);
 
   const handlePostAdded = () => {
-    // if (isAuthenticated) {
+    if (isAuthenticated) {
       axios.get(`https://mena.alraed1.com/postsCategory/Houseware/0/10`)
         .then((res) => {
           setPosts(res.data.result);
@@ -76,7 +76,7 @@ function Houseware() {
         .catch((error) => {
           console.error('Error fetching posts:', error);
         });
-    // }
+    }
   };
 
   return (

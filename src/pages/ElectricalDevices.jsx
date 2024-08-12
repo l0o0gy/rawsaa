@@ -11,11 +11,13 @@ import { useData } from "../Components/contacts/store";
 
 
 function ElectricalDevices() {
-  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
-  const cookies = Cookies.get('token');
+  const [results, setResults] = useState([]);
+  const cookies = Cookies.get('token');  
+  const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const items = useData();
 
@@ -35,20 +37,6 @@ function ElectricalDevices() {
       });
   };
 
-
-  useEffect(() => {
-    axios.get(`https://mena.alraed1.com/postsCategory/Electrical Devices/0/10`)
-      .then((res) => {
-        setPosts(res.data.result);
-        console.log(typeof setPosts);
-        console.log(res.data[0]);
-      })
-      .catch((error) => {
-        console.error('Error fetching posts:', error);
-      });
-  }, []);
-
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,27 +46,40 @@ function ElectricalDevices() {
             'theToken': `Bearer ${cookies}`
           }
         });
-          console.log('User authenticated');
+        console.log('User authenticated');
+        setIsAuthenticated(true); 
       } catch (error) {
         console.error('Error checking role:', error);
-        navigate('/loginpage');
+        navigate('/loginpage'); 
       }
     };
+
     fetchData();
   }, [cookies, navigate]);
 
-   
-const handlePostAdded=()=>{
-  axios.get(`https://mena.alraed1.com/postsCategory/Electrical Devices/0/10`)
-  .then((res) => {
-    setPosts(res.data.result);
-    console.log(typeof setPosts);
-    console.log(res.data[0]);
-  })
-  .catch((error) => {
-    console.error('Error fetching posts:', error);
-  });
-}
+  useEffect(() => {
+    if (isAuthenticated) {
+      axios.get(`https://mena.alraed1.com/postsCategory/Electrical Devices/0/10`)
+        .then((res) => {
+          setPosts(res.data.result);
+        })
+        .catch((error) => {
+          console.error('Error fetching posts:', error);
+        });
+    }
+  }, [isAuthenticated]);
+
+  const handlePostAdded = () => {
+    if (isAuthenticated) {
+      axios.get(`https://mena.alraed1.com/postsCategory/Electrical Devices/0/10`)
+        .then((res) => {
+          setPosts(res.data.result);
+        })
+        .catch((error) => {
+          console.error('Error fetching posts:', error);
+        });
+    }
+  };
 
   return (
     <div className='text-center h-screen'>

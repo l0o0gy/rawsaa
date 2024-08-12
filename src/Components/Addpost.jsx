@@ -34,7 +34,7 @@ const data = [
 ];
 
 function AddPost() {
-  const { posts, setPosts }=useState(null)
+  const [posts, setPosts ]= useState(null)
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
@@ -46,6 +46,8 @@ function AddPost() {
   const [img_id, setImgId] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const cookies = Cookies.get('token');
+  const onPostAdded = useState(null)
+
 
 
   useEffect(() => {
@@ -147,7 +149,7 @@ function AddPost() {
         setAlertMessage('Post successfully added');
         setAlertOpen(true);
         getData(); 
-        // onPostAdded(); 
+        onPostAdded(); 
     } catch(err){
       console.log(err)
         setShowBox(false);

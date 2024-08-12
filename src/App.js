@@ -61,9 +61,9 @@ function App() {
           <Route path="/loginpage" element={<LoginFinal  />} showError={updateErrorMessage}
           updateTitle={updateTitle}/>
 
-          <Route path='/'
+          {/* <Route path='/'
           exact={true}
-          showError={updateErrorMessage} updateTitle={updateTitle} element={<Singup/>}/>
+          showError={updateErrorMessage} updateTitle={updateTitle} element={<Singup/>}/> */}
           <Route path="/signuppage"
           showError={updateErrorMessage}
           updateTitle={updateTitle}

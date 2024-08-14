@@ -22,9 +22,9 @@ import UserInfoPost from './userInfoPost';
 
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
-  width: '100%',
+  width: 450,
   objectFit: 'cover',
-  height: 200,
+  height: 350,
   [theme.breakpoints.up('sm')]: {
     height: 400,
   },

@@ -88,7 +88,7 @@ function ElectricalDevices() {
       <div className='mt-16 sm:mt-0'>
         {searchTerm === '' ? (
           <div className="text-center sm:ml-60">
-            <div className='grid grid-cols-2 ml-1 mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5'>
+            <div className='grid grid-cols-1 ml-1 mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5'>
               {posts.map((post, index) => (
                 <PostCard key={index} post={post} />
               ))}
@@ -99,7 +99,7 @@ function ElectricalDevices() {
             {isSearching ? (
               <p className="flex justify-center items-center h-80 text-center">Searching...</p>
             ) : posts.length > 0 ? (
-              <div className='grid grid-cols-2 ml-1 mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5'>
+              <div className='grid grid-cols-1 ml-1 mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5'>
                 {posts.map((post, index) => (
                   <PostCard key={index} post={post} />
                 ))}

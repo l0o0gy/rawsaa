@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 function Coversection({handleSearch}) {
   const [seachinput, setSearchInput] = React.useState('');
 
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchInput(value);
@@ -24,6 +25,7 @@ function Coversection({handleSearch}) {
             faster than you think and without any cost 
           </p>
             <div className='hidden sm:flex'>
+
             <input              
             className=' w-60 sm:w-80 sm:ml-5 border h-10 mt-5  rounded-md p-2 ' 
             type='text' 

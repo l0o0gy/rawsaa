@@ -238,8 +238,6 @@ export default function SignUpFinal() {
                 value={data.phone_number}
                 onChange={handleChange}
               />
-
-
               <Button
                 type="submit"
                 fullWidth

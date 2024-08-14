@@ -37,7 +37,7 @@ const PostPage = () => {
   }
 
   const sendWhatsAppMessage = () => {
-    const link = `https://api.whatsapp.com/send?phone=+964${post.user_number}&text=Check%20this%20out:%20${post.item_name}`;
+    const link = `https://api.whatsapp.com/send?phone=+964${post.user_number}&text=I'm%20interested%20in%20your%20post%20${post.item_name} `;
     window.open(link, '_blank');
   };
 

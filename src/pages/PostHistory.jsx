@@ -182,7 +182,7 @@ export default function MediaControlCard() {
               />
 
 
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' , overflow:'hidden'}}>
                 <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
                   <Typography component="div" sx={{ fontSize: { xs: 17, sm: 30 } }}>
                     Name of item: {post.item_name}
@@ -245,7 +245,7 @@ export default function MediaControlCard() {
             </Toolbar>
           </AppBar>
           {editPost && (
-            <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+            <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)'}}>
               <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -253,13 +253,13 @@ export default function MediaControlCard() {
               }}>
                 <CardMedia
                   component="img"
-                  sx={{ width: { xs: '100%', sm: 400 }, height: { xs: '100%' }, objectFit: 'cover' }}
+                  sx={{ width: '100%', height: { xs: '100%',sm:'90%' }, objectFit: 'cover' ,ml:5 }}
                   image={`https://mena.alraed1.com/imgPosts/${editPost.img_id}.jpg`}
                   alt={editPost.item_name}
                 />
               </Box>
-              <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
+              <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)'  }}>
+                <CardContent sx={{ flex: '1 0 auto', p: 2 ,ml:5}}>
                   <Typography component="div" variant="subtitle1"
                     // sx={{ fontSize: { xs: 17, sm: 30 } }}
                     color="text.secondary"

@@ -60,7 +60,7 @@ export default function UserInfoPost({ userid, date, postId, post }) {
                         {isBookmarked ? <BookmarkAddedIcon style={{ color: "#fa7305" }} /> : <BookmarkAddIcon />}
                     </IconButton>
                 }
-                title={data.first_name + ' ' + userid}
+                title={post.first_name + ' ' + post.last_name}
                 subheader={date}
             />
         </ThemeProvider>

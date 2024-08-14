@@ -104,6 +104,10 @@ export default function SignUpFinal() {
       });
   };
 
+  const goToPage = (path) => () => {
+    navigate(path);
+  };
+
   return (
     <ThemeProvider theme={theme} sx={{ overflow: "hidden" }}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -156,30 +160,42 @@ export default function SignUpFinal() {
                   onChange={handlePhotoChange}
                 />
               </FormControl>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="first_name"
-                name="first_name"
-                autoComplete="first_name"
-                value={data.first_name}
-                onChange={handleChange}
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="last_name"
-                name="last_name"
-                autoComplete="last_name"
-                value={data.last_name}
-                onChange={handleChange}
-                autoFocus
-              />
+              <FormControl className="flex justify-center  w-full ">
+
+                <label
+                  for="imgUser"
+                  className="border-sky-100  bg-slate-100 p-2 rounded  px-4 m-0 "
+                >
+                  <AddAPhotoRoundedIcon />
+                  <span class=' pl-1 pt-4 mt-4 text-black '> Add Photo</span>
+                </label>
+              </FormControl>
+              <Box sx={{ display: { md: 'flex' }, justifyContent: { md: 'space-evenly' }, width: { md: '400' } }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="first_name"
+                  name="first_name"
+                  autoComplete="first_name"
+                  value={data.first_name}
+                  onChange={handleChange}
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="last_name"
+                  name="last_name"
+                  autoComplete="last_name"
+                  value={data.last_name}
+                  onChange={handleChange}
+                  autoFocus
+                />
+              </Box>
               <TextField
                 margin="normal"
                 required
@@ -222,17 +238,7 @@ export default function SignUpFinal() {
                 value={data.phone_number}
                 onChange={handleChange}
               />
-                             <FormControl>
 
-              <label
-                for="imgUser"
-                 className="  bg-gray-500 p-2 rounded px-4 m-0 "
-              >
-
-                <AddAPhotoRoundedIcon/>
-                <span class=' pl-1 pt-4 mt-4'>Add Photo</span>
-              </label>
-              </FormControl>
 
               <Button
                 type="submit"
@@ -252,13 +258,20 @@ export default function SignUpFinal() {
                   {errorMessage}
                 </Alert>
               )}
-              <Typography
+              {/* <Typography
                 endDecorator={<Link href="/loginpage">Log in</Link>}
                 fontSize="sm"
                 sx={{ alignSelf: "center" }}
               >
-                Already have an account?
-              </Typography>
+                
+              </Typography> */}
+              <Grid item
+                onClick={goToPage('/loginpage')}
+              >
+                <Link href="" variant="body2">
+                  {"Already have an account? Log in"}
+                </Link>
+              </Grid>
             </Box>
           </Box>
         </Grid>

@@ -119,12 +119,16 @@ function Account() {
   };
 
   return (
-    <div className="ml-5 mt-14 sm:ml-64 sm:mt-2">
+<div className="ml-5 mt-14 sm:ml-64 sm:mt-2">
       <ResponsiveDrawer />
       <Box>
-        <Stack direction="row" spacing={2} sx={{ marginBottom: "20px" }}>
-        <Avatar
-            src={imgsrc != 0 ?`https://mena.alraed1.com/imgUsers/${imgsrc}.jpg`:`https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
+        <Stack direction="row" spacing={2} sx={{ marginBottom: '20px' }}>
+          <Avatar
+            src={
+              imgsrc
+                ? `https://mena.alraed1.com/imgUsers/${imgsrc}.jpg`
+                : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`
+            }
             alt="User Avatar"
             sx={{ width: { xs: 100, sm: 200 }, height: { xs: 100, sm: 200 } }}
           />
@@ -137,9 +141,13 @@ function Account() {
             onChange={handlePhotoChange}
           />
           <br />
+          <label htmlFor="imgPost" className="absolute bg-orange-100 sm:p-2 sm:px-4 rounded ml-20 sm:left-96 sm:top-40 top-32 left-16 px-1 ">
+            <TransformRoundedIcon className=' sm:w-auto ' />
+          </label>
+
           <div className="sm:ml-5">
             <h1 className="text-xl mt-5 sm:text-3xl sm:ml-10 sm:mt-20 text-slate-800">
-              {data.first_name + " " + data.last_name}
+              {`${data.first_name} ${data.last_name}`}
             </h1>
             <p className="text-lg sm:text-2xl sm:ml-10 text-slate-500">
               {data.user_number}
@@ -215,28 +223,14 @@ function Account() {
               fullWidth
             />
           </Box>
-          <Box>
-          <label for="imgPost" className=" absolute bg-slate-500 p-2 px-4 rounded ml-20 mt-[30px]"><TransformRoundedIcon/><span class='pl-1'>Change Photo</span></label>
-          </Box>
-          {/* <Box>
-            <FormLabel>Password</FormLabel>
-            <TextField
-              name="password"
-              type="password"
-              value={formData.password || ''}
-              onChange={handleChange}
-              disabled={!isEditing}
-              fullWidth
-            />
-          </Box> */}
         </Box>
         <div className="mt-5 rounded-md">
           {isEditing ? (
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "orange",
-                "&:hover": { backgroundColor: "orange" },
+                backgroundColor: 'orange',
+                '&:hover': { backgroundColor: 'orange' },
                 width: { xs: 350, sm: 800 },
                 marginBottom: { xs: 2 },
               }}

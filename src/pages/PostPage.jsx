@@ -12,20 +12,18 @@ import { Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@m
 
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
-  width: 500,
+  width: '100%',
   objectFit: 'cover',
   height: 300,
   [theme.breakpoints.up('sm')]: {
     height: 600,
-    width: 600,
   },
   [theme.breakpoints.up('md')]: {
     height: 600,
-    width: 600,
   },
   [theme.breakpoints.up('lg')]: {
     height: 600,
-    width: 700,
+    width: '100%',
   },
 
 }));
@@ -43,14 +41,15 @@ const PostPage = () => {
     window.open(link, '_blank');
   };
 
+
   return (
     <div
-      className='ml-4 mt-50 sm:ml-60  sm:mt-4  overflow-hidden'
+      className='ml-4 mt-1  sm:mt-4  overflow-hidden'
     >
       <Card
         sx={{
-          marginTop: { xs: 8, sm: 0 },
-          width: { xs: 470, sm: 'auto' },
+          marginTop: { xs: 2, sm: 0 },
+          width: { xs: '95%' , sm: 'auto' },
           display: 'grid',
           gridTemplateColumns: {
             xs: '1fr',
@@ -68,11 +67,11 @@ const PostPage = () => {
           image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
           alt={post.item_name}
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#f6f6f6' ,pt:5}}>
-          <CardContent sx={{ flex: '1 0 auto', p: 2 }}>
+        <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#f6f6f6' ,pt:5}}>
+          <CardContent sx={{ flex: '1 0 auto', p: 2}}>
             <TableContainer component={Paper}>
-              <Table>
-                <TableBody>
+              <Table >
+                <TableBody >
                   <TableRow>
                     <TableCell>
                       <h1 className='text-xl text-slate-600'>Item Name:</h1>
@@ -131,17 +130,16 @@ const PostPage = () => {
           <Stack sx={{ mb: 2, mt: 3,p:2 }}>
             <Button
               sx={{
-                width: { xs: 440, sm: 510 },
+                width: { xs: 440, sm: '100%' },
                 backgroundColor: '#fb8f36',
                 '&:hover': {
                   backgroundColor: '#fa7305',
                 },boxShadow:5
               }}
               onClick={sendWhatsAppMessage} >
-              Contact {post.user_name} on WhatsApp
+              Contact  {post.first_name + ' ' + post.last_name} on WhatsApp
             </Button>
           </Stack>
-
         </Box>
       </Card>
 

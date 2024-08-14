@@ -149,7 +149,7 @@ function AddPost() {
         setAlertMessage('Post successfully added');
         setAlertOpen(true);
         getData(); 
-        onPostAdded(); 
+        // onPostAdded(); 
     } catch(err){
       console.log(err)
         setShowBox(false);

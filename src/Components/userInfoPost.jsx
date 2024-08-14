@@ -8,10 +8,10 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 const theme = createTheme();
 
-export default function UserInfoPost({ userid, date, postId, post }) {
+export default function UserInfoPost({ userid,date,postId,post }) {
     const [data, setData] = useState({});
     const [isBookmarked, setIsBookmarked] = useState(() => {
-        const savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
+        const savedPosts = JSON.parse(localStorage.getItem('savedPosts'))  ;
         return savedPosts.some(savedPost => savedPost.id === postId);
     });
 
@@ -29,7 +29,7 @@ export default function UserInfoPost({ userid, date, postId, post }) {
     }, [userid]); 
 
     const handleBookmarkClick = () => {
-        let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
+        let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) ;
 
         if (!isBookmarked) {
             savedPosts = [...savedPosts, post];
@@ -47,20 +47,23 @@ export default function UserInfoPost({ userid, date, postId, post }) {
         <ThemeProvider theme={theme} sx={{ overflow: "hidden" }}>
             <CardHeader
                 sx={{ height: { xs: 80 } }}
-
+                
                 avatar={
                     <Avatar
-                        src={data.img_id !== 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : `https://ui-avatars.com/api/?name=mena+thaer&background=22d3ee&color=fff`}
+                        src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
                         alt="User Avatar"
                         lg={{ width: { xs: 100, sm: 200, xl: 200 }, height: { xs: 100, sm: 200, xl: 200 } }}
                     />
                 }
                 action={
+                    
                     <IconButton onClick={handleBookmarkClick} aria-label="bookmark">
                         {isBookmarked ? <BookmarkAddedIcon style={{ color: "#fa7305" }} /> : <BookmarkAddIcon />}
+                       
+
                     </IconButton>
                 }
-                title={post.first_name + ' ' + post.last_name}
+                title={data.first_name  + ' ' + data.last_name}
                 subheader={date}
             />
         </ThemeProvider>

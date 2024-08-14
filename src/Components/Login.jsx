@@ -86,7 +86,9 @@ export default function LoginPage() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar               
+            sx={{ bgcolor: "secondary.main", backgroundColor: "orange" }}
+            >
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -133,7 +135,14 @@ export default function LoginPage() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, backgroundColor: "#f98306" }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  backgroundColor: "#f98306",
+                  '&:hover': {
+                    backgroundColor: "#f98306",
+                  },
+                }}
               >
                 Sign In
               </Button>

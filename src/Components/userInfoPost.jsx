@@ -11,7 +11,7 @@ const theme = createTheme();
 export default function UserInfoPost({ userid,date,postId,post }) {
     const [data, setData] = useState({});
     const [isBookmarked, setIsBookmarked] = useState(() => {
-        const savedPosts = JSON.parse(localStorage.getItem('savedPosts'))  ;
+        const savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
         return savedPosts.some(savedPost => savedPost.id === postId);
     });
 

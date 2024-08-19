@@ -49,8 +49,7 @@ export default function UserInfoPost({ userid,date,postId,post }) {
     return (
         <ThemeProvider theme={theme} sx={{ overflow: "hidden" }}>
             <CardHeader
-                sx={{ height: { xs: 80 } }}
-                
+                sx={{ height: { xs: 80 },fontSize:{xs:5,sm:'auto'} }}
                 avatar={
                     <Avatar
                         src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
@@ -59,11 +58,8 @@ export default function UserInfoPost({ userid,date,postId,post }) {
                     />
                 }
                 action={
-                    
                     <IconButton onClick={handleBookmarkClick} aria-label="bookmark">
                         {isBookmarked ? <BookmarkAddedIcon style={{ color: "#fa7305" }} /> : <BookmarkAddIcon />}
-                       
-
                     </IconButton>
                 }
                 title={data.first_name  + ' ' + data.last_name}

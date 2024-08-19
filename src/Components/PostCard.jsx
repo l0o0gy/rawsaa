@@ -22,15 +22,17 @@ import UserInfoPost from './userInfoPost';
 
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
-  maxWidth: 150,
+  width: 150,
   objectFit: 'cover',
   height: 150,
   [theme.breakpoints.up('sm')]: {
     height: 250,
+    width: 250,
+
   },
   [theme.breakpoints.up('md')]: {
     height: 250,
-    width:250,
+    width:345,
   },  
 }));
 

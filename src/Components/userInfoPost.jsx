@@ -10,10 +10,7 @@ const theme = createTheme();
 
 export default function UserInfoPost({ userid,date,postId,post }) {
     const [data, setData] = useState({});
-    const [isBookmarked, setIsBookmarked] = useState(() => {
-        const savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
-        return savedPosts.some(savedPost => savedPost.id === postId);
-    });
+    const [isBookmarked, setIsBookmarked] = useState();
 
     useEffect(() => {
         const fetchInfo = async () => {
@@ -28,6 +25,12 @@ export default function UserInfoPost({ userid,date,postId,post }) {
         fetchInfo();
     }, [userid]); 
 
+    useEffect(() => {
+    const savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
+        const bookmarked = savedPosts.some(savedPost => savedPost.id === postId);
+        setIsBookmarked(bookmarked);
+    }, [postId]); 
+    
     const handleBookmarkClick = () => {
         let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) ;
 

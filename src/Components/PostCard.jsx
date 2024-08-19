@@ -22,11 +22,11 @@ import UserInfoPost from './userInfoPost';
 
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
-  width: 450,
+  maxWidth: 150,
   objectFit: 'cover',
-  height: 350,
+  height: 150,
   [theme.breakpoints.up('sm')]: {
-    height: 400,
+    height: 250,
   },
   [theme.breakpoints.up('md')]: {
     height: 250,
@@ -47,7 +47,7 @@ const PostCard = ({ post }) => {
 
 
   return (
-    <Card sx={{ maxWidth: {sm:345}, maxHeight: {sm:460} , border:'1px  solid gray' , borderRadius:"1px"}}>
+    <Card sx={{ maxWidth: {xs:345,sm:345}, height: {xs:320 ,sm:460} , border:'1px  solid gray' , borderRadius:"1px",fontsize:'10px'}}>
           <UserInfoPost userid={post.user_id} date={post.date} post={post} postId={post.id}/>
           <Box   style={{
           display:'flex',
@@ -57,15 +57,16 @@ const PostCard = ({ post }) => {
         component="img"
         image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
         alt={post.item_name}
+        sx={{mt:{xs:'-10px',sm:0}}}
       />
       </Box>
       <CardContent>
-        <Typography variant="body2" color="text.secondary" style={{fontSize:'20px'}}>
+        <Typography variant="body2" color="text.secondary" sx={{fontSize:'20px',mt:{xs:'-10px',sm:0},mb:{xs:'-40px',sm:0}}}>
           {post.item_name}
         </Typography>
       </CardContent>
         <CardContent>
-          <Link to={`/posts/${post.id}`} state={{ post }} style={{ textDecoration: 'none' }}>
+          <Link to={`/posts/${post.id}`} state={{ post }} style={{ textDecoration: 'none'}}>
             <button className='mb-2 p-2 bg-orange-500 text-white rounded w-full'>
               Read More
             </button>

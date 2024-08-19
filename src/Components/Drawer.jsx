@@ -168,7 +168,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
 
   const drawer = (
     <div>
-      <img src={img} alt="logo" className="w-40 pl-3 pt-3" />
+      <img src={img} alt="logo" className="w-60  pt-3" />
       <List>
         <ListItem key="Home" disablePadding>
           <ListItemButton

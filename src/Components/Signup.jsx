@@ -21,7 +21,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import img from '../assets/img/rawsshalogo.jpg'
+import img from '../assets/img/rawsshalogo.png'
 
 const theme = createTheme();
 export default function SignUpFinal() {

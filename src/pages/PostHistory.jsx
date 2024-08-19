@@ -167,14 +167,14 @@ export default function MediaControlCard() {
     <>
       < ResponsiveDrawer />
       <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: 1, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 1 } }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)',md:'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: 1, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 4 } }}>
           {history.map((post) => (
-            <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: 450, sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
+            <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: "95%", sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
 
               <CardMedia
                 component="img"
                 sx={{
-                  width: { xs: '100%', sm: 200 }, height: { xs: '100%' },
+                  width: { xs: 150,  md:200 }, height: { xs: '100%' },
                   objectFit: 'cover',
                 }}
                 image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}

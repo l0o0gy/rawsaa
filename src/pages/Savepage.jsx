@@ -9,7 +9,7 @@ import axios from 'axios';
 
 function Savepage() {
   const navigate = useNavigate();
-  const cookies = Cookies.get('token');  
+  const cookies = Cookies.get('token');
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [savedPosts, setSavedPosts] = useState([]);
   const [seachinput, setSearchInput] = React.useState('');
@@ -24,10 +24,10 @@ function Savepage() {
           }
         });
         console.log('User authenticated');
-        setIsAuthenticated(true); // Set to true if authenticated
+        setIsAuthenticated(true); 
       } catch (error) {
         console.error('Error checking role:', error);
-        navigate('/loginpage'); // Redirect to login if not authenticated
+        navigate('/loginpage');
       }
     };
 
@@ -36,34 +36,31 @@ function Savepage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-
-
-    
       const savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
       setSavedPosts(savedPosts);
-  }
+    }
   }, [isAuthenticated]);
 
   return (
-    <>
-    <ResponsiveDrawer/>
-    <div className=' text-center '>
-      <div className="text-center  sm:ml-60 sm:mt-10 p-4 ">
-        <div  className='  grid grid-cols-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 '
-        // style={{ 
-        //   display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 4, width: '100%' 
-        //   }}
+    <div>
+      <ResponsiveDrawer />
+      <div className=' text-center '>
+        <div className="text-center  sm:ml-60 sm:mt-10 p-4 ">
+          <div className='  grid grid-cols-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 '
+          // style={{ 
+          //   display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 4, width: '100%' 
+          //   }}
           >
-          {savedPosts.length > 0 ? (
-            savedPosts.map(post => <PostCard key={post.id} post={post} />)
-          ) : (
-            <p>No saved posts found.</p>
-          )}
+            {savedPosts.length > 0 ? (
+              savedPosts.map(post => <PostCard key={post.id} post={post} />)
+            ) : (
+              <p>No saved posts found.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
-    </>
-    
+
   );
 }
 

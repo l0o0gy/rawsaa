@@ -32,12 +32,12 @@ export default function UserInfoPost({ userid, date, postId, post }) {
     }, [postId]);
 
     const handleBookmarkClick = () => {
-        let savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
-
+        let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || []; 
+    
         if (!isBookmarked) {
-            savedPosts = [...savedPosts, post];
-            console.log(savedPosts)
-            localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+            savedPosts = [...savedPosts, post]; 
+            console.log(savedPosts);
+            localStorage.setItem('savedPosts', JSON.stringify(savedPosts)); 
             setIsBookmarked(true);
         } else {
             savedPosts = savedPosts.filter(savedPost => savedPost.id !== postId);

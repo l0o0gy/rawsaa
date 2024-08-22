@@ -8,7 +8,7 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 const theme = createTheme();
 
-export default function UserInfoPost({ userid,date,postId,post }) {
+export default function UserInfoPost({ userid, date, postId, post }) {
     const [data, setData] = useState({});
     const [isBookmarked, setIsBookmarked] = useState();
 
@@ -23,16 +23,16 @@ export default function UserInfoPost({ userid,date,postId,post }) {
         };
 
         fetchInfo();
-    }, [userid]); 
+    }, [userid]);
 
     useEffect(() => {
-    const savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || [];
+        const savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
         const bookmarked = savedPosts.some(savedPost => savedPost.id === postId);
         setIsBookmarked(bookmarked);
-    }, [postId]); 
-    
+    }, [postId]);
+
     const handleBookmarkClick = () => {
-        let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) ;
+        let savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
 
         if (!isBookmarked) {
             savedPosts = [...savedPosts, post];
@@ -49,8 +49,17 @@ export default function UserInfoPost({ userid,date,postId,post }) {
     return (
         <ThemeProvider theme={theme} sx={{ overflow: "hidden" }}>
             <CardHeader
-                sx={{ height: { xs: 80 },fontSize:{xs:5,sm:'auto'} }}
-                avatar={
+                sx={{
+                    height: { xs: 80 },
+                    '& .MuiCardHeader-title': {
+                        fontSize: { xs: "12px", sm: "18px", md: "auto" },
+                        marginLeft: { xs: '-15px', sm: "auto" }
+                    },
+                    '& .MuiCardHeader-subheader': {
+                        fontSize: { xs: "12px", sm: "18px", md: "auto" },
+                        marginLeft: { xs: '-15px', sm: "auto" }
+                    }
+                }} avatar={
                     <Avatar
                         src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
                         alt="User Avatar"
@@ -62,7 +71,7 @@ export default function UserInfoPost({ userid,date,postId,post }) {
                         {isBookmarked ? <BookmarkAddedIcon style={{ color: "#fa7305" }} /> : <BookmarkAddIcon />}
                     </IconButton>
                 }
-                title={data.first_name  + ' ' + data.last_name}
+                title={data.first_name + ' ' + data.last_name}
                 subheader={date}
             />
         </ThemeProvider>

@@ -10,7 +10,7 @@ const theme = createTheme();
 
 export default function UserInfoPost({ userid, date, postId, post }) {
     const [data, setData] = useState({});
-    const [isBookmarked, setIsBookmarked] = useState();
+    const [isBookmarked, setIsBookmarked] = useState(false);
 
     useEffect(() => {
         const fetchInfo = async () => {
@@ -32,16 +32,15 @@ export default function UserInfoPost({ userid, date, postId, post }) {
     }, [postId]);
 
     const handleBookmarkClick = () => {
-        let savedPosts = JSON.parse(localStorage.getItem('savedPosts'));
+        let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || []; 
 
         if (!isBookmarked) {
-            savedPosts = [...savedPosts, post];
-            console.log(savedPosts)
-            localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+            savedPosts = [...savedPosts, post]; 
+            localStorage.setItem('savedPosts', JSON.stringify(savedPosts)); 
             setIsBookmarked(true);
         } else {
-            savedPosts = savedPosts.filter(savedPost => savedPost.id !== postId);
-            localStorage.setItem('savedPosts', JSON.stringify(savedPosts));
+            savedPosts = savedPosts.filter(savedPost => savedPost.id !== postId); 
+            localStorage.setItem('savedPosts', JSON.stringify(savedPosts)); 
             setIsBookmarked(false);
         }
     };
@@ -52,26 +51,31 @@ export default function UserInfoPost({ userid, date, postId, post }) {
                 sx={{
                     height: { xs: 80 },
                     '& .MuiCardHeader-title': {
-                        fontSize: { xs: "10px", sm: "18px", md: "auto" },
+                        fontSize: { xs: "15px", sm: "18px", md: "auto" },
                         marginLeft: { xs: '-15px', sm: "auto" }
                     },
                     '& .MuiCardHeader-subheader': {
-                        fontSize: { xs: "10px", sm: "18px", md: "auto" },
+                        fontSize: { xs: "12px", sm: "18px", md: "auto" },
                         marginLeft: { xs: '-15px', sm: "auto" }
                     }
-                }} avatar={
+                }}
+                avatar={
                     <Avatar
-                        src={data.img_id != 0 ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg` : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
+                        src={data.img_id != 0
+                            ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg`
+                            : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
                         alt="User Avatar"
                         lg={{ width: { xs: 100, sm: 200, xl: 200 }, height: { xs: 100, sm: 200, xl: 200 } }}
                     />
                 }
                 action={
                     <IconButton onClick={handleBookmarkClick} aria-label="bookmark">
-                        {isBookmarked ? <BookmarkAddedIcon style={{ color: "#fa7305" }} /> : <BookmarkAddIcon />}
+                        {isBookmarked
+                            ? <BookmarkAddedIcon style={{ color: "#fa7305" }} />
+                            : <BookmarkAddIcon />}
                     </IconButton>
                 }
-                title={data.first_name + ' ' + data.last_name}
+                title={`${data.first_name} ${data.last_name}`}
                 subheader={date}
             />
         </ThemeProvider>

@@ -52,11 +52,11 @@ export default function UserInfoPost({ userid, date, postId, post }) {
                 sx={{
                     height: { xs: 80 },
                     '& .MuiCardHeader-title': {
-                        fontSize: { xs: "12px", sm: "18px", md: "auto" },
+                        fontSize: { xs: "10px", sm: "18px", md: "auto" },
                         marginLeft: { xs: '-15px', sm: "auto" }
                     },
                     '& .MuiCardHeader-subheader': {
-                        fontSize: { xs: "12px", sm: "18px", md: "auto" },
+                        fontSize: { xs: "10px", sm: "18px", md: "auto" },
                         marginLeft: { xs: '-15px', sm: "auto" }
                     }
                 }} avatar={

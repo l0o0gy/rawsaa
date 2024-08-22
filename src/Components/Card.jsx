@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
-import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
@@ -23,13 +22,9 @@ const StyledCardMedia = styled(CardMedia)({
 
 function PostCard({ item }) {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const cookies = Cookies.get('token');
 
-  // useEffect(() => {
-    
 
-  // }, []);
   const fetchData = async () => {
     try {
         const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
@@ -38,8 +33,7 @@ function PostCard({ item }) {
                 'theToken': `Bearer ${cookies}`
             }
         });
-        // Process data as needed
-        // console.log(data);
+
         if (data.user_id) {
           console.log('mina');
         }else{
@@ -47,15 +41,11 @@ function PostCard({ item }) {
         }
     } catch (error) {
       console.log('hello');
-      // console.error('Error fetching data:', error);         
 
     }
 };
   const handleCardClick = () => {
-    // if (!isAuthenticated) {
-    //   navigate("/Loginpage"); // Redirect to login page if not authenticated
-    //   return;
-    // }
+
     
     switch (item.title) {
       case 'Houseware':

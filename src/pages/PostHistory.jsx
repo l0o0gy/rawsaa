@@ -167,50 +167,50 @@ export default function MediaControlCard() {
     <>
       < ResponsiveDrawer />
       <div className="mt-20 ml-4 sm:ml-60 sm:mt-5">
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', md: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: {xs:0,sm:1}, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 4 } }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(1, 1fr)', md: 'repeat(1, 1fr)', lg: 'repeat(2, 1fr)' }, gap: { xs: 0, sm: 1 }, marginLeft: { xs: 0, sm: 1 }, marginRight: { xs: 0, sm: 4 } }}>
           {history.map((post) => (
             <Card key={post.id} sx={{ marginBottom: 2, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 2, width: { xs: "95%", sm: "auto" }, padding: 1, border: '1px solid gray', borderRadius: "2px" }}>
 
               <CardMedia
                 component="img"
                 sx={{
-                  width: { xs: 150, sm: 200 }, height: { xs: 150, sm:"100%"},
+                  width: { xs: 150, sm: 200 }, height: { xs: 150, sm: "100%" },
                   objectFit: 'cover',
                 }}
                 image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
                 alt={post.item_name}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
-                <CardContent sx={{ flex: '1 0 auto',p:{sm:2,sm:'auto'}, paddingBottom:{xs:1,sm:'auto'} ,marginTop:{xs:'-10px'}, marginLeft:{xs:'-15px',sm:0}}}>
-                  <Typography component="div" sx={{ fontSize: { xs: 14, sm: 20 }}}>
+                <CardContent sx={{ flex: '1 0 auto', p: { sm: 2, sm: 'auto' }, paddingBottom: { xs: 1, sm: 'auto' }, marginTop: { xs: '-10px' }, marginLeft: { xs: '-15px', sm: 0 } }}>
+                  <Typography component="div" sx={{ fontSize: { xs: 14, sm: 20 } }}>
                     Name of item: {post.item_name}
                   </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ fontSize: { xs: 14, sm: 20 } ,height:{xs:25,sm:30} ,overflow:'hidden'}}>
+                  <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ fontSize: { xs: 14, sm: 20 }, height: { xs: 25, sm: 30 }, overflow: 'hidden' }}>
                     Description: {post.description}
                   </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ fontSize: { xs: 14, sm: 20 }}}>
+                  <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ fontSize: { xs: 14, sm: 20 } }}>
                     Date: {post.date}
                   </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ fontSize: { xs: 14, sm: 20 }}}>
+                  <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ fontSize: { xs: 14, sm: 20 } }}>
                     Time: {post.time}
                   </Typography>
                 </CardContent>
-                <Stack direction="row" spacing={{xs:1,sm:2}} sx={{ mb: 2, ml:{xs:0,sm:2} }}>
+                <Stack direction="row" spacing={{ xs: 1, sm: 2 }} sx={{ mb: 2, ml: { xs: 0, sm: 2 } }}>
                   <Button
                     variant="outlined"
-                    startIcon={<DeleteIcon sx={{width:{xs:18,sm:'auto'} ,marginRight:{xs:'-10px',sm:'auto'}}} />}
+                    startIcon={<DeleteIcon sx={{ width: { xs: 18, sm: 'auto' }, marginRight: { xs: '-10px', sm: 'auto' } }} />}
                     color="error"
-                    sx={{ width:{ xs:58,sm:90},height:{xs:30,sm:'auto'},fontSize: { xs: 12,sm:'auto' }}}
+                    sx={{ width: { xs: 58, sm: 90 }, height: { xs: 30, sm: 'auto' }, fontSize: { xs: 12, sm: 'auto' } }}
                     onClick={() => handleClickOpen(post.id)}
-                   >
+                  >
                     Delete
                   </Button>
                   <Button
                     variant="contained"
-                    endIcon={<EditIcon sx={{width:{xs:18,sm:'auto'},marginLeft:{xs:'-5px',sm:'auto'}}} />}
+                    endIcon={<EditIcon sx={{ width: { xs: 18, sm: 'auto' }, marginLeft: { xs: '-5px', sm: 'auto' } }} />}
                     onClick={() => handleClickOpenEdit(post)}
-                    sx={{ bgcolor: '#f97806', width: { xs: 55,sm:90 },height:{xs:30,sm:'auto'},fontSize: { xs: 12,sm:'auto' }, marginLeft:{xs:'-60px',sm:'auto'} }}
-                   >
+                    sx={{ bgcolor: '#f97806', width: { xs: 55, sm: 90 }, height: { xs: 30, sm: 'auto' }, fontSize: { xs: 12, sm: 'auto' }, marginLeft: { xs: '-60px', sm: 'auto' } }}
+                  >
                     Edit
                   </Button>
                 </Stack>
@@ -244,7 +244,8 @@ export default function MediaControlCard() {
             </Toolbar>
           </AppBar>
           {editPost && (
-            <List style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+            <List className='grid sm:grid-cols-2'
+            >
               <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -252,13 +253,13 @@ export default function MediaControlCard() {
               }}>
                 <CardMedia
                   component="img"
-                  sx={{ width: '100%', height: { xs: '100%', sm: '90%' }, objectFit: 'cover', ml: 5 }}
+                  sx={{ width: { xs: 350, sm: 400, md:500}, height: { xs: 350, sm: 400 ,md:500}, objectFit: 'cover', ml: { xs: 0, sm: 5 } }}
                   image={`https://mena.alraed1.com/imgPosts/${editPost.img_id}.jpg`}
                   alt={editPost.item_name}
                 />
               </Box>
               <Box style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                <CardContent sx={{ flex: '1 0 auto', p: 2, ml: 5 }}>
+                <CardContent sx={{ flex: '1 0 auto', p: 2, ml: { xs: 0, sm: 5 }, width: { xs: 350 } }}>
                   <Typography component="div" variant="subtitle1"
                     // sx={{ fontSize: { xs: 17, sm: 30 } }}
                     color="text.secondary"

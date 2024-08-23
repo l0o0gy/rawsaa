@@ -63,7 +63,7 @@ const PostCard = ({ post }) => {
       />
       </Box>
       <CardContent>
-        <Typography variant="body2" color="text.secondary" sx={{fontSize:'20px',mt:{xs:'-10px',sm:0},mb:{xs:'-40px',sm:0}}}>
+        <Typography variant="body2" color="text.secondary" sx={{fontSize:'20px',mt:{xs:'-10px',sm:0},mb:{xs:'-40px',sm:0},height:{xs:30,sm:'auto'}, overflow:'hidden'}}>
           {post.item_name}
         </Typography>
       </CardContent>

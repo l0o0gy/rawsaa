@@ -167,7 +167,7 @@ function Account() {
             gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
             gap: 2,
             mt: { xs: 1, sm: 2 },
-            maxWidth: { xs: '350px', sm: '800px' },
+            maxWidth: { xs: '320px', sm: '800px' },
             textAlign: 'start',
           }}
           noValidate
@@ -231,7 +231,7 @@ function Account() {
               sx={{
                 backgroundColor: 'orange',
                 '&:hover': { backgroundColor: 'orange' },
-                width: { xs: 350, sm: 800 },
+                width: { xs: 320, sm: 800 },
                 marginBottom: { xs: 2 },
               }}
               onClick={handleUpdateClick}
@@ -244,7 +244,7 @@ function Account() {
               sx={{
                 backgroundColor: 'orange',
                 '&:hover': { backgroundColor: 'orange' },
-                width: { xs: 350, sm: 800 },
+                width: { xs: 320, sm: 800 },
                 marginBottom: { xs: 2 },
               }}
               onClick={handleEditClick}

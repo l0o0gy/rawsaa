@@ -33,7 +33,7 @@ function Homepage({ isAuthenticated }) {
 
       {searchTerm === '' ? (
         <>
-          <div className="mr-2 grid grid-cols-2 sm:grid-cols-4 sm:ml-64 sm:mt-10">
+          <div className="mr-2 grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4 sm:ml-64 sm:mt-10">
             {items.map(item => (
               <Card key={item.id} item={item} isAuthenticated={isAuthenticated} />
             ))}
@@ -41,7 +41,7 @@ function Homepage({ isAuthenticated }) {
         </>
       ) : (
         <div className="text-center sm:ml-64 sm:mt-10">
-          <div className='grid grid-cols-2 ml-2 sm:ml-0 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+          <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 ml-2 sm:ml-0  gap-4 p-4'>
         {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}

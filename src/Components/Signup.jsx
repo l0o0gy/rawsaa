@@ -115,7 +115,7 @@ export default function SignUpFinal() {
         <Grid
           item
           xs={false}
-          sm={4}
+          sm={false}
           md={7}
           sx={{
             backgroundImage: `url(${img})`,
@@ -127,7 +127,7 @@ export default function SignUpFinal() {
             backgroundPosition: "left",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6}>
+        <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6}>
           <Box
             sx={{
               my: 2,

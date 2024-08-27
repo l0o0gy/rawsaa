@@ -50,10 +50,10 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const [isClosing, setIsClosing] = React.useState(false);
   const [checkToken, setIsAuthenticated] = React.useState(Cookies.get('token'));
   const [seachinput, setSearchInput] = React.useState('');
-  const [open ,setOpen]=React.useState(false);
-  const [user_id,setUser_Id] =useState()
+  const [open, setOpen] = React.useState(false);
+  const [user_id, setUser_Id] = useState()
   const navigate = useNavigate();
-  
+
 
   React.useEffect(() => {
     const handleCookieChange = async () => {
@@ -79,7 +79,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
         setIsAuthenticated(false);
       }
 
-      
+
     };
 
     const observer = new MutationObserver(handleCookieChange);
@@ -150,7 +150,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
     const value = event.target.value;
     setSearchInput(value);
     fetchData(value);
-    handleSearch(value); 
+    handleSearch(value);
   };
 
   const deleteUserAccount = async () => {
@@ -186,7 +186,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
-        
+
         <ListItem key="Language" disablePadding>
           <ListItemButton
             onClick={goToPage('/languagepage', 2)}
@@ -328,13 +328,13 @@ function ResponsiveDrawer({ window, handleSearch }) {
             </ListItem>
             <ListItem key="Sign Up" disablePadding>
               <ListItemButton
-                 onClick={goToPage('/signuppage', 9)}
-                 sx={{
-                   backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'inherit',
-                   '&:hover': {
-                     backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'lightgray',
-                   },
-                 }}
+                onClick={goToPage('/signuppage', 9)}
+                sx={{
+                  backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: location.pathname === '/signuppage' ? 'orange' : 'lightgray',
+                  },
+                }}
               >
                 <ListItemIcon>
                   <PersonAddIcon />
@@ -351,43 +351,57 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex'}}>
-      <CssBaseline  />
-      <AppBar position="fixed" sx={{ display: { sm: 'none' }, backgroundColor: 'white', boxShadow: 'none' }}>
-        <Toolbar>
-          <IconButton
-            color="black"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, mt: 0 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <input
-              type="text"
-              placeholder="search..."
-              className="w-5/6 mt-1 border h-8 rounded-full p-2 pr-3 text-black"
-              onInput={(e) => handleSearch(e.target.value)}
-              onClick={handleInputChange}
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" sx={{ backgroundColor: 'white', boxShadow: "none" }}>
+        {location.pathname !== '/savepage' && location.pathname !== '/' && location.pathname !== '/accountpage' && location.pathname !== '/history' && (
 
-            />
-            <IconButton color="black" >
-            <SearchIcon />
+          <Toolbar>
+            <IconButton
+              color="black"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, mt: 0 }}
+            >
+              <MenuIcon />
             </IconButton>
-          </Box> 
-          <IconButton
-            color="black"
-            aria-label="back"
-            edge="start"
-            onClick={handleBackButton}
-            sx={{ ml: 2, mt: 0 }}
-          >
-            <ArrowForwardIosIcon />
-          </IconButton>
-        </Toolbar>
+            <Box sx={{ flexGrow: { xs: 1, lg: 0 } }} />
+            <Box sx={{ display: 'flex', justifyContent: 'center', ml: { sm: 0, lg: 50 } }}>
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'start',
+                border: '1px solid gray',
+                width: {xs:300,lg:600},
+                borderRadius:5,
+              }}
+              //  className="flex justify-center border rounded-full lg:w-96"
+              >
+                <IconButton color="black"  >
+                  <SearchIcon />
+                </IconButton>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="w-5/6 pt-1 mt-2  h-8  p-2 pr-3 text-black focus:outline-none"
+                  onInput={(e) => handleSearch(e.target.value)}
+                  onClick={handleInputChange}
+                />
+
+              </Box>
+
+            </Box>
+            <IconButton
+              color="black"
+              aria-label="back"
+              edge="start"
+              onClick={handleBackButton}
+              sx={{ ml: 2, mt: 0, display: { sm: 'none' } }}
+            >
+              <ArrowForwardIosIcon />
+            </IconButton>
+          </Toolbar>
+        )}
       </AppBar>
       <Box
         component="nav"
@@ -417,11 +431,11 @@ function ResponsiveDrawer({ window, handleSearch }) {
             '& .MuiDrawer-paper': { boxSizing: 'border-box', marginTop: 0, width: drawerWidth },
           }}
         >
-          {drawer}  
+          {drawer}
         </Drawer>
 
       </Box>
-    
+
       <Dialog
         open={open}
         TransitionComponent={Transition}

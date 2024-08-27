@@ -163,7 +163,7 @@ function AddPost() {
   return (
     <div>
       {isAuthenticated && (
-        <Box sx={{ '& > :not(style)': { m: 1, position: 'fixed', backgroundColor: 'orange', bottom: 20, right: 20 } }}>
+        <Box sx={{ '& > :not(style)': { m: 1, position: 'fixed', backgroundColor: '#fe8801', '&hover':{backgroundColor: '#fe8801'}, bottom: 20, right: 20 } }}>
           <Fab color="" aria-label="add" onClick={handleClickOpen}>
             <AddIcon />
           </Fab>

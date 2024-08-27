@@ -11,6 +11,9 @@ import ResponsiveDrawer from '../Components/Drawer.jsx';
 import { useData } from "../Components/contacts/store";
 import { useContext } from 'react';
 import { PostContext } from '../Components/contacts/store';
+import img from '../assets/img/loading.png';
+import img1 from '../assets/img/item-not-found.png';
+import img2 from '../assets/img/no-published-posts-yet.png'
 
 
 function Antiques() {
@@ -85,31 +88,37 @@ function Antiques() {
   };
 
   return (
-    <div className='text-center h-screen'>
+    <div className="text-center h-screen">
       <ResponsiveDrawer handleSearch={handleSearch} />
       <Addpost handleSubmit={handlePostAdded} />
-      <div className='mt-16 sm:mt-0'>
+      <div className="mt-16 sm:mt-0">
         {searchTerm === '' ? (
           <div className="text-center sm:ml-60">
-            <div className='grid grid-cols-2 ml-1 mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5'>
-              {posts.map((post, index) => (
-                <PostCard key={index} post={post} />
-              ))}
+            <div className="grid grid-cols-2 ml-1 mt-3 sm:mt-20 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5">
+              {posts.length > 0 ? (
+                posts.map((post, index) => <PostCard key={index} post={post} />)
+              ) : (
+                <div className="justify-center mt-24 w-96 sm:ml-16 flex lg:mt-20 lg:ml-80">
+                  <img src={img2} alt="no-published-posts-yet" />
+                </div>
+              )}
             </div>
           </div>
         ) : (
           <div className="text-center sm:ml-60">
             {isSearching ? (
-              <p className="flex justify-center items-center h-80 text-center">Searching...</p>
+              <div className="justify-center mt-24 w-96 sm:ml-16 flex lg:mt-20 lg:ml-80">
+                <img src={img} alt="Searching..." />
+              </div>
             ) : posts.length > 0 ? (
-              <div className='grid grid-cols-2 ml-1 mt-3 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5'>
+              <div className="grid grid-cols-2 ml-1 mt-3  sm:mt-20 sm:ml-0 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 sm:gap-4 gap-3 p-1 sm:mb-5">
                 {posts.map((post, index) => (
                   <PostCard key={index} post={post} />
                 ))}
               </div>
             ) : (
-              <div className="flex justify-center items-center h-80 text-center ">
-                <p>Item not found </p>
+              <div className="justify-center mt-24 w-96 sm:ml-16 flex lg:mt-20 lg:ml-80">
+                <img src={img1} alt="No items found" />
               </div>
             )}
           </div>

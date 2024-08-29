@@ -21,6 +21,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -51,6 +53,7 @@ function AddPost() {
   const [alertMessage, setAlertMessage] = useState('');
   const [imgId, setImgId] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
   const cookies = Cookies.get('token');
 
   const theme = useTheme();
@@ -76,7 +79,19 @@ function AddPost() {
   }, [cookies]);
 
   const handlePhotoChange = (e) => {
-    setSelectedPhoto(e.target.files[0]);
+    const file = e.target.files[0];
+    if (uploadedPhotos.some(photo => photo.name === file.name)) {
+      setAlertMessage('Item already chosen');
+      setAlertOpen(true);
+    } else {
+      setSelectedPhoto(file);
+      setUploadedPhotos([...uploadedPhotos, file]);
+    }
+  };
+
+  const removePhoto = () => {
+    setSelectedPhoto(null);
+    setUploadedPhotos(uploadedPhotos.filter(photo => photo.name !== selectedPhoto.name));
   };
 
   const uploadImg = async (id) => {
@@ -181,17 +196,44 @@ function AddPost() {
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit} id="postForm">
-            <label htmlFor="imgPost" className=" bg-orange-200 p-2 rounded px-4 ">
-              <PhotoLibraryRoundedIcon />
-              <span className="pl-1">Add Post Photo</span>
-            </label>
+            {!selectedPhoto && (
+              <label htmlFor="imgPost" className="bg-orange-200 p-2 rounded px-4">
+                <PhotoLibraryRoundedIcon />
+                <span className="pl-1">Add Post Photo</span>
+              </label>
+            )}
             <input type="file" required hidden id="imgPost" accept="image/*" onChange={handlePhotoChange} /> <br />
             {selectedPhoto && (
-              <img 
-                src={`https://mena.alraed1.com/imgPosts/${imgId}.jpg`} 
-                alt={imgId} 
-                className="w-60" 
-              />
+              <Box
+                sx={{
+                  position: 'relative',
+                  width: 100,
+                  height: 100,
+                  border: '1px solid gray',
+                  borderRadius: 2,
+                  overflow: 'hidden'
+                }}
+              >
+                <img 
+                  src={URL.createObjectURL(selectedPhoto)} 
+                  alt={selectedPhoto.name} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+                <IconButton 
+                  onClick={removePhoto}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    color: 'red',
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    '&:hover': { backgroundColor: 'lightgrey' }
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Box>
             )}
             <TextField
               id="item-name"

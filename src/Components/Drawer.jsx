@@ -353,55 +353,72 @@ function ResponsiveDrawer({ window, handleSearch }) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ backgroundColor: 'white', boxShadow: "none" }}>
-        {location.pathname !== '/savepage' && location.pathname !== '/' && location.pathname !== '/accountpage' && location.pathname !== '/history' && (
+      <AppBar position="fixed"
+        sx={{
+          backgroundColor: { xs: 'white', lg: 'none' },
+          boxShadow: "none",
+          display: { xs: 'block', sm: location.pathname === '/' ? 'none' : 'block' }
+        }}>
 
-          <Toolbar>
-            <IconButton
-              color="black"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, mt: 0 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Box sx={{ flexGrow: { xs: 1, lg: 0 } }} />
-            <Box sx={{ display: 'flex', justifyContent: 'center', ml: { sm: 0, lg: 50 } }}>
-              <Box sx={{
-                display: 'flex',
-                justifyContent: 'start',
-                border: '1px solid gray',
-                width: {xs:300,lg:600},
-                borderRadius:5,
-              }}
-              //  className="flex justify-center border rounded-full lg:w-96"
-              >
-                <IconButton color="black"  >
-                  <SearchIcon />
-                </IconButton>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-5/6 pt-1 mt-2  h-8  p-2 pr-3 text-black focus:outline-none"
-                  onInput={(e) => handleSearch(e.target.value)}
-                  onClick={handleInputChange}
-                />
+        <Toolbar>
+          <IconButton
+            color="black"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, mt: 0, display: { xs: 'block', sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          {location.pathname !== '/savepage' && location.pathname !== '/accountpage' && location.pathname !== '/history' && (
+            <>
+              <Box sx={{ flexGrow: { xs: 1, lg: 0 } }} />
+              <Box sx={{ display: 'flex', justifyContent: 'center', ml: { sm: 0, lg: 50 } }}>
+                <Box sx={{
+                  // display: 'flex',
+                  // justifyContent: 'start',
+                  border: '1px solid gray',
+                  width: { xs: 300, lg: 600 },
+                  height: { xs: 40, md: 'auto' },
+                  borderRadius: 5,
+                }}
+                //  className="flex justify-center border rounded-full lg:w-96"
+                >
+                  <IconButton color="black"  >
+                    <SearchIcon />
+                  </IconButton>
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="w-5/6 pt-1 mt-2 h-5  md:h-8  p-2 pr-3 text-black focus:outline-none"
+                    onInput={(e) => handleSearch(e.target.value)}
+                    onClick={handleInputChange}
+                  />
+
+                </Box>
 
               </Box>
+            </>
+          )}
+          {location.pathname !== '/' && (
+            <>
+              <IconButton
+                color="black"
+                aria-label="back"
+                edge="end"
+                onClick={handleBackButton}
+                sx={{
+                  mt: 0,
+                  display: { xs: 'block', sm: 'none' },
+                  marginLeft: 'auto',
+                }}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </>
+          )}
+        </Toolbar>
 
-            </Box>
-            <IconButton
-              color="black"
-              aria-label="back"
-              edge="start"
-              onClick={handleBackButton}
-              sx={{ ml: 2, mt: 0, display: { sm: 'none' } }}
-            >
-              <ArrowForwardIosIcon />
-            </IconButton>
-          </Toolbar>
-        )}
       </AppBar>
       <Box
         component="nav"

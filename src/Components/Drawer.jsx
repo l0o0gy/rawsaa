@@ -355,9 +355,15 @@ function ResponsiveDrawer({ window, handleSearch }) {
       <CssBaseline />
       <AppBar position="fixed"
         sx={{
-          backgroundColor: { xs: 'white', lg: 'none' },
+          backgroundColor: { xs: 'white', lg: 'transparent' },
           boxShadow: "none",
-          display: { xs: 'block', sm: location.pathname === '/' ? 'none' : 'block' }
+          display: {
+            xs: 'block',
+            sm: location.pathname === '/savepage'
+              || location.pathname === '/'
+              || location.pathname === '/accountpage'
+              || location.pathname === '/history' ? 'none' : 'block'
+          }
         }}>
 
         <Toolbar>

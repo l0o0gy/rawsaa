@@ -94,7 +94,7 @@ const PostPage = () => {
               pt: 5,
             }}
           >
-            <CardContent sx={{ flex: '1 0 auto', p: { xs: 1, sm: 2 }, width: { xs: 350 }, overflow: 'hidden' }}>
+            <CardContent sx={{ flex: '1 0 auto', p: { xs: 1, sm: 2 }, width: { xs: 350 ,sm:'auto' }, overflow: 'hidden' }}>
               <TableContainer component={Paper}>
                 <Table>
                   <TableBody>
@@ -124,7 +124,7 @@ const PostPage = () => {
             </CardContent>
 
             <Box sx={{ p: 2 }}>
-              <CardContent sx={{ flex: '1 0 auto', p: { xs: 1, sm: 2 }, width: { xs: 350 }, overflow: 'hidden', ml: { xs: '-15px', sm: 'auto' } }}>
+              <CardContent sx={{ flex: '1 0 auto', p: { xs: 1, sm: 0 }, width: { xs: 350,sm:'auto' }, overflow: 'hidden', ml: { xs: '-15px', sm: 'auto' } }}>
                 <TableContainer component={Paper}>
                   <Table>
                     <TableBody>

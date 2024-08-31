@@ -212,7 +212,7 @@ export default function MediaControlCard() {
                       variant="contained"
                       endIcon={<EditIcon sx={{ width: { xs: 18, sm: 'auto' }, marginLeft: { xs: '-5px', sm: 'auto' } }} />}
                       onClick={() => handleClickOpenEdit(post)}
-                      sx={{ bgcolor: '#f97806', width: { xs: 55, sm: 90 }, height: { xs: 30, sm: 'auto' }, fontSize: { xs: 12, sm: 'auto' }, marginLeft: { xs: '-60px', sm: 'auto' } }}
+                      sx={{ bgcolor: '#f97806','&:hover':{bgcolor: '#f97806'}, width: { xs: 55, sm: 90 }, height: { xs: 30, sm: 'auto' }, fontSize: { xs: 12, sm: 'auto' }, marginLeft: { xs: '-60px', sm: 'auto' } }}
                     >
                       Edit
                     </Button>

@@ -378,15 +378,18 @@ function ResponsiveDrawer({ window, handleSearch }) {
           </IconButton>
           {location.pathname !== '/savepage' && location.pathname !== '/accountpage' && location.pathname !== '/history' && (
             <>
-              <Box sx={{ flexGrow: { xs: 1, lg: 0 } }} />
+              <Box sx={{ flexGrow: { xs: 0, lg: 0 } }} />
               <Box sx={{ display: 'flex', justifyContent: 'center', ml: { sm: 0, lg: 50 } }}>
                 <Box sx={{
                   // display: 'flex',
                   // justifyContent: 'start',
                   border: '1px solid gray',
-                  width: { xs: 250, sm:500,md:500, lg: 600 },
+                  width: { xs: 280, sm:500,md:500, lg: 600 },
                   height: { xs: 40, md: 'auto' },
                   borderRadius: 5,
+                  display: 'flex',
+                   justifyContent: 'center',
+                   ml:0
                 }}
                 //  className="flex justify-center border rounded-full lg:w-96"
                 >
@@ -396,7 +399,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="w-5/6 pt-1 mt-2 h-5  md:h-5  p-2 pr-3 text-black focus:outline-none"
+                    className="w-5/6 pt-1 mt-2 h-5  md:h-5  lg:h-8 p-2 pr-3 text-black focus:outline-none"
                     onInput={(e) => handleSearch(e.target.value)}
                     onClick={handleInputChange}
                   />

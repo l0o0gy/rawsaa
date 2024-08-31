@@ -25,8 +25,11 @@ const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
     height: 600,
   },
   [theme.breakpoints.up('lg')]: {
-    height: 600,
-    width: '100%',
+    height: 500,
+    width: 500,
+    margin:'auto',
+    objectFit: 'cover',
+
   },
 }));
 
@@ -53,15 +56,27 @@ const PostPage = () => {
     <>
       <Box sx={{ boxShadow: 1, mt: 0, display: 'flex', justifyContent: 'space-between' }}>
         <img src={img} alt='logo' className='w-40 ml-2 mt-2' />
-        <IconButton
+        {/* <IconButton
           color="default"
           aria-label="back"
-          edge="start"
+          edge="end"
           onClick={handleBackButton}
           sx={{ mr: { xs: 2, sm: 'auto' }, mt: 0 }}
         >
           <ArrowForwardIosIcon />
-        </IconButton>
+        </IconButton> */}
+        <IconButton
+                color="black"
+                aria-label="back"
+                edge="end"
+                onClick={handleBackButton}
+                sx={{
+                  mt: 0,
+                  marginRight:{xs:0,md:2},
+                }}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
       </Box>
 
       <Box className='ml-4 mt-1 sm:mt-4 overflow-hidden'>

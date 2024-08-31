@@ -32,18 +32,23 @@ export default function UserInfoPost({ userid, date, postId, post }) {
     }, [postId]);
 
     const handleBookmarkClick = () => {
-        let savedPosts = JSON.parse(localStorage.getItem('savedPosts')) || []; 
-
+        let savedPosts = JSON.parse(localStorage.getItem("savedPosts"));
+    
         if (!isBookmarked) {
-            savedPosts = [...savedPosts, post]; 
-            localStorage.setItem('savedPosts', JSON.stringify(savedPosts)); 
-            setIsBookmarked(true);
+          if (savedPosts !== null) {
+            savedPosts = [...savedPosts, post];
+          }else{
+            savedPosts = [post];
+          }
+          console.log(savedPosts);
+          localStorage.setItem("savedPosts", JSON.stringify(savedPosts));
+          setIsBookmarked(true);
         } else {
-            savedPosts = savedPosts.filter(savedPost => savedPost.id !== postId); 
-            localStorage.setItem('savedPosts', JSON.stringify(savedPosts)); 
-            setIsBookmarked(false);
+          savedPosts = savedPosts.filter((savedPost) => savedPost.id !== postId);
+          localStorage.setItem("savedPosts", JSON.stringify(savedPosts));
+          setIsBookmarked(false);
         }
-    };
+      };
 
     return (
         <ThemeProvider theme={theme} sx={{ overflow: "hidden" }}>

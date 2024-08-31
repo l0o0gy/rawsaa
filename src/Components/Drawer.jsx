@@ -384,7 +384,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
                   // display: 'flex',
                   // justifyContent: 'start',
                   border: '1px solid gray',
-                  width: { xs: 300, lg: 600 },
+                  width: { xs: 250, sm:500,md:500, lg: 600 },
                   height: { xs: 40, md: 'auto' },
                   borderRadius: 5,
                 }}
@@ -396,7 +396,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="w-5/6 pt-1 mt-2 h-5  md:h-8  p-2 pr-3 text-black focus:outline-none"
+                    className="w-5/6 pt-1 mt-2 h-5  md:h-5  p-2 pr-3 text-black focus:outline-none"
                     onInput={(e) => handleSearch(e.target.value)}
                     onClick={handleInputChange}
                   />
@@ -415,7 +415,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
                 onClick={handleBackButton}
                 sx={{
                   mt: 0,
-                  display: { xs: 'block', sm: 'none' },
+                  display: { xs: 'block', sm: 'none'},
                   marginLeft: 'auto',
                 }}
               >

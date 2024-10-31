@@ -63,7 +63,7 @@ export default function MediaControlCard() {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+        const { data } = await axios.get('https://mena.al-massrah.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
             'theToken': `Bearer ${cookies}`
@@ -83,7 +83,7 @@ export default function MediaControlCard() {
   useEffect(() => {
     if (getuser_id === 0) return;
 
-    axios.get(`https://mena.alraed1.com/userPosts/${getuser_id}/0/20`)
+    axios.get(`https://mena.al-massrah.com/userPosts/${getuser_id}/0/20`)
       .then((res) => {
         console.log('Fetched posts:', res.data.result);
         setHistoryState(res.data.result);
@@ -96,7 +96,7 @@ export default function MediaControlCard() {
   const handlePostAdded = () => {
     if (getuser_id === 0) return;
 
-    axios.get(`https://mena.alraed1.com/userPosts/${getuser_id}/0/20`)
+    axios.get(`https://mena.al-massrah.com/userPosts/${getuser_id}/0/20`)
       .then((res) => {
         setHistoryState(res.data.result);
       })
@@ -125,7 +125,7 @@ export default function MediaControlCard() {
   const deletePost = async () => {
     if (!deleteId) return;
     try {
-      await axios.delete(`https://mena.alraed1.com/deletePosts/${deleteId}`);
+      await axios.delete(`https://mena.al-massrah.com/deletePosts/${deleteId}`);
       handlePostAdded();
       handleClose();
     } catch (error) {
@@ -146,7 +146,7 @@ export default function MediaControlCard() {
 
     const updatePost = async () => {
       try {
-        await axios.put(`https://mena.alraed1.com/updatePost/${editPost.id}`, editPost);
+        await axios.put(`https://mena.al-massrah.com/updatePost/${editPost.id}`, editPost);
         console.log(`Post ${editPost.id} updated successfully`);
       } catch (error) {
         console.error("Error updating post:", error);
@@ -180,7 +180,7 @@ export default function MediaControlCard() {
                     width: { xs: 150, sm: 200 }, height: { xs: 150, sm: "100%" },
                     objectFit: 'cover',
                   }}
-                  image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
+                  image={`https://mena.al-massrah.com/imgPosts/${post.img_id}.jpg`}
                   alt={post.item_name}
                 />
                 <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>

@@ -29,7 +29,7 @@ function CarAccessories() {
     setSearchTerm(term);
     setIsSearching(true);  
     axios
-      .get(`https://mena.alraed1.com/postSearch/${term}`)
+      .get(`https://mena.al-massrah.com/postSearch/${term}`)
       .then((response) => {
         const filteredPosts = response.data.filter(post => post.category === 'Car Accessories');
         setPosts(filteredPosts);
@@ -44,7 +44,7 @@ function CarAccessories() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+        const { data } = await axios.get('https://mena.al-massrah.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
             'theToken': `Bearer ${cookies}`
@@ -63,7 +63,7 @@ function CarAccessories() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      axios.get(`https://mena.alraed1.com/postsCategory/Car Accessories/0/10`)
+      axios.get(`https://mena.al-massrah.com/postsCategory/Car Accessories/0/10`)
         .then((res) => {
           setPosts(res.data.result);
         })
@@ -75,7 +75,7 @@ function CarAccessories() {
 
   const handlePostAdded = () => {
     if (isAuthenticated) {
-      axios.get(`https://mena.alraed1.com/postsCategory/Car Accessories/0/10`)
+      axios.get(`https://mena.al-massrah.com/postsCategory/Car Accessories/0/10`)
         .then((res) => {
           setPosts(res.data.result);
         })

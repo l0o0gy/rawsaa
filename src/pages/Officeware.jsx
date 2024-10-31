@@ -62,7 +62,7 @@ function Officeware() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      axios.get(`https://mena.alraed1.com/postsCategory/Office Ware/0/10`)
+      axios.get(`https://mena.al-massrah.com/postsCategory/Office Ware/0/10`)
         .then((res) => {
           setPosts(res.data.result);
         })
@@ -74,7 +74,7 @@ function Officeware() {
 
   const handlePostAdded = () => {
     if (isAuthenticated) {
-      axios.get(`https://mena.alraed1.com/postsCategory/Office Ware/0/10`)
+      axios.get(`https://mena.al-massrah.com/postsCategory/Office Ware/0/10`)
         .then((res) => {
           setPosts(res.data.result);
         })

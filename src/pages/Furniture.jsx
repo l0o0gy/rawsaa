@@ -20,7 +20,7 @@ function Furniture() {
   const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
+  const [isAuthenticated, setIsAuthenticated] = useState(false); 
 
   const items = useData();
 
@@ -28,7 +28,7 @@ function Furniture() {
     setSearchTerm(term);
     setIsSearching(true);  
     axios
-      .get(`https://mena.alraed1.com/postSearch/${term}`)
+      .get(`https://mena.al-massrah.com/postSearch/${term}`)
       .then((response) => {
         const filteredPosts = response.data.filter(post => post.category === 'Furniture');
         setPosts(filteredPosts);
@@ -43,7 +43,7 @@ function Furniture() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+        const { data } = await axios.get('https://mena.al-massrah.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
             'theToken': `Bearer ${cookies}`
@@ -62,7 +62,7 @@ function Furniture() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      axios.get(`https://mena.alraed1.com/postsCategory/Furniture/0/10`)
+      axios.get(`https://mena.al-massrah.com/postsCategory/Furniture/0/10`)
         .then((res) => {
           setPosts(res.data.result);
         })
@@ -74,7 +74,7 @@ function Furniture() {
 
   const handlePostAdded = () => {
     if (isAuthenticated) {
-      axios.get(`https://mena.alraed1.com/postsCategory/Furniture/0/10`)
+      axios.get(`https://mena.al-massrah.com/postsCategory/Furniture/0/10`)
         .then((res) => {
           setPosts(res.data.result);
         })

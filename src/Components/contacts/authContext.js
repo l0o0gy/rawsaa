@@ -1,4 +1,3 @@
-// auth.js or authContext.js
 export const isAuthenticated = async (data) => {
     try {
       const response = await fetch('https://x8ki-letl-twmt.n7.xano.io/api:B8mXd58e/auth/me', {
@@ -11,7 +10,7 @@ export const isAuthenticated = async (data) => {
   
       if (response.ok) {
         const data = await response.json();
-        return !!data; // Replace this with your actual authentication logic if needed
+        return !!data; 
       } else {
         return false;
       }

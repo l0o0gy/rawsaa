@@ -61,7 +61,7 @@ export default function SignUpFinal() {
 
     try {
       const { data } = await axios.post(
-        "https://mena.alraed1.com/imgUsers",
+        "https://mena.al-massrah.com/imgUsers",
         formData
       );
       return data.filePath;
@@ -80,7 +80,7 @@ export default function SignUpFinal() {
     await uploadImg(id);
 
     axios
-      .post("https://mena.alraed1.com/register", {
+      .post("https://mena.al-massrah.com/register", {
         username: data.name,
         email: data.email,
         first_name: data.first_name,

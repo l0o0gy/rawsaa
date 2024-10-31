@@ -15,7 +15,7 @@ function Homepage({ isAuthenticated }) {
   const handleSearch = (term) => {
     setSearchTerm(term); 
       axios
-        .get(`https://mena.alraed1.com/postSearch/${searchTerm}`)
+        .get(`https://mena.al-massrah.com/postSearch/${searchTerm}`)
         .then((response) => {
           setPosts(response.data);
         })

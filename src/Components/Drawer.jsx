@@ -59,7 +59,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
     const handleCookieChange = async () => {
       try {
         const cookies = Cookies.get('token');
-        const { data } = await axios.get('https://mena.alraed1.com/checkRole', {
+        const { data } = await axios.get('https://mena.al-massrah.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
             'theToken': `Bearer ${cookies}`,
@@ -136,7 +136,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
   };
 
   const fetchData = (value) => {
-    axios.get(`https://mena.alraed1.com/postSearch/${value}`)
+    axios.get(`https://mena.al-massrah.com/postSearch/${value}`)
       .then((response) => {
         console.log(response.data);
         console.log("value:", value);
@@ -156,7 +156,7 @@ function ResponsiveDrawer({ window, handleSearch }) {
   const deleteUserAccount = async () => {
     try {
       if (user_id) {
-        await axios.delete(`https://mena.alraed1.com/deleteUser/${user_id}`);
+        await axios.delete(`https://mena.al-massrah.com/deleteUser/${user_id}`);
         console.log(`User with ${user_id} deleted successfully`);
         setUser_Id(null);
         handleLogout();

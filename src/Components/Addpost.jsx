@@ -63,7 +63,7 @@ function AddPost() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://mena.alraed1.com/checkRole', {
+        const response = await axios.get('https://mena.al-massrah.com/checkRole', {
           headers: {
             'Content-Type': 'application/json',
             'theToken': `Bearer ${cookies}`
@@ -106,7 +106,7 @@ function AddPost() {
     formData.append('post', renamedFile);
 
     try {
-      const response = await axios.post('https://mena.alraed1.com/imgPosts', formData);
+      const response = await axios.post('https://mena.al-massrah.com/imgPosts', formData);
       return response.data.filePath;
     } catch (error) {
       return null;
@@ -119,7 +119,7 @@ function AddPost() {
     let userNumber = 0;
     let userData = {};
     try {
-      const response = await axios.get('https://mena.alraed1.com/checkRole', {
+      const response = await axios.get('https://mena.al-massrah.com/checkRole', {
         headers: {
           'Content-Type': 'application/json',
           'theToken': `Bearer ${cookies}`
@@ -153,7 +153,7 @@ function AddPost() {
     };
 
     try {
-      await axios.post('https://mena.alraed1.com/posts', newPost);
+      await axios.post('https://mena.al-massrah.com/posts', newPost);
       setAlertMessage('Post successfully added');
       setAlertOpen(true);
       setOpenDialog(false);

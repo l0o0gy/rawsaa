@@ -39,7 +39,7 @@ export default function LoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('https://mena.alraed1.com/login', { email: data.email, password: data.password })
+    axios.post('https://mena.al-massrah.com/login', { email: data.email, password: data.password })
       .then((res) => {
         Cookies.set('isAuthenticated', 'true');
         Cookies.set('token', res.data.token);

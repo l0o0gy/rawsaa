@@ -15,7 +15,7 @@ export default function UserInfoPost({ userid, date, postId, post }) {
     useEffect(() => {
         const fetchInfo = async () => {
             try {
-                const response = await axios.get(`https://mena.alraed1.com/userInfo/${userid}`);
+                const response = await axios.get(`https://mena.al-massrah.com/userInfo/${userid}`);
                 setData(response.data);
             } catch (error) {
                 console.error("Error fetching user info:", error);
@@ -67,7 +67,7 @@ export default function UserInfoPost({ userid, date, postId, post }) {
                 avatar={
                     <Avatar
                         src={data.img_id != 0
-                            ? `https://mena.alraed1.com/imgUsers/${data.img_id}.jpg`
+                            ? `https://mena.al-massrah.com/imgUsers/${data.img_id}.jpg`
                             : `https://ui-avatars.com/api/?name=${data.first_name}+${data.last_name}&background=22d3ee&color=fff`}
                         alt="User Avatar"
                         lg={{ width: { xs: 100, sm: 200, xl: 200 }, height: { xs: 100, sm: 200, xl: 200 } }}

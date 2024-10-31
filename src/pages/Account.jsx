@@ -29,7 +29,7 @@ function Account() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const response = await axios.get("https://mena.alraed1.com/checkRole", {
+      const response = await axios.get("https://mena.al-massrah.com/checkRole", {
         headers: {
           "Content-Type": "application/json",
           theToken: `Bearer ${cookies}`,

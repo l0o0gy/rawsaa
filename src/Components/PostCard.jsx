@@ -57,7 +57,7 @@ const PostCard = ({ post }) => {
         }}>
       <StyledCardMedia
         component="img"
-        image={`https://mena.alraed1.com/imgPosts/${post.img_id}.jpg`}
+        image={`https://mena.al-massrah.com/imgPosts/${post.img_id}.jpg`}
         alt={post.item_name}
         sx={{mt:{xs:'-10px',sm:0}}}
       />
